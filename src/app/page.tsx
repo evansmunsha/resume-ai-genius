@@ -169,7 +169,7 @@ export default function Home() {
                     </div>
                     <div className="border rounded-lg p-4 shadow-sm">
                       <h3 className="font-semibold cursor-pointer hover:text-blue-600" onClick={() => toggleAnswer(2)}>
-                        Can I edit my resume after it's generated?
+                        Can I edit my resume after it&apos;s generated?
                       </h3>
                       <p className={`text-gray-600 ${visibleAnswers[2] ? '' : 'hidden'}`} id="answer-2">
                         While our AI generates a great starting point&lsquo; you have full control to edit&lsquo; customize&lsquo; and refine your resume to make it perfect for your needs.
@@ -200,7 +200,7 @@ function TestimonialCard({ quote, author }: { quote: string; author: string }) {
   return (
     <Card>
       <CardContent className="p-6">
-        <p className="italic mb-4">"{quote}"</p>
+        <p className="italic mb-4">&quot;{quote}&quot;</p>
         <p className="text-right font-semibold">- {author}</p>
       </CardContent>
     </Card>
