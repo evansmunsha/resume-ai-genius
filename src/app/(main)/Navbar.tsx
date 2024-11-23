@@ -1,6 +1,6 @@
 "use client";
 
-import logo from "@/assets/logo.png";
+import logo from "@/assets/logo.jpg";
 import ThemeToggle from "@/components/ThemeToggle";
 import { UserButton } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
@@ -24,7 +24,7 @@ export default function Navbar() {
             className="rounded-full"
           />
           <span className="text-xl font-bold tracking-tight">
-            AI Resume Builder
+            Resume AI Genius
           </span>
         </Link>
         <div className="flex items-center gap-3">

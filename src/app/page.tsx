@@ -1,6 +1,6 @@
 "use client"
 
-import logo from "@/assets/logo.png";
+import logo from "@/assets/logo.jpg";
 import resumePreview from "@/assets/resume-preview.jpg";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -80,10 +80,10 @@ export default function Home() {
                     />
                   </div>
                   <p className="text-lg text-gray-500 mt-6">
-                    With our <strong className="font-bold">AI Resume Builder</strong>, crafting a professional resume has never been easier! 
+                    With our <strong className="font-bold">Resume AI Genius</strong>, crafting a professional resume has never been easier! 
                     Whether you're a seasoned professional or just starting out, our intuitive tool guides you through the process, 
                     ensuring your resume stands out. 
-                    <Link href="/how-it-works" className="text-blue-600 underline cursor-pointer"> Discover how it works and get started today!</Link>
+                    <Link href="/resume" className="text-blue-600 underline cursor-pointer"> Discover how it works and get started today!</Link>
                   </p>
                 </section>
 
@@ -109,11 +109,19 @@ export default function Home() {
                   <h2 className="text-3xl font-bold text-center mb-8">Simple Pricing</h2>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <PricingCard
+                      title="Free"
+                      price="$0"
+                      features={[
+                        "0 AI-generated resume",
+                        "1 format (PDF)",
+                      ]}
+                    />
+                    <PricingCard
                       title="Basic"
                       price="$9.99"
                       features={[
-                        "1 AI-generated resume",
-                        "1 format (PDF)",
+                        "3 AI-generated resume",
+                        "3 format (PDF)",
                         "Basic ATS optimization",
                       ]}
                     />
@@ -122,12 +130,12 @@ export default function Home() {
                       price="$19.99"
                       features={[
                         "Unlimited AI-generated resumes",
-                        "Multiple formats (PDF, DOCX, TXT)",
+                        "Unlimited formats (PDF)",
                         "Advanced ATS optimization",
-                        "Cover letter generation",
+                        "Cover letter generation>>> coming soon",
                       ]}
                     />
-                    <PricingCard
+                    {/* <PricingCard
                       title="Premium"
                       price="$29.99"
                       features={[
@@ -136,7 +144,7 @@ export default function Home() {
                         "Priority customer support",
                         "Resume performance analytics",
                       ]}
-                    />
+                    /> */}
                   </div>
                 </section>
 
