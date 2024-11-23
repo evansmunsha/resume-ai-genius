@@ -1,6 +1,6 @@
 "use client";
 
-import logo from "@/assets/logo.jpg";
+import logo from "@/assets/logo.jpeg";
 import ThemeToggle from "@/components/ThemeToggle";
 import { UserButton } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";

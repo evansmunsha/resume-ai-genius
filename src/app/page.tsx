@@ -1,6 +1,6 @@
 "use client"
 
-import logo from "@/assets/logo.jpg";
+import logo from "@/assets/logo.jpeg";
 import resumePreview from "@/assets/resume-preview.jpg";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
