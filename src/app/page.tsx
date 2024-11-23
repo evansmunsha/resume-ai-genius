@@ -31,16 +31,16 @@ export default function Home() {
             className="mx-auto md:ms-0"
           />
           <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-            Create the{" "}
-            <span className="inline-block bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-transparent">
-              Perfect Resume
-            </span>{" "}
-            in Minutes
+          Build Your{" "}
+      <span className="inline-block bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-transparent">
+        Dream Resume
+      </span>{" "}
+      in Just Minutes
           </h1>
           <p className="text-lg text-gray-500">
-            With our <strong className="font-bold">AI Resume Builder</strong>, crafting a professional resume has never been easier! 
-            Whether you're a seasoned professional or just starting out, our intuitive tool guides you through the process, 
-            ensuring your resume stands out. 
+          Welcome to the <strong className="font-bold">Resume AI Genius</strong>—your ultimate solution for creating a standout resume! 
+      Whether you're an industry veteran or embarking on your first job search, our user-friendly tool simplifies the resume-building process, 
+      allowing you to showcase your skills and experiences effectively. 
             <Link href="/how-it-works" className="text-blue-600 underline cursor-pointer"> Discover how it works and get started today!</Link>
           </p>
           <Button asChild size="lg" variant="premium">
