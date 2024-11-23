@@ -120,7 +120,7 @@ export default function Home() {
                       title="Basic"
                       price="$9.99"
                       features={[
-                        "3 AI-generated resume",
+                        "3 AI-generated resumes",
                         "3 format (PDF)",
                         "Basic ATS optimization",
                       ]}
@@ -153,7 +153,7 @@ export default function Home() {
                   <div className="max-w-2xl mx-auto space-y-4">
                     <div className="border rounded-lg p-4 shadow-sm">
                       <h3 className="font-semibold cursor-pointer hover:text-blue-600" onClick={() => toggleAnswer(0)}>
-                        How does ResumeGenius AI work?
+                        How does Resume AI Genius work?
                       </h3>
                       <p className={`text-gray-600 ${visibleAnswers[0] ? '' : 'hidden'}`} id="answer-0">
                         Resume AI Genius advanced machine learning algorithms to analyze your input and generate a tailored&lsquo; professional resume. It considers industry standards&lsquo; job requirements&lsquo; and best practices to create an optimized resume for you.
