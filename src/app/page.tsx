@@ -39,9 +39,9 @@ export default function Home() {
           </h1>
           <p className="text-lg text-gray-500">
           Welcome to the <strong className="font-bold">Resume AI Genius</strong>—your ultimate solution for creating a standout resume! 
-      Whether you're an industry veteran or embarking on your first job search, our user-friendly tool simplifies the resume-building process, 
+      Whether you&apos;re an industry veteran or embarking on your first job search&lsquo; our user-friendly tool simplifies the resume-building process&lsquo; 
       allowing you to showcase your skills and experiences effectively. 
-            <Link href="/how-it-works" className="text-blue-600 underline cursor-pointer"> Discover how it works and get started today!</Link>
+            <Link href="/resume" className="text-blue-600 underline cursor-pointer"> Discover how it works and get started today!</Link>
           </p>
           <Button asChild size="lg" variant="premium">
             <Link href="/resumes">Get Started</Link>
@@ -80,8 +80,8 @@ export default function Home() {
                     />
                   </div>
                   <p className="text-lg text-gray-500 mt-6">
-                    With our <strong className="font-bold">Resume AI Genius</strong>, crafting a professional resume has never been easier! 
-                    Whether you're a seasoned professional or just starting out, our intuitive tool guides you through the process, 
+                    With our <strong className="font-bold">Resume AI Genius</strong>&lsquo; crafting a professional resume has never been easier! 
+                    Whether you&apos;re a seasoned professional or just starting out&lsquo; our intuitive tool guides you through the process&lsquo; 
                     ensuring your resume stands out. 
                     <Link href="/resume" className="text-blue-600 underline cursor-pointer"> Discover how it works and get started today!</Link>
                   </p>
@@ -156,7 +156,7 @@ export default function Home() {
                         How does ResumeGenius AI work?
                       </h3>
                       <p className={`text-gray-600 ${visibleAnswers[0] ? '' : 'hidden'}`} id="answer-0">
-                        ResumeGenius AI uses advanced machine learning algorithms to analyze your input and generate a tailored, professional resume. It considers industry standards, job requirements, and best practices to create an optimized resume for you.
+                        Resume AI Genius advanced machine learning algorithms to analyze your input and generate a tailored&lsquo; professional resume. It considers industry standards&lsquo; job requirements&lsquo; and best practices to create an optimized resume for you.
                       </p>
                     </div>
                     <div className="border rounded-lg p-4 shadow-sm">
@@ -164,7 +164,7 @@ export default function Home() {
                         Is my information secure?
                       </h3>
                       <p className={`text-gray-600 ${visibleAnswers[1] ? '' : 'hidden'}`} id="answer-1">
-                        Yes, we take data security very seriously. All your information is encrypted and stored securely. We never share your personal data with third parties without your explicit consent.
+                        Yes&lsquo; we take data security very seriously. All your information is encrypted and stored securely. We never share your personal data with third parties without your explicit consent.
                       </p>
                     </div>
                     <div className="border rounded-lg p-4 shadow-sm">
@@ -172,7 +172,7 @@ export default function Home() {
                         Can I edit my resume after it's generated?
                       </h3>
                       <p className={`text-gray-600 ${visibleAnswers[2] ? '' : 'hidden'}`} id="answer-2">
-                        While our AI generates a great starting point, you have full control to edit, customize, and refine your resume to make it perfect for your needs.
+                        While our AI generates a great starting point&lsquo; you have full control to edit&lsquo; customize&lsquo; and refine your resume to make it perfect for your needs.
                       </p>
                     </div>
                   </div>
@@ -218,7 +218,10 @@ function PricingCard({ title, price, features }: { title: string; price: string;
             <li key={index} className="mb-2">{feature}</li>
           ))}
         </ul>
-        <Button className="w-full mt-4">Choose Plan</Button>
+        <Link href={"/billing"}>
+        
+        <Button className="w-full mt-4">Get started</Button>
+        </Link>
       </CardContent>
     </Card>
   );
