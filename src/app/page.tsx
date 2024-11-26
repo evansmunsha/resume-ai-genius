@@ -121,7 +121,7 @@ export default function Home() {
                       price="$9.99"
                       features={[
                         "3 AI-generated resumes",
-                        "3 format (PDF)",
+                        "3 formats (PDF)",
                         "Basic ATS optimization",
                       ]}
                     />
@@ -218,7 +218,7 @@ function PricingCard({ title, price, features }: { title: string; price: string;
             <li key={index} className="mb-2">{feature}</li>
           ))}
         </ul>
-        <Link href={"/resume"}>
+        <Link href={"/resumes"}>
         
         <Button className="w-full mt-4">Get started</Button>
         </Link>
