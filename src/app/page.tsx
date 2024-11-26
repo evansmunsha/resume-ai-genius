@@ -75,7 +75,7 @@ export default function Home() {
                     />
                     <FeatureCard
                       title="Multiple Formats"
-                      description="Download your resume in PDF, DOCX, or TXT formats."
+                      description="Download your resume in PDF,format."
                       icon="📄"
                     />
                   </div>
