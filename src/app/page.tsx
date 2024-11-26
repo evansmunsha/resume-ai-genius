@@ -28,7 +28,7 @@ export default function Home() {
             alt="Logo"
             width={150}
             height={150}
-            className="mx-auto md:ms-0"
+            className="mx-auto md:ms-auto"
           />
           <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
           Build Your{" "}
@@ -91,7 +91,7 @@ export default function Home() {
                   <h2 className="text-3xl font-bold text-center mb-8">What Our Users Say</h2>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <TestimonialCard
-                      quote="ResumeGenius AI helped me land my dream job! The AI-generated resume was spot-on."
+                      quote="Resume AI Genius helped me land my dream job! The AI-generated resume was spot-on."
                       author="Sarah K., Software Engineer"
                     />
                     <TestimonialCard
@@ -117,7 +117,7 @@ export default function Home() {
                       ]}
                     />
                     <PricingCard
-                      title="Basic"
+                      title="Pro"
                       price="$9.99"
                       features={[
                         "3 AI-generated resumes",
@@ -126,7 +126,7 @@ export default function Home() {
                       ]}
                     />
                     <PricingCard
-                      title="Pro"
+                      title="Pro Plus"
                       price="$19.99"
                       features={[
                         "Unlimited AI-generated resumes",
@@ -218,7 +218,7 @@ function PricingCard({ title, price, features }: { title: string; price: string;
             <li key={index} className="mb-2">{feature}</li>
           ))}
         </ul>
-        <Link href={"/billing"}>
+        <Link href={"/resume"}>
         
         <Button className="w-full mt-4">Get started</Button>
         </Link>
