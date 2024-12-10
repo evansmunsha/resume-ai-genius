@@ -20,7 +20,6 @@ interface GenerateAchievementButtonProps {
 }
 
 export default function GenerateAchievementButton({
-  achievement,
   onAchievementGenerated,
 }: GenerateAchievementButtonProps) {
   const subscriptionLevel = useSubscriptionLevel();

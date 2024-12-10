@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { EditorFormProps } from "@/lib/types/types";
 import { yourPersonalInfoSchema, YourPersonalInfoValues } from "@/lib/validation"; // Updated import
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 export default function PersonalInfoForm({

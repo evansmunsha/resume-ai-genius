@@ -15,16 +15,12 @@ import usePremiumModal from "@/hooks/usePremiumModal";
 interface CoverLetterPreviewSectionProps {
   coverLetterData: CoverLetterValues;
   setCoverLetterData: (data: CoverLetterValues) => void;
-  showSmCoverLetterPreview: boolean;
-  setShowSmCoverLetterPreview: (show: boolean) => void;
   className?: string;
 }
 
 export default function CoverLetterPreviewSection({
   coverLetterData,
   setCoverLetterData,
-  showSmCoverLetterPreview,
-  setShowSmCoverLetterPreview,
   className,
 }: CoverLetterPreviewSectionProps) {
   const [themeColor, setThemeColor] = useState(coverLetterData.colorHex || "#0066cc");
