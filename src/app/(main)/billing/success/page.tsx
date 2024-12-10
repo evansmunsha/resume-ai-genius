@@ -7,11 +7,16 @@ export default function Page() {
       <h1 className="text-3xl font-bold">Billing Success</h1>
       <p>
         The checkout was successful and your Pro account has been activated.
-        Enjoy!
+        Enjoy creating professional resumes and cover letters!
       </p>
-      <Button asChild>
-        <Link href="/resumes">Go to resumes</Link>
-      </Button>
+      <div className="flex justify-center gap-4">
+        <Button asChild>
+          <Link href="/resumes">Go to resumes</Link>
+        </Button>
+        <Button asChild variant="secondary">
+          <Link href="/cover-letters">Go to cover letters</Link>
+        </Button>
+      </div>
     </main>
   );
 }

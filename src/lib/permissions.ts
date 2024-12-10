@@ -2,23 +2,40 @@ import { SubscriptionLevel } from "./subscription";
 
 export function canCreateResume(
   subscriptionLevel: SubscriptionLevel,
-  currentResumeCount: number,
-) {
-  const maxResumeMap: Record<SubscriptionLevel, number> = {
-    free: 1,
-    pro: 3,
-    pro_plus: Infinity,
-  };
-
-  const maxResumes = maxResumeMap[subscriptionLevel];
-
-  return currentResumeCount < maxResumes;
+  totalCount: number
+): boolean {
+  switch (subscriptionLevel) {
+    case "FREE":
+      return totalCount < 1;
+    case "PRO":
+      return totalCount < 3;
+    case "ENTERPRISE":
+      return true;
+    default:
+      return false;
+  }
 }
 
-export function canUseAITools(subscriptionLevel: SubscriptionLevel) {
-  return subscriptionLevel !== "free";
+export function canCreateCoverLetter(
+  subscriptionLevel: SubscriptionLevel,
+  totalCount: number
+): boolean {
+  switch (subscriptionLevel) {
+    case "FREE":
+      return totalCount < 1;
+    case "PRO":
+      return totalCount < 3;
+    case "ENTERPRISE":
+      return true;
+    default:
+      return false;
+  }
 }
 
-export function canUseCustomizations(subscriptionLevel: SubscriptionLevel) {
-  return subscriptionLevel === "pro_plus";
+export function canUseAITools(subscriptionLevel: SubscriptionLevel): boolean {
+  return subscriptionLevel === "PRO" || subscriptionLevel === "ENTERPRISE";
+}
+
+export function canUseCustomizations(subscriptionLevel: SubscriptionLevel): boolean {
+  return subscriptionLevel === "ENTERPRISE";
 }

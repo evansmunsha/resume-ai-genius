@@ -9,18 +9,18 @@ export default function Page() {
     <main className="mx-auto max-w-prose space-y-6 p-3 py-6">
       <h1 className="text-center text-2xl font-bold">Terms of Service</h1>
       <p className="text-center text-sm text-muted-foreground">
-        Effective Date: Oct 31, 2024
+        Effective Date: Dec 10, 2024
       </p>
       <p>
-        Welcome to Resume AI Genius. These Terms of Service (&quot;Terms&quot;)
+        Welcome to Resume & Cover Letter AI Genius. These Terms of Service (&quot;Terms&quot;)
         govern your use of our website and services, including any paid
-        subscription plans. By accessing or using Resume AI Genius (&quot;the
+        subscription plans. By accessing or using Resume & Cover Letter AI Genius (&quot;the
         Service&quot;), you agree to be bound by these Terms. If you do not
         agree to these Terms, do not use the Service.
       </p>
       <h2 className="text-xl font-semibold">1. Overview</h2>
       <p>
-        Resume AI Genius is a SaaS platform that provides resume-building tools
+        Resume & Cover Letter AI Genius is a SaaS platform that provides resume and cover letter building tools
         powered by artificial intelligence. We offer both a free tier and paid
         subscription plans (&quot;Paid Plans&quot;). Payments for Paid Plans are
         processed through Stripe, our third-party payment provider.
@@ -42,8 +42,8 @@ export default function Page() {
       <h2 className="text-xl font-semibold">4. Free Tier</h2>
       <p>
         We offer a free tier of the Service that includes limited access to
-        certain features. While on the free tier, you can create resumes with
-        basic functionality. Some advanced features and templates may only be
+        certain features. While on the free tier, you can create one resume and one cover letter with
+        basic functionality. Some advanced features, templates, and AI tools may only be
         available to Paid Plan subscribers.
       </p>
       <h2 className="text-xl font-semibold">5. Paid Subscription Plans</h2>
@@ -67,7 +67,7 @@ export default function Page() {
           the renewal date.
         </li>
         <li>
-          <strong>Refund Policy:</strong> Resume AI Genius does not offer
+          <strong>Refund Policy:</strong> Resume & Cover Letter AI Genius does not offer
           refunds for any payments already processed. However, you can cancel
           your subscription at any time, and you will continue to have access to
           the Paid Plan features until the end of your current billing period.
@@ -92,8 +92,8 @@ export default function Page() {
       </p>
       <h2 className="text-xl font-semibold">8. License to Use the Service</h2>
       <p>
-        Resume AI Genius grants you a limited, non-exclusive, non-transferable,
-        and revocable license to use the Service for personal or professional
+        Resume & Cover Letter AI Genius grants you a limited, non-exclusive,
+        non-transferable, and revocable license to use the Service for personal or professional
         use in accordance with these Terms. You may not:
       </p>
       <ul className="list-inside list-disc">
@@ -107,14 +107,14 @@ export default function Page() {
       <h2 className="text-xl font-semibold">9. Intellectual Property</h2>
       <p>
         All content, trademarks, logos, and intellectual property related to AI
-        Resume Builder are owned by Resume AI Genius or its licensors. You
+        Resume Builder are owned by Resume & Cover Letter AI Genius or its licensors. You
         agree not to infringe on these rights.
       </p>
       <h2 className="text-xl font-semibold">10. User Content</h2>
       <p>
-        By using the Service, you grant Resume AI Genius a non-exclusive,
+        By using the Service, you grant Resume & Cover Letter AI Genius a non-exclusive,
         worldwide, royalty-free license to use, modify, and display any content
-        you create using the platform (such as resumes) solely for the purpose
+        you create using the platform (such as resumes and cover letters) solely for the purpose
         of providing the Service. You retain all ownership of your content.
       </p>
       <h2 className="text-xl font-semibold">11. Privacy Policy</h2>
@@ -126,21 +126,21 @@ export default function Page() {
       <h2 className="text-xl font-semibold">12. Third-Party Services</h2>
       <p>
         The Service may contain links or integrations to third-party websites or
-        services (e.g., Stripe for payments). Resume AI Genius is not
+        services (e.g., Stripe for payments). Resume & Cover Letter AI Genius is not
         responsible for the content or practices of any third-party websites or
         services.
       </p>
       <h2 className="text-xl font-semibold">13. Disclaimer of Warranties</h2>
       <p>
         The Service is provided on an &quot;as is&quot; and &quot;as
-        available&quot; basis. Resume AI Genius makes no warranties, express or
+        available&quot; basis. Resume & Cover Letter AI Genius makes no warranties, express or
         implied, regarding the Service, including but not limited to the
-        accuracy of resume outputs, the suitability of resumes for job
+        accuracy of resume and cover letter outputs, the suitability of documents for job
         applications, or the uninterrupted availability of the Service.
       </p>
       <h2 className="text-xl font-semibold">14. Limitation of Liability</h2>
       <p>
-        To the fullest extent permitted by law, Resume AI Genius shall not be
+        To the fullest extent permitted by law, Resume & Cover Letter AI Genius shall not be
         liable for any indirect, incidental, consequential, or punitive damages,
         including loss of profits, data, or business opportunities, arising out
         of or related to your use of the Service.
@@ -148,9 +148,9 @@ export default function Page() {
       <h2 className="text-xl font-semibold">15. Governing Law</h2>
       <p>
         These Terms are governed by and construed in accordance with the laws of
-        [Insert Jurisdiction], without regard to its conflict of law provisions.
+        Lusaka City, Zambia, without regard to its conflict of law provisions.
         Any disputes arising from these Terms will be subject to the exclusive
-        jurisdiction of the courts located in [Insert Location].
+        jurisdiction of the courts located in Lusaka City, Zambia.
       </p>
       <h2 className="text-xl font-semibold">16. Changes to the Terms</h2>
       <p>
@@ -159,13 +159,61 @@ export default function Page() {
         accordingly. Your continued use of the Service after the changes take
         effect will constitute your acceptance of the new Terms.
       </p>
-      <h2 className="text-xl font-semibold">17. Contact Us</h2>
+      <h2 className="text-xl font-semibold">17. Data Protection and Privacy</h2>
       <p>
-        If you have any questions about these Terms, please contact us at
-        [Insert Contact Information].
+        We take your data privacy seriously. All personal information is processed in accordance with our Privacy Policy. 
+        You have the right to request access to, correction of, or deletion of your personal data.
+      </p>
+
+      <h2 className="text-xl font-semibold">18. Cookies and Tracking</h2>
+      <p>
+        We use cookies and similar tracking technologies to enhance your experience on our platform. 
+        By using our Service, you consent to our use of cookies in accordance with our Privacy Policy. 
+        You can manage cookie preferences through your browser settings, though disabling certain cookies 
+        may limit your ability to use some features of the Service.
+      </p>
+
+      <h2 className="text-xl font-semibold">19. Document Storage and Security</h2>
+      <p>
+        Documents created using our Service are stored on our secure servers. Free tier users&apos; documents may be 
+        deleted after 30 days of inactivity. Premium users&apos; documents are retained for the duration of their 
+        subscription. We recommend maintaining your own backup copies of important documents. We employ industry-standard 
+        security measures to protect your documents, but cannot guarantee absolute security.
+      </p>
+
+      <h2 className="text-xl font-semibold">20. Acceptable Use</h2>
+      <p>
+        You agree not to use the Service to create, store, or transmit any content that is unlawful, harmful, 
+        threatening, abusive, or otherwise objectionable. You are solely responsible for the accuracy and 
+        appropriateness of the content you create using our Service. We reserve the right to suspend or terminate 
+        accounts that violate these terms.
+      </p>
+
+      <h2 className="text-xl font-semibold">21. AI Usage and Limitations</h2>
+      <p>
+        Our AI-powered features are provided to assist in creating resumes and cover letters. While we strive for accuracy, 
+        you acknowledge that AI-generated content should be reviewed and edited by you before use. We do not guarantee 
+        that AI-generated content will result in successful job applications.
+      </p>
+      <h2 className="text-xl font-semibold">22. Export and Portability</h2>
+      <p>
+        You may export your resumes and cover letters in PDF format. If you cancel your subscription, 
+        you will have 30 days to export your documents before they may become inaccessible.
+      </p>
+      <h2 className="text-xl font-semibold">23. Contact Us</h2>
+      <p>
+        If you have any questions about these Terms, please contact us at{" "}
+        <a href="mailto:evansensteen@gmail.com" className="text-blue-600 hover:underline">
+          evansensteen@gmail.com
+        </a>{" "}
+        or call us at{" "}
+        <a href="tel:+66963266937" className="text-blue-600 hover:underline">
+          096-326-6937
+        </a>
+        .
       </p>
       <p>
-        By using Resume AI Genius, you acknowledge that you have read,
+        By using Resume & Cover Letter AI Genius, you acknowledge that you have read,
         understood, and agree to these Terms of Service.
       </p>
     </main>

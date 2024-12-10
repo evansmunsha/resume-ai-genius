@@ -9,14 +9,23 @@ import { Button } from "../ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { createCheckoutSession } from "./actions";
 
-const premiumFeatures = ["AI tools", "Up to 3 resumes"];
-const premiumPlusFeatures = ["Infinite resumes", "Design customizations"];
+const premiumFeatures = [
+  "AI tools",
+  "Up to 3 resumes",
+  "Up to 3 cover letters",
+  "Premium templates"
+];
+
+const premiumPlusFeatures = [
+  "Infinite resumes",
+  "Infinite cover letters",
+  "Design customizations",
+  "Advanced AI features",
+];
 
 export default function PremiumModal() {
   const { open, setOpen } = usePremiumModal();
-
   const { toast } = useToast();
-
   const [loading, setLoading] = useState(false);
 
   async function handlePremiumClick(priceId: string) {
@@ -46,10 +55,10 @@ export default function PremiumModal() {
     >
       <DialogContent className="max-w-2xl">
         <DialogHeader>
-          <DialogTitle>Resume AI Genius Premium</DialogTitle>
+          <DialogTitle>Resume & Cover Letter AI Genius Premium</DialogTitle>
         </DialogHeader>
         <div className="space-y-6">
-          <p>Get a premium subscription to unlock more features.</p>
+          <p>Get a premium subscription to unlock more features for both resumes and cover letters.</p>
           <div className="flex">
             <div className="flex w-1/2 flex-col space-y-5">
               <h3 className="text-center text-lg font-bold">Premium</h3>

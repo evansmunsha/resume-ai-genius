@@ -6,7 +6,7 @@ export default function useDimensions(
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
-    const currentRef = containerRef.current;
+    const currentRef = containerRef?.current;
 
     function getDimensions() {
       return {

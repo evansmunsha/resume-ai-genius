@@ -1,7 +1,8 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { CoverLetterServerData } from "./types/types";
+import { ResumeValues, CoverLetterValues } from "./validation";
 import { ResumeServerData } from "./types";
-import { ResumeValues } from "./validation";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -50,3 +51,59 @@ export function mapToResumeValues(data: ResumeServerData): ResumeValues {
     summary: data.summary || undefined,
   };
 }
+
+export function mapToCoverLetterValues(data: CoverLetterServerData): CoverLetterValues {
+  return {
+    id: data.id,
+    title: data.title || undefined,
+    description: data.description || undefined,
+    photo: data.photoUrl || undefined,
+    firstName: data.firstName || undefined,
+    lastName: data.lastName || undefined,
+    jobTitle: data.jobTitle || undefined,
+    city: data.city || undefined,
+    country: data.country || undefined,
+    phone: data.phone || undefined,
+    email: data.email || undefined,
+    applicationLink: data.applicationLink || undefined,
+    recipientName: data.recipientInfo.map(info => ({
+      jobTitle: info.jobTitle,
+      recipientName: info.recipientName,
+      recipientTitle: info.recipientTitle,
+      companyName: info.companyName,
+      jobReference: info.jobReference || undefined,
+    })) || [],
+    jobDescription: data.jobDescription.map(job => ({
+      title: job.title,
+      companyName: job.companyName,
+      location: job.location || undefined,
+      employmentType: job.employmentType || undefined,
+      salaryRange: job.salaryRange || undefined,
+      responsibilities: job.responsibilities,
+      qualifications: job.qualifications,
+    })) || [],
+    coverLetterWorkExperience: data.coverLetterWorkExperience.map(exp => ({
+      description: exp.description || undefined,
+      position: exp.position || undefined,
+      company: exp.company || undefined,
+      startDate: exp.startDate?.toISOString().split('T')[0],
+      endDate: exp.endDate?.toISOString().split('T')[0],
+    })) || [],
+    achievements: data.Achievement.map(ach => ({
+      description: ach.description,
+      impact: ach.impact,
+      date: ach.date.toISOString().split('T')[0],
+    })) || [],
+    opening: data.opening || undefined,
+    experience: data.experience || undefined,
+    companyKnowledge: data.companyKnowledge || undefined,
+    futurePlans: data.futurePlans || undefined,
+    closing: data.closing || undefined,
+    colorHex: data.colorHex,
+    borderStyle: data.borderStyle,
+    skills: data.skills,
+  };
+}
+
+
+

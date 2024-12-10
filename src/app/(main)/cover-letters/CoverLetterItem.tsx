@@ -1,7 +1,7 @@
 "use client";
 
 import LoadingButton from "@/components/LoadingButton";
-import ResumePreview from "@/components/ResumePreview";
+import CoverLetterPreview from "@/components/CoverLetterPreview";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -18,73 +18,72 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/hooks/use-toast";
-import { ResumeServerData } from "@/lib/types";
-import { mapToResumeValues } from "@/lib/utils";
+import { CoverLetterServerData } from "@/lib/types/types";
+import { mapToCoverLetterValues } from "@/lib/utils";
 import { formatDate } from "date-fns";
 import { MoreVertical, Printer, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useRef, useState, useTransition } from "react";
 import { useReactToPrint } from "react-to-print";
-import { deleteResume } from "./actions";
+import { deleteCoverLetter } from "./actions";
 
-interface ResumeItemProps {
-  resume: ResumeServerData;
+interface CoverLetterItemProps {
+  coverLetter: CoverLetterServerData;
 }
 
-export default function ResumeItem({ resume }: ResumeItemProps) {
+export default function CoverLetterItem({ coverLetter }: CoverLetterItemProps) {
   const contentRef = useRef<HTMLDivElement>(null);
 
   const reactToPrintFn = useReactToPrint({
     contentRef,
-    documentTitle: resume.title || "Resume",
+    documentTitle: coverLetter.title || "Cover Letter",
   });
 
-  const wasUpdated = resume.updatedAt !== resume.createdAt;
+  const wasUpdated = coverLetter.updatedAt !== coverLetter.createdAt;
 
   return (
     <div className="group relative rounded-lg border border-transparent bg-secondary p-3 transition-colors hover:border-border">
       <div className="space-y-3">
         <Link
-          href={`/editor?resumeId=${resume.id}`}
+          href={`/cover-letter-editor?coverLetterId=${coverLetter.id}`}
           className="inline-block w-full text-center"
         >
           <p className="line-clamp-1 font-semibold">
-            {resume.title || "No title"}
+            {coverLetter.title || "No title"}
           </p>
-          {resume.description && (
-            <p className="line-clamp-2 text-sm">{resume.description}</p>
+          {coverLetter.description && (
+            <p className="line-clamp-2 text-sm">{coverLetter.description}</p>
           )}
           <p className="text-xs text-muted-foreground">
             {wasUpdated ? "Updated" : "Created"} on{" "}
-            {formatDate(resume.updatedAt, "MMM d, yyyy h:mm a")}
+            {formatDate(coverLetter.updatedAt, "MMM d, yyyy h:mm a")}
           </p>
         </Link>
         <Link
-          href={`/editor?resumeId=${resume.id}`}
+          href={`/cover-letter-editor?coverLetterId=${coverLetter.id}`}
           className="relative inline-block w-full"
         >
           <div className="h-[300px] overflow-hidden">
-
-            <ResumePreview
-              resumeData={mapToResumeValues(resume)}
+            <CoverLetterPreview
+              coverLetterData={mapToCoverLetterValues(coverLetter)}
               contentRef={contentRef}
               className="overflow-hidden shadow-sm transition-shadow group-hover:shadow-lg"
             />
-         </div>
+          </div>
           <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white to-transparent" />
         </Link>
       </div>
-      <MoreMenu resumeId={resume.id} onPrintClick={reactToPrintFn} />
+      <MoreMenu coverLetterId={coverLetter.id} onPrintClick={reactToPrintFn} />
     </div>
   );
 }
 
 interface MoreMenuProps {
-  resumeId: string;
+  coverLetterId: string;
   onPrintClick: () => void;
 }
 
-function MoreMenu({ resumeId, onPrintClick }: MoreMenuProps) {
+function MoreMenu({ coverLetterId, onPrintClick }: MoreMenuProps) {
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
   return (
@@ -117,7 +116,7 @@ function MoreMenu({ resumeId, onPrintClick }: MoreMenuProps) {
         </DropdownMenuContent>
       </DropdownMenu>
       <DeleteConfirmationDialog
-        resumeId={resumeId}
+        coverLetterId={coverLetterId}
         open={showDeleteConfirmation}
         onOpenChange={setShowDeleteConfirmation}
       />
@@ -126,24 +125,23 @@ function MoreMenu({ resumeId, onPrintClick }: MoreMenuProps) {
 }
 
 interface DeleteConfirmationDialogProps {
-  resumeId: string;
+  coverLetterId: string;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
 function DeleteConfirmationDialog({
-  resumeId,
+  coverLetterId,
   open,
   onOpenChange,
 }: DeleteConfirmationDialogProps) {
   const { toast } = useToast();
-
   const [isPending, startTransition] = useTransition();
 
   async function handleDelete() {
     startTransition(async () => {
       try {
-        await deleteResume(resumeId);
+        await deleteCoverLetter(coverLetterId);
         onOpenChange(false);
       } catch (error) {
         console.error(error);
@@ -159,9 +157,9 @@ function DeleteConfirmationDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Delete resume?</DialogTitle>
+          <DialogTitle>Delete cover letter?</DialogTitle>
           <DialogDescription>
-            This will permanently delete this resume. This action cannot be
+            This will permanently delete this cover letter. This action cannot be
             undone.
           </DialogDescription>
         </DialogHeader>
@@ -180,4 +178,4 @@ function DeleteConfirmationDialog({
       </DialogContent>
     </Dialog>
   );
-}
+} 

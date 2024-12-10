@@ -1,16 +1,18 @@
-import { canCreateResume } from "@/lib/permissions";
+import { canCreateCoverLetter } from "@/lib/permissions";
 import prisma from "@/lib/prisma";
 import { getUserSubscriptionLevel } from "@/lib/subscription";
-import { resumeDataInclude } from "@/lib/types";
+import { coverLetterDataInclude } from "@/lib/types/types";
 import { auth } from "@clerk/nextjs/server";
 import { Metadata } from "next";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import CreateResumeButton from "./CreateResumeButton";
-import ResumeItem from "./ResumeItem";
+import CreateCoverLetterButton from "./CreateCoverLetterButton";
+import CoverLetterItem from "./CoverLetterItem";
+
+
 
 export const metadata: Metadata = {
-  title: "Your resumes",
+  title: "Your cover letters",
 };
 
 export default async function Page({
@@ -21,19 +23,19 @@ export default async function Page({
   const { userId } = await auth();
   if (!userId) return null;
 
-  const page = Number(searchParams.page) || 1;
-  const pageSize = 12; // Number of items per page
-  const skip = (page - 1) * pageSize;
+  const currentPage = Number(searchParams?.page ?? "1");
+  const pageSize = 12;
+  const skip = (currentPage - 1) * pageSize;
 
-  const [resumes, totalCount, subscriptionLevel] = await Promise.all([
-    prisma.resume.findMany({
+  const [coverLetters, totalCount, subscriptionLevel] = await Promise.all([
+    prisma.coverLetter.findMany({
       where: { userId },
       orderBy: { updatedAt: "desc" },
-      include: resumeDataInclude,
+      include: coverLetterDataInclude,
       take: pageSize,
       skip,
     }),
-    prisma.resume.count({
+    prisma.coverLetter.count({
       where: { userId },
     }),
     getUserSubscriptionLevel(userId),
@@ -43,16 +45,16 @@ export default async function Page({
 
   return (
     <main className="mx-auto w-full max-w-7xl space-y-6 px-3 py-6">
-      <CreateResumeButton
-        canCreate={canCreateResume(subscriptionLevel, totalCount)}
+      <CreateCoverLetterButton
+        canCreate={canCreateCoverLetter(subscriptionLevel, totalCount)}
       />
       <div className="space-y-1">
-        <h1 className="text-3xl font-bold">Your resumes</h1>
+        <h1 className="text-3xl font-bold">Your cover letters</h1>
         <p>Total: {totalCount}</p>
       </div>
       <div className="flex w-full grid-cols-2 flex-col gap-3 sm:grid md:grid-cols-3 lg:grid-cols-4">
-        {resumes.map((resume) => (
-          <ResumeItem key={resume.id} resume={resume} />
+        {coverLetters.map((coverLetter) => (
+          <CoverLetterItem key={coverLetter.id} coverLetter={coverLetter} />
         ))}
       </div>
       {totalPages > 1 && (
@@ -60,10 +62,10 @@ export default async function Page({
           {Array.from({ length: totalPages }, (_, i) => (
             <Link
               key={i + 1}
-              href={`/resumes?page=${i + 1}`}
+              href={`/cover-letters?page=${i + 1}`}
               className={cn(
                 "px-4 py-2 border rounded",
-                page === i + 1 && "bg-primary text-primary-foreground"
+                currentPage === i + 1 && "bg-primary text-primary-foreground"
               )}
             >
               {i + 1}
@@ -73,4 +75,4 @@ export default async function Page({
       )}
     </main>
   );
-}
+} 

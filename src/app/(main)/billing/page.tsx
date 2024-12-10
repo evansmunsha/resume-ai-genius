@@ -34,7 +34,7 @@ export default async function Page() {
       <p>
         Your current plan:{" "}
         <span className="font-bold">
-          {priceInfo ? (priceInfo.product as Stripe.Product).name : "Free"}
+          {priceInfo ? (priceInfo.product as Stripe.Product).name : "FREE"}
         </span>
       </p>
       {subscription ? (
