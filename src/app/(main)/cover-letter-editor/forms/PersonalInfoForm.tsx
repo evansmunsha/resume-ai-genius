@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+
 import {
   Form,
   FormControl,
@@ -41,7 +41,7 @@ export default function PersonalInfoForm({
     return unsubscribe;
   }, [form, coverLetterData, setCoverLetterData,]);
 
-  const photoInputRef = useRef<HTMLInputElement>(null);
+
   
 
   return (

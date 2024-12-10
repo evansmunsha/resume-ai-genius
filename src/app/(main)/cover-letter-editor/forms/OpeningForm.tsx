@@ -1,5 +1,5 @@
 import { EditorFormProps } from "@/lib/types/types";
-import { coverLetterContentSchema, CoverLetterContentValues, CoverLetterValues } from "@/lib/validation";
+import { coverLetterContentSchema, CoverLetterContentValues } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -43,7 +43,7 @@ export default function OpeningForm({
       <div className="space-y-1.5 text-center">
         <h2 className="text-2xl font-semibold">Opening Statement</h2>
         <p className="text-sm text-muted-foreground">
-          Write why you want this job, or let AI help create an opening after you've filled out the other sections.
+          Write why you want this job, or let AI help create an opening after you&apos;ve filled out the other sections.
         </p>
       </div>
       <Form {...form}>
