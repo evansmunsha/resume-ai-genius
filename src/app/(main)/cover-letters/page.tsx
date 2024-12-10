@@ -9,17 +9,17 @@ import { cn } from "@/lib/utils";
 import CreateCoverLetterButton from "./CreateCoverLetterButton";
 import CoverLetterItem from "./CoverLetterItem";
 
-
-
 export const metadata: Metadata = {
   title: "Your cover letters",
 };
 
+interface PageProps {
+  searchParams: { page?: string }
+}
+
 export default async function Page({
   searchParams,
-}: {
-  searchParams: { page?: string };
-}) {
+}: PageProps) {
   const { userId } = await auth();
   if (!userId) return null;
 
@@ -30,21 +30,19 @@ export default async function Page({
   const [coverLetters, totalCount, subscriptionLevel] = await Promise.all([
     prisma.coverLetter.findMany({
       where: { userId },
-      orderBy: { updatedAt: "desc" },
       include: coverLetterDataInclude,
-      take: pageSize,
+      orderBy: { updatedAt: "desc" },
       skip,
+      take: pageSize,
     }),
-    prisma.coverLetter.count({
-      where: { userId },
-    }),
+    prisma.coverLetter.count({ where: { userId } }),
     getUserSubscriptionLevel(userId),
   ]);
 
   const totalPages = Math.ceil(totalCount / pageSize);
 
   return (
-    <main className="mx-auto w-full max-w-7xl space-y-6 px-3 py-6">
+    <main className="mx-auto max-w-7xl space-y-6 px-3 py-6">
       <CreateCoverLetterButton
         canCreate={canCreateCoverLetter(subscriptionLevel, totalCount)}
       />
