@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import usePremiumModal from "@/hooks/usePremiumModal";
 import { canUseAITools } from "@/lib/permissions";
-import { GenerateCompanyKnowledgeInput, generateCompanyKnowledgeSchema } from "@/lib/validation";
+import { GenerateCompanyKnowledgeInput, generateCompanyKnowledgeSchema, CoverLetterValues } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { WandSparklesIcon } from "lucide-react";
 import { useState } from "react";
@@ -15,10 +15,12 @@ import { useSubscriptionLevel } from "../../SubscriptionLevelProvider";
 import { generateCompanyKnowledge } from "./actions";
 
 interface GenerateCompanyKnowledgeButtonProps {
+  coverLetterData: CoverLetterValues;
   onCompanyKnowledgeGenerated: (companyKnowledge: string) => void;
 }
 
 export default function GenerateCompanyKnowledgeButton({
+  coverLetterData,
   onCompanyKnowledgeGenerated,
 }: GenerateCompanyKnowledgeButtonProps) {
   const subscriptionLevel = useSubscriptionLevel();
