@@ -89,8 +89,6 @@ export default function CoverLetterEditor({ coverLetterToEdit }: CoverLetterEdit
             <CoverLetterPreviewSection
               coverLetterData={coverLetterData}
               setCoverLetterData={setCoverLetterData}
-              showSmCoverLetterPreview={showSmCoverLetterPreview}
-              setShowSmCoverLetterPreview={setShowSmCoverLetterPreview}
               className={cn(showSmCoverLetterPreview && "flex")}
             />
           
