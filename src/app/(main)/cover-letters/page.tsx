@@ -30,7 +30,7 @@ async function getCoverLetters(userId: string, page: number) {
   ]);
 }
 
-export default async function CoverLettersPage(props) {
+export default async function CoverLettersPage(props: { searchParams: { page: any; }; }) {
   const { userId } = await auth();
   if (!userId) return null;
 
