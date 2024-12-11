@@ -30,26 +30,19 @@ async function getCoverLetters(userId: string, page: number) {
   ]);
 }
 
-export default async function CoverLettersPage({
-  searchParams,
-}: {
-  searchParams: Record<string, string | string[] | undefined>;
-}) {
+export default async function CoverLettersPage(props) {
   const { userId } = await auth();
   if (!userId) return null;
 
-  // Parse page number
-  const pageNumber = typeof searchParams.page === 'string' 
-    ? parseInt(searchParams.page) 
-    : 1;
+  // Safely handle page parameter
+  const pageStr = props?.searchParams?.page;
+  const pageNumber = pageStr ? parseInt(String(pageStr)) : 1;
 
-  // Get data
   const [coverLetters, totalCount, subscriptionLevel] = await getCoverLetters(
     userId,
     pageNumber
   );
 
-  // Calculate pagination
   const totalPages = Math.ceil(totalCount / 12);
 
   return (
@@ -58,13 +51,11 @@ export default async function CoverLettersPage({
         canCreate={canCreateCoverLetter(subscriptionLevel, totalCount)}
       />
       
-      {/* Header */}
       <div className="space-y-1">
         <h1 className="text-3xl font-bold">Your cover letters</h1>
         <p>Total: {totalCount}</p>
       </div>
 
-      {/* Cover Letters Grid */}
       <div className="flex w-full grid-cols-2 flex-col gap-3 sm:grid md:grid-cols-3 lg:grid-cols-4">
         {coverLetters.map((coverLetter) => (
           <CoverLetterItem 
@@ -74,7 +65,6 @@ export default async function CoverLettersPage({
         ))}
       </div>
 
-      {/* Pagination */}
       {totalPages > 1 && (
         <nav className="flex justify-center gap-2">
           {Array.from({ length: totalPages }, (_, i) => (
