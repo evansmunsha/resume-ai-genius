@@ -32,7 +32,7 @@ async function getResumes(userId: string, page: number) {
   ]);
 }
 
-export default async function ResumesPage(props: { searchParams: { page: any; }; }) {
+export default async function ResumesPage(props) {
   const { userId } = await auth();
   if (!userId) return null;
 
