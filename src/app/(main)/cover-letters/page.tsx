@@ -13,15 +13,11 @@ export const metadata: Metadata = {
   title: "Your cover letters",
 };
 
-
-
-type Props = {
-  params: { [key: string]: string | string[] };
-  searchParams: { [key: string]: string | string[] | undefined };
-}
-
-export default async function Page(props: Props) {
-  const { searchParams } = props;
+export default async function Page({
+  searchParams,
+}: {
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) {
   const { userId } = await auth();
   if (!userId) return null;
 
