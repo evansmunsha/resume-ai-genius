@@ -15,11 +15,8 @@ export const metadata: Metadata = {
 
 
 
-
-
-
 type Props = {
-  params: Record<string, string | string[]>;
+  params: { [key: string]: string | string[] };
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
