@@ -14,16 +14,16 @@ export const metadata: Metadata = {
 };
 
 export default async function Page({
-  searchParams,
+  searchParams = {},
 }: {
-  searchParams?: { [key: string]: string | string[] | undefined };
+  searchParams?: { [key: string]: string | undefined }
 }) {
   const { userId } = await auth();
   if (!userId) return null;
 
-  const currentPage = Number(searchParams?.page || "1");
+  const page = searchParams.page ? parseInt(searchParams.page) : 1;
   const pageSize = 12;
-  const skip = (currentPage - 1) * pageSize;
+  const skip = (page - 1) * pageSize;
 
   const [coverLetters, totalCount, subscriptionLevel] = await Promise.all([
     prisma.coverLetter.findMany({
@@ -61,7 +61,7 @@ export default async function Page({
               href={`/cover-letters?page=${i + 1}`}
               className={cn(
                 "px-4 py-2 border rounded",
-                currentPage === i + 1 && "bg-primary text-primary-foreground"
+                page === i + 1 && "bg-primary text-primary-foreground"
               )}
             >
               {i + 1}
