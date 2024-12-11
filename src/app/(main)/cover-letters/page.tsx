@@ -13,17 +13,15 @@ export const metadata: Metadata = {
   title: "Your cover letters",
 };
 
-interface PageProps {
-  searchParams: { page?: string }
-}
-
 export default async function Page({
   searchParams,
-}: PageProps) {
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
   const { userId } = await auth();
   if (!userId) return null;
 
-  const currentPage = Number(searchParams?.page ?? "1");
+  const currentPage = Number(searchParams?.page || "1");
   const pageSize = 12;
   const skip = (currentPage - 1) * pageSize;
 
