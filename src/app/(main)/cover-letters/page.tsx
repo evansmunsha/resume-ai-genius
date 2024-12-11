@@ -13,15 +13,12 @@ export const metadata: Metadata = {
   title: "Your cover letters",
 };
 
-export default async function Page({
-  searchParams = {},
-}: {
-  searchParams?: { [key: string]: string | undefined }
-}) {
+export default async function Page(props: any) {
   const { userId } = await auth();
   if (!userId) return null;
 
-  const page = searchParams.page ? parseInt(searchParams.page) : 1;
+  const pageParam = props?.searchParams?.page;
+  const page = pageParam ? parseInt(pageParam.toString()) : 1;
   const pageSize = 12;
   const skip = (page - 1) * pageSize;
 
