@@ -46,10 +46,8 @@ export default function GenerateCompanyKnowledgeButton({
       <InputDialog
         open={showInputDialog}
         onOpenChange={setShowInputDialog}
-        onCompanyKnowledgeGenerated={(companyKnowledge) => {
-          onCompanyKnowledgeGenerated(companyKnowledge);
-          setShowInputDialog(false);
-        }}
+        onCompanyKnowledgeGenerated={onCompanyKnowledgeGenerated}
+        initialValue={coverLetterData.companyKnowledge || ""}
       />
     </>
   );
@@ -59,18 +57,20 @@ interface InputDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onCompanyKnowledgeGenerated: (companyKnowledge: string) => void;
+  initialValue: string;
 }
 
 function InputDialog({
   open,
   onOpenChange,
   onCompanyKnowledgeGenerated,
+  initialValue,
 }: InputDialogProps) {
   const { toast } = useToast();
   const form = useForm<GenerateCompanyKnowledgeInput>({
     resolver: zodResolver(generateCompanyKnowledgeSchema),
     defaultValues: {
-      companyKnowledge: "",
+      companyKnowledge: initialValue,
     },
   });
 
