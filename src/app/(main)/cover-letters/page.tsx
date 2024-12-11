@@ -13,22 +13,11 @@ export const metadata: Metadata = {
   title: "Your cover letters",
 };
 
-type SearchParams = {
-  searchParams?: {
-    page?: string;
-    [key: string]: string | string[] | undefined;
-  };
-};
-
-export default async function Page({ searchParams }: SearchParams) {
-  const { userId } = await auth();
-  if (!userId) return null;
-
-  const page = searchParams?.page ? parseInt(searchParams.page) : 1;
+async function getCoverLetters(userId: string, page: number) {
   const pageSize = 12;
   const skip = (page - 1) * pageSize;
 
-  const [coverLetters, totalCount, subscriptionLevel] = await Promise.all([
+  return Promise.all([
     prisma.coverLetter.findMany({
       where: { userId },
       include: coverLetterDataInclude,
@@ -39,38 +28,68 @@ export default async function Page({ searchParams }: SearchParams) {
     prisma.coverLetter.count({ where: { userId } }),
     getUserSubscriptionLevel(userId),
   ]);
+}
 
-  const totalPages = Math.ceil(totalCount / pageSize);
+export default async function CoverLettersPage({
+  searchParams,
+}: {
+  searchParams: Record<string, string | string[] | undefined>;
+}) {
+  const { userId } = await auth();
+  if (!userId) return null;
+
+  // Parse page number
+  const pageNumber = typeof searchParams.page === 'string' 
+    ? parseInt(searchParams.page) 
+    : 1;
+
+  // Get data
+  const [coverLetters, totalCount, subscriptionLevel] = await getCoverLetters(
+    userId,
+    pageNumber
+  );
+
+  // Calculate pagination
+  const totalPages = Math.ceil(totalCount / 12);
 
   return (
     <main className="mx-auto max-w-7xl space-y-6 px-3 py-6">
       <CreateCoverLetterButton
         canCreate={canCreateCoverLetter(subscriptionLevel, totalCount)}
       />
+      
+      {/* Header */}
       <div className="space-y-1">
         <h1 className="text-3xl font-bold">Your cover letters</h1>
         <p>Total: {totalCount}</p>
       </div>
+
+      {/* Cover Letters Grid */}
       <div className="flex w-full grid-cols-2 flex-col gap-3 sm:grid md:grid-cols-3 lg:grid-cols-4">
         {coverLetters.map((coverLetter) => (
-          <CoverLetterItem key={coverLetter.id} coverLetter={coverLetter} />
+          <CoverLetterItem 
+            key={coverLetter.id} 
+            coverLetter={coverLetter} 
+          />
         ))}
       </div>
+
+      {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex justify-center gap-2">
+        <nav className="flex justify-center gap-2">
           {Array.from({ length: totalPages }, (_, i) => (
             <Link
               key={i + 1}
               href={`/cover-letters?page=${i + 1}`}
               className={cn(
-                "px-4 py-2 border rounded",
-                page === i + 1 && "bg-primary text-primary-foreground"
+                "px-4 py-2 border rounded transition-colors",
+                pageNumber === i + 1 && "bg-primary text-primary-foreground"
               )}
             >
               {i + 1}
             </Link>
           ))}
-        </div>
+        </nav>
       )}
     </main>
   );
