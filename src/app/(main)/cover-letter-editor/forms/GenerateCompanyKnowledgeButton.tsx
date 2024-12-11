@@ -27,6 +27,8 @@ export default function GenerateCompanyKnowledgeButton({
   const premiumModal = usePremiumModal();
   const [showInputDialog, setShowInputDialog] = useState(false);
 
+  const initialCompanyKnowledge = coverLetterData.companyKnowledge || "";
+
   return (
     <>
       <Button
@@ -46,8 +48,11 @@ export default function GenerateCompanyKnowledgeButton({
       <InputDialog
         open={showInputDialog}
         onOpenChange={setShowInputDialog}
-        onCompanyKnowledgeGenerated={onCompanyKnowledgeGenerated}
-        initialValue={coverLetterData.companyKnowledge || ""}
+        onCompanyKnowledgeGenerated={(knowledge) => {
+          onCompanyKnowledgeGenerated(knowledge);
+          setShowInputDialog(false);
+        }}
+        initialValue={initialCompanyKnowledge}
       />
     </>
   );
