@@ -13,35 +13,11 @@ export const metadata: Metadata = {
   title: "Your resumes",
 };
 
-interface PageProps {
-  searchParams: { [key: string]: string | string[] | undefined };
-}
-
-async function getResumes(userId: string, page: number) {
-  const pageSize = 12;
-  const skip = (page - 1) * pageSize;
-
-  return Promise.all([
-    prisma.resume.findMany({
-      where: { userId },
-      orderBy: { updatedAt: "desc" },
-      include: resumeDataInclude,
-      take: pageSize,
-      skip,
-    }),
-    prisma.resume.count({
-      where: { userId },
-    }),
-    getUserSubscriptionLevel(userId),
-  ]);
-}
-
-export default async function ResumesPage({ searchParams }: PageProps) {
+export default async function ResumesPage(props: any) {
   const { userId } = await auth();
   if (!userId) return null;
 
-  // Parse page number
-  const pageStr = searchParams?.page;
+  const pageStr = props?.searchParams?.page;
   const pageNumber = pageStr ? parseInt(String(pageStr)) : 1;
 
   const [resumes, totalCount, subscriptionLevel] = await getResumes(
@@ -83,4 +59,23 @@ export default async function ResumesPage({ searchParams }: PageProps) {
       )}
     </main>
   );
+}
+
+async function getResumes(userId: string, page: number) {
+  const pageSize = 12;
+  const skip = (page - 1) * pageSize;
+
+  return Promise.all([
+    prisma.resume.findMany({
+      where: { userId },
+      orderBy: { updatedAt: "desc" },
+      include: resumeDataInclude,
+      take: pageSize,
+      skip,
+    }),
+    prisma.resume.count({
+      where: { userId },
+    }),
+    getUserSubscriptionLevel(userId),
+  ]);
 }

@@ -13,10 +13,6 @@ export const metadata: Metadata = {
   title: "Your cover letters",
 };
 
-interface PageProps {
-  searchParams: { [key: string]: string | string[] | undefined };
-}
-
 async function getCoverLetters(userId: string, page: number) {
   const pageSize = 12;
   const skip = (page - 1) * pageSize;
@@ -34,12 +30,11 @@ async function getCoverLetters(userId: string, page: number) {
   ]);
 }
 
-export default async function CoverLettersPage({ searchParams }: PageProps) {
+export default async function CoverLettersPage(props: any) {
   const { userId } = await auth();
   if (!userId) return null;
 
-  // Parse page number
-  const pageStr = searchParams?.page;
+  const pageStr = props?.searchParams?.page;
   const pageNumber = pageStr ? parseInt(String(pageStr)) : 1;
 
   const [coverLetters, totalCount, subscriptionLevel] = await getCoverLetters(
