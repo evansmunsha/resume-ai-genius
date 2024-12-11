@@ -13,14 +13,10 @@ export const metadata: Metadata = {
   title: "Your cover letters",
 };
 
-interface SearchParams {
-  page?: string;
-}
-
 export default async function Page({
   searchParams,
 }: {
-  searchParams: SearchParams;
+  searchParams: { [key: string]: string | undefined }
 }) {
   const { userId } = await auth();
   if (!userId) return null;
@@ -41,7 +37,6 @@ export default async function Page({
     getUserSubscriptionLevel(userId),
   ]);
 
-  
   const totalPages = Math.ceil(totalCount / pageSize);
 
   return (
