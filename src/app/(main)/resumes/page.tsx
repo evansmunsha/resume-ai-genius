@@ -13,6 +13,10 @@ export const metadata: Metadata = {
   title: "Your resumes",
 };
 
+interface PageProps {
+  searchParams: { [key: string]: string | string[] | undefined };
+}
+
 async function getResumes(userId: string, page: number) {
   const pageSize = 12;
   const skip = (page - 1) * pageSize;
@@ -32,12 +36,12 @@ async function getResumes(userId: string, page: number) {
   ]);
 }
 
-export default async function ResumesPage(props) {
+export default async function ResumesPage({ searchParams }: PageProps) {
   const { userId } = await auth();
   if (!userId) return null;
 
-  // Safely handle page parameter
-  const pageStr = props?.searchParams?.page;
+  // Parse page number
+  const pageStr = searchParams?.page;
   const pageNumber = pageStr ? parseInt(String(pageStr)) : 1;
 
   const [resumes, totalCount, subscriptionLevel] = await getResumes(
