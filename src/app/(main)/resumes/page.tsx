@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { canCreateResume } from "@/lib/permissions";
 import prisma from "@/lib/prisma";
 import { getUserSubscriptionLevel } from "@/lib/subscription";
