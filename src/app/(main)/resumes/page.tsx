@@ -13,19 +13,11 @@ export const metadata: Metadata = {
   title: "Your resumes",
 };
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams: { page?: string };
-}) {
-  const { userId } = await auth();
-  if (!userId) return null;
-
-  const page = Number(searchParams.page) || 1;
-  const pageSize = 12; // Number of items per page
+async function getResumes(userId: string, page: number) {
+  const pageSize = 12;
   const skip = (page - 1) * pageSize;
 
-  const [resumes, totalCount, subscriptionLevel] = await Promise.all([
+  return Promise.all([
     prisma.resume.findMany({
       where: { userId },
       orderBy: { updatedAt: "desc" },
@@ -38,8 +30,22 @@ export default async function Page({
     }),
     getUserSubscriptionLevel(userId),
   ]);
+}
 
-  const totalPages = Math.ceil(totalCount / pageSize);
+export default async function ResumesPage(props) {
+  const { userId } = await auth();
+  if (!userId) return null;
+
+  // Safely handle page parameter
+  const pageStr = props?.searchParams?.page;
+  const pageNumber = pageStr ? parseInt(String(pageStr)) : 1;
+
+  const [resumes, totalCount, subscriptionLevel] = await getResumes(
+    userId,
+    pageNumber
+  );
+
+  const totalPages = Math.ceil(totalCount / 12);
 
   return (
     <main className="mx-auto w-full max-w-7xl space-y-6 px-3 py-6">
@@ -56,20 +62,20 @@ export default async function Page({
         ))}
       </div>
       {totalPages > 1 && (
-        <div className="flex justify-center gap-2">
+        <nav className="flex justify-center gap-2">
           {Array.from({ length: totalPages }, (_, i) => (
             <Link
               key={i + 1}
               href={`/resumes?page=${i + 1}`}
               className={cn(
-                "px-4 py-2 border rounded",
-                page === i + 1 && "bg-primary text-primary-foreground"
+                "px-4 py-2 border rounded transition-colors",
+                pageNumber === i + 1 && "bg-primary text-primary-foreground"
               )}
             >
               {i + 1}
             </Link>
           ))}
-        </div>
+        </nav>
       )}
     </main>
   );
