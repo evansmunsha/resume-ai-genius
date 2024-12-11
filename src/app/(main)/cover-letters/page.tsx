@@ -13,8 +13,13 @@ export const metadata: Metadata = {
   title: "Your cover letters",
 };
 
+
+
+
+
+
 type Props = {
-  params: { slug: string };
+  params: Record<string, string | string[]>;
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
