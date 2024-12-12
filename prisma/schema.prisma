@@ -101,7 +101,7 @@ model CoverLetter {
 
   photoUrl    String?
   colorHex    String  @default("#000000")
-  borderStyle String  @default("squircle")
+  borderStyle String  @default("modern")
   summary     String?
   firstName   String?
   lastName    String?
@@ -126,8 +126,6 @@ model CoverLetter {
   skills          String[]        // Technical skills and capabilities
   recipientInfo RecipientInfo[]
   Achievement Achievement[]
-  template    String?
-  font        String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

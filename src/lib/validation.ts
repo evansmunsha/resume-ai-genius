@@ -293,8 +293,6 @@ export const coverLetterSchema = z.object({
   achievements: z.array(achievementSchema).optional(),
   colorHex: optionalString,
   borderStyle: optionalString,
-  template: optionalString,
-  font: optionalString,
 });
 
 export type CoverLetterValues = Omit<z.infer<typeof coverLetterSchema>, "photo"> & {

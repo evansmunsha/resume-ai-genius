@@ -75,8 +75,6 @@ export async function saveCoverLetter(values: CoverLetterValues) {
       data: {
         ...coverLetterValues,
         photoUrl: newPhotoUrl,
-        template: values.template,
-        font: values.font,
         colorHex: values.colorHex,
         borderStyle: values.borderStyle,
         achievements: "",
@@ -129,8 +127,6 @@ export async function saveCoverLetter(values: CoverLetterValues) {
         ...coverLetterValues,
         userId,
         photoUrl: newPhotoUrl,
-        template: values.template,
-        font: values.font,
         colorHex: values.colorHex,
         borderStyle: values.borderStyle,
         achievements: "",
