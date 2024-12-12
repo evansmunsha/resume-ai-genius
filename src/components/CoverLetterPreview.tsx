@@ -15,18 +15,16 @@ interface CoverLetterPreviewProps {
 export default function CoverLetterPreview({
   coverLetterData,
   className,
-  style,
+  style = {},
   contentRef
 }: CoverLetterPreviewProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { width } = useDimensions(contentRef || containerRef);
 
-  const styles = {
-    fontFamily: style?.fontFamily || 'sans-serif',
-    backgroundColor: style?.backgroundColor || 'white',
+  const styles: React.CSSProperties = {
+    ...style,
     padding: '0.5rem',
     color: 'black',
-    ...style,
   };
 
   return (

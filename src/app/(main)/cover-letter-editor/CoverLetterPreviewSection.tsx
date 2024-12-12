@@ -79,7 +79,7 @@ export default function CoverLetterPreviewSection({
           className="max-w-2xl shadow-md"
           style={{
             backgroundColor: selectedTemplate.style.backgroundColor,
-            fontFamily: selectedTemplate.font
+            fontFamily: selectedTemplate.font,
           }}
           contentRef={contentRef}
         />
