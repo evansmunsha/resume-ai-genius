@@ -12,6 +12,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import GenerateFuturePlansButton from "./GenerateFuturePlansButton";
+import { useEffect } from "react";
 
 export default function FuturePlansForm({
   coverLetterData,
@@ -23,6 +24,18 @@ export default function FuturePlansForm({
       futurePlans: coverLetterData.futurePlans || "",
     },
   });
+
+  useEffect(() => {
+    const subscription = form.watch(async (values) => {
+      const isValid = await form.trigger();
+      if (!isValid) return;
+      setCoverLetterData({
+        ...coverLetterData,
+        futurePlans: values.futurePlans || "",
+      });
+    });
+    return () => subscription.unsubscribe();
+  }, [form, coverLetterData, setCoverLetterData]);
 
   return (
     <div className="mx-auto max-w-xl space-y-6">
@@ -39,13 +52,6 @@ export default function FuturePlansForm({
                     {...field}
                     placeholder="Looking ahead, I am excited about the opportunity to..."
                     className="min-h-[200px]"
-                    onChange={(e) => {
-                      field.onChange(e);
-                      setCoverLetterData({
-                        ...coverLetterData,
-                        futurePlans: e.target.value
-                      });
-                    }}
                   />
                 </FormControl>
                 <FormMessage />

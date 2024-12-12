@@ -12,6 +12,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import GenerateExperienceButton from "./GenerateExperienceButton";
+import { useEffect } from "react";
 
 export default function ExperienceForm({
   coverLetterData,
@@ -23,6 +24,18 @@ export default function ExperienceForm({
       experience: coverLetterData.experience || "",
     },
   });
+
+  useEffect(() => {
+    const subscription = form.watch(async (values) => {
+      const isValid = await form.trigger();
+      if (!isValid) return;
+      setCoverLetterData({
+        ...coverLetterData,
+        experience: values.experience || "",
+      });
+    });
+    return () => subscription.unsubscribe();
+  }, [form, coverLetterData, setCoverLetterData]);
 
   return (
     <div className="mx-auto max-w-xl space-y-6">
@@ -39,13 +52,6 @@ export default function ExperienceForm({
                     {...field}
                     placeholder="Throughout my career, I have developed strong skills in..."
                     className="min-h-[200px]"
-                    onChange={(e) => {
-                      field.onChange(e);
-                      setCoverLetterData({
-                        ...coverLetterData,
-                        experience: e.target.value
-                      });
-                    }}
                   />
                 </FormControl>
                 <FormMessage />

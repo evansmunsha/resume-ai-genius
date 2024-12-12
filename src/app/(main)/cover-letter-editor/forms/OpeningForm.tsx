@@ -26,12 +26,16 @@ export default function OpeningForm({
   });
 
   useEffect(() => {
-    const subscription = form.watch(() => {
-      form.handleSubmit(() => {})();
+    const subscription = form.watch(async (values) => {
+      const isValid = await form.trigger();
+      if (!isValid) return;
+      setCoverLetterData({
+        ...coverLetterData,
+        opening: values.opening || "",
+      });
     });
-
     return () => subscription.unsubscribe();
-  }, [form]);
+  }, [form, coverLetterData, setCoverLetterData]);
 
   return (
     <div className="mx-auto max-w-xl space-y-6">
@@ -54,13 +58,6 @@ export default function OpeningForm({
                     {...field}
                     placeholder="I am writing to express my strong interest in the [Position] role at [Company]..."
                     className="min-h-[200px]"
-                    onChange={(e) => {
-                      field.onChange(e);
-                      setCoverLetterData({
-                        ...coverLetterData,
-                        opening: e.target.value
-                      });
-                    }}
                   />
                 </FormControl>
                 <FormMessage />
