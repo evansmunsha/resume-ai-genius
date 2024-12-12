@@ -118,7 +118,7 @@ function ContentSection({ coverLetterData, styles }: CoverLetterSectionProps) {
   
   return (
     <div className="space-y-2 text-gray-800 leading-relaxed" style={styles}>
-      {/* Opening */}
+      {/* Opening */}-
       {coverLetterData.opening && (
         <>
           <div className="break-inside-avoid" style={{ color: colorHex }}>
