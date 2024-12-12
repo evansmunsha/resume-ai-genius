@@ -42,11 +42,11 @@ export default function CoverLetterPreview({
         className={cn(!width && "invisible")}
         style={{
           zoom: (1 / 794) * width,
-          fontFamily: font || 'sans-serif',
+          ...styles,
         }}
         id="coverLetterPreviewContent"
       >
-        <div className="space-y-2" style={{ fontFamily: font || 'sans-serif' }}>
+        <div className="space-y-2" style={styles}>
           <HeaderSection coverLetterData={coverLetterData} font={font} />
           <RecipientSection coverLetterData={coverLetterData} font={font} />
           <ContentSection coverLetterData={coverLetterData} font={font} />
