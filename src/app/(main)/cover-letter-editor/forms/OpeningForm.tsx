@@ -61,12 +61,10 @@ export default function OpeningForm({
                     className="min-h-[200px]"
                     onChange={(e) => {
                       field.onChange(e);
-                      form.handleSubmit((values) => {
-                        setCoverLetterData({
-                          ...coverLetterData,
-                          ...values
-                        });
-                      })();
+                      setCoverLetterData({
+                        ...coverLetterData,
+                        opening: e.target.value
+                      });
                     }}
                   />
                 </FormControl>

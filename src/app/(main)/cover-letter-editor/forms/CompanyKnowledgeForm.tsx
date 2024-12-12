@@ -41,12 +41,10 @@ export default function CompanyKnowledgeForm({
                     className="min-h-[200px]"
                     onChange={(e) => {
                       field.onChange(e);
-                      form.handleSubmit((values) => {
-                        setCoverLetterData({
-                          ...coverLetterData,
-                          ...values
-                        });
-                      })();
+                      setCoverLetterData({
+                        ...coverLetterData,
+                        companyKnowledge: e.target.value
+                      });
                     }}
                   />
                 </FormControl>

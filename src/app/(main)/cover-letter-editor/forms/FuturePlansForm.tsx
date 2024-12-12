@@ -41,12 +41,10 @@ export default function FuturePlansForm({
                     className="min-h-[200px]"
                     onChange={(e) => {
                       field.onChange(e);
-                      form.handleSubmit((values) => {
-                        setCoverLetterData({
-                          ...coverLetterData,
-                          ...values
-                        });
-                      })();
+                      setCoverLetterData({
+                        ...coverLetterData,
+                        futurePlans: e.target.value
+                      });
                     }}
                   />
                 </FormControl>
