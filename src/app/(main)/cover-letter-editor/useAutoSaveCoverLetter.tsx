@@ -24,7 +24,10 @@ export default function useAutoSaveCoverLetter(coverLetterData: CoverLetterValue
       
       try {
         setIsSaving(true);
-        await saveCoverLetter(debouncedData);
+        await saveCoverLetter({
+          ...debouncedData,
+          id: coverLetterId
+        });
         setLastSavedData(debouncedData);
       } catch (error) {
         toast.toast({
