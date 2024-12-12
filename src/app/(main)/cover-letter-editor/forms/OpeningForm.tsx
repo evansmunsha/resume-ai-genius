@@ -27,16 +27,11 @@ export default function OpeningForm({
 
   useEffect(() => {
     const subscription = form.watch(() => {
-      form.handleSubmit((values) => {
-        setCoverLetterData({
-          ...coverLetterData,
-          ...values,
-        });
-      })();
+      form.handleSubmit(() => {})();
     });
 
     return () => subscription.unsubscribe();
-  }, [form, setCoverLetterData, coverLetterData]);
+  }, [form]);
 
   return (
     <div className="mx-auto max-w-xl space-y-6">
