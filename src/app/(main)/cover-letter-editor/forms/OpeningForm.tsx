@@ -26,14 +26,13 @@ export default function OpeningForm({
   });
 
   useEffect(() => {
-    const subscription = form.watch(async (values) => {
-      const isValid = await form.trigger();
-      if (!isValid) return;
+    const subscription = form.watch((values) => {
       setCoverLetterData({
         ...coverLetterData,
         opening: values.opening || "",
       });
     });
+
     return () => subscription.unsubscribe();
   }, [form, coverLetterData, setCoverLetterData]);
 
