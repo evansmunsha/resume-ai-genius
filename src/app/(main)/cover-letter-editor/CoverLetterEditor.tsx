@@ -21,10 +21,20 @@ export default function CoverLetterEditor({ coverLetterToEdit }: CoverLetterEdit
 
   const searchParams = useSearchParams();
 
-  const [coverLetterData, setCoverLetterData] = useState<CoverLetterValues>(
-    coverLetterToEdit ? mapToCoverLetterValues(coverLetterToEdit) : {
+  const [coverLetterData, setCoverLetterData] = useState<CoverLetterValues>(() => {
+    if (coverLetterToEdit) {
+      return mapToCoverLetterValues(coverLetterToEdit);
+    }
+    
+    return {
       id: searchParams.get("coverLetterId") || undefined,
-      recipientName: [],
+      recipientName: [{
+        recipientName: "",
+        recipientTitle: "",
+        companyName: "",
+        jobTitle: "",
+        jobReference: undefined,
+      }],
       achievements: [],
       skills: [],
       opening: "",
@@ -47,8 +57,8 @@ export default function CoverLetterEditor({ coverLetterToEdit }: CoverLetterEdit
       applicationLink: undefined,
       jobDescription: [],
       coverLetterWorkExperience: [],
-    }
-  );
+    } satisfies CoverLetterValues;
+  });
 
   const [showSmCoverLetterPreview, setShowSmCoverLetterPreview] = useState(false)
 
