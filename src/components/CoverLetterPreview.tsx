@@ -67,27 +67,28 @@ interface CoverLetterSectionProps {
   const {firstName, lastName, jobTitle, city, email, phone, applicationLink, country, colorHex} = coverLetterData;
   const styles = { 
     fontFamily: font || 'sans-serif',
-    borderBottom: 'none'
   };
 
   return (
-    <header className="flex justify-between items-start pb-4 break-inside-avoid" style={styles}>
-      <div className="space-y-1">
-        <h1 className="text-2xl font-bold tracking-tight" style={{ color: colorHex }}>
-          {firstName} {lastName}
-        </h1>
-        <p className="text-xl font-medium text-gray-600">{jobTitle}</p>
+    <header className="space-y-4 break-inside-avoid flex flex-col" style={styles}>
+      <div className="flex justify-between items-start">
+        <div className="space-y-1">
+          <h1 className="text-2xl font-bold tracking-tight" style={{ color: colorHex }}>
+            {firstName} {lastName}
+          </h1>
+          <p className="text-xl font-medium text-gray-600">{jobTitle}</p>
+        </div>
+        
+        <div className="text-right text-sm text-gray-600 space-y-1">
+          {email && <div>{email}</div>}
+          {phone && <div>{phone}</div>}
+          {city && country && <div>{city}, {country}</div>}
+          {applicationLink && (
+            <div>{applicationLink}</div>
+          )}
+        </div>
       </div>
-      
-      <div className="text-right text-sm text-gray-600 space-y-1">
-        {email && <div>{email}</div>}
-        {phone && <div>{phone}</div>}
-        {city && country && <div>{city}, {country}</div>}
-        {applicationLink && (
-          <div>{applicationLink}</div>
-        )}
-      </div>
-      <hr className="border-gray-400" style={{color: colorHex}}/>
+      <hr className="border-t-2" style={{ borderColor: colorHex || '#000' }} />
     </header>
   );
 }
@@ -98,6 +99,7 @@ function RecipientSection({ coverLetterData, font }: CoverLetterSectionProps) {
     fontFamily: font || 'sans-serif',
     borderBottom: 'none'
   };
+  
   
   return (
     <div className="space-y-2 text-gray-800 break-inside-avoid" style={styles}>
