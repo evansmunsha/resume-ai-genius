@@ -59,6 +59,15 @@ export default function OpeningForm({
                     {...field}
                     placeholder="I am writing to express my strong interest in the [Position] role at [Company]..."
                     className="min-h-[200px]"
+                    onChange={(e) => {
+                      field.onChange(e);
+                      form.handleSubmit((values) => {
+                        setCoverLetterData({
+                          ...coverLetterData,
+                          ...values
+                        });
+                      })();
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
