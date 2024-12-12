@@ -21,20 +21,10 @@ export default function CoverLetterEditor({ coverLetterToEdit }: CoverLetterEdit
 
   const searchParams = useSearchParams();
 
-  const [coverLetterData, setCoverLetterData] = useState<CoverLetterValues>(() => {
-    if (coverLetterToEdit) {
-      return mapToCoverLetterValues(coverLetterToEdit);
-    }
-    
-    return {
+  const [coverLetterData, setCoverLetterData] = useState<CoverLetterValues>(
+    coverLetterToEdit ? mapToCoverLetterValues(coverLetterToEdit) : {
       id: searchParams.get("coverLetterId") || undefined,
-      recipientName: [{
-        recipientName: "",
-        recipientTitle: "",
-        companyName: "",
-        jobTitle: "",
-        jobReference: undefined,
-      }],
+      recipientName: [],
       achievements: [],
       skills: [],
       opening: "",
@@ -47,18 +37,8 @@ export default function CoverLetterEditor({ coverLetterToEdit }: CoverLetterEdit
       title: undefined,
       description: undefined,
       photo: undefined,
-      firstName: undefined,
-      lastName: undefined,
-      jobTitle: undefined,
-      city: undefined,
-      country: undefined,
-      phone: undefined,
-      email: undefined,
-      applicationLink: undefined,
-      jobDescription: [],
-      coverLetterWorkExperience: [],
-    } satisfies CoverLetterValues;
-  });
+    }
+  );
 
   const [showSmCoverLetterPreview, setShowSmCoverLetterPreview] = useState(false)
 

@@ -13,7 +13,7 @@ export default function useAutoSaveCoverLetter(coverLetterData: CoverLetterValue
   const [lastSavedData, setLastSavedData] = useState(coverLetterData);
   const searchParams = useSearchParams();
   const coverLetterId = searchParams.get("coverLetterId");
-  const { toast } = useToast();
+  const toast = useToast();
 
   const debouncedData = useDebounce(coverLetterData, 1000);
 
@@ -29,7 +29,7 @@ export default function useAutoSaveCoverLetter(coverLetterData: CoverLetterValue
         });
         setLastSavedData(debouncedData);
       } catch (error) {
-        toast({
+        toast.toast({
           title: "Error saving cover letter",
           description: error instanceof Error ? error.message : "Unknown error occurred",
           variant: "destructive",
