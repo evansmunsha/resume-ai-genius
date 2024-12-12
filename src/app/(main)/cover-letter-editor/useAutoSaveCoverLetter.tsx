@@ -13,9 +13,8 @@ export default function useAutoSaveCoverLetter(coverLetterData: CoverLetterValue
   const [lastSavedData, setLastSavedData] = useState(coverLetterData);
   const searchParams = useSearchParams();
   const coverLetterId = searchParams.get("coverLetterId");
-  const toast = useToast();
+  const { toast } = useToast();
 
-  // Debounce the cover letter data to avoid too frequent saves
   const debouncedData = useDebounce(coverLetterData, 1000);
 
   useEffect(() => {
@@ -30,7 +29,7 @@ export default function useAutoSaveCoverLetter(coverLetterData: CoverLetterValue
         });
         setLastSavedData(debouncedData);
       } catch (error) {
-        toast.toast({
+        toast({
           title: "Error saving cover letter",
           description: error instanceof Error ? error.message : "Unknown error occurred",
           variant: "destructive",
@@ -40,7 +39,6 @@ export default function useAutoSaveCoverLetter(coverLetterData: CoverLetterValue
       }
     }
 
-    // Only save if the data has actually changed
     if (JSON.stringify(debouncedData, fileReplacer) !== JSON.stringify(lastSavedData, fileReplacer)) {
       saveData();
     }
