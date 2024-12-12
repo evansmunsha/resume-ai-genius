@@ -26,17 +26,17 @@ export default function OpeningForm({
   });
 
   useEffect(() => {
-    const { unsubscribe } = form.watch(async (values) => {
-      const isValid = await form.trigger();
-      if (!isValid) return;
-      
-      setCoverLetterData({
-        ...coverLetterData,
-        opening: values.opening || ""
-      });
+    const subscription = form.watch(() => {
+      form.handleSubmit((values) => {
+        setCoverLetterData({
+          ...coverLetterData,
+          ...values,
+        });
+      })();
     });
-    return unsubscribe;
-  }, [form, coverLetterData, setCoverLetterData]);
+
+    return () => subscription.unsubscribe();
+  }, [form, setCoverLetterData, coverLetterData]);
 
   return (
     <div className="mx-auto max-w-xl space-y-6">
