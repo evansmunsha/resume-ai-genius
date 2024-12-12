@@ -73,7 +73,7 @@ function HeaderSection({ coverLetterData, styles }: CoverLetterSectionProps) {
           <h1 className="text-2xl font-bold tracking-tight" style={{ color: colorHex }}>
             {firstName} {lastName}
           </h1>
-          <p className="text-xl font-medium text-gray-600">{jobTitle}</p>
+          <p className="text-xl font-medium text-gray-600" style={{ color: colorHex }}>{jobTitle}</p>
         </div>
         
         <div className="text-right text-sm text-gray-600 space-y-1">
