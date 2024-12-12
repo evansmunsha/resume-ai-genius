@@ -37,6 +37,16 @@ export default function CoverLetterEditor({ coverLetterToEdit }: CoverLetterEdit
       title: undefined,
       description: undefined,
       photo: undefined,
+      firstName: undefined,
+      lastName: undefined,
+      jobTitle: undefined,
+      city: undefined,
+      country: undefined,
+      phone: undefined,
+      email: undefined,
+      applicationLink: undefined,
+      jobDescription: [],
+      coverLetterWorkExperience: [],
     }
   );
 
