@@ -2,15 +2,14 @@
 
 import CoverLetterPreview from "@/components/CoverLetterPreview";
 import { CoverLetterValues } from "@/lib/validation";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { cn } from "@/lib/utils";
 import ColorThemeSelector from "./ColorThemeSelector";
-import { coverLetterTemplates, Template } from "@/lib/templates";
-import { Layout } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { coverLetterTemplates } from "@/lib/templates";
 import { useSubscriptionLevel } from "../SubscriptionLevelProvider";
 import { canUseCustomizations } from "@/lib/permissions";
 import usePremiumModal from "@/hooks/usePremiumModal";
+import TemplateSelector from "./TemplateSelector";
 
 interface CoverLetterPreviewSectionProps {
   coverLetterData: CoverLetterValues;
@@ -23,9 +22,12 @@ export default function CoverLetterPreviewSection({
   setCoverLetterData,
   className,
 }: CoverLetterPreviewSectionProps) {
+  const contentRef = useRef<HTMLDivElement>(null);
   const [themeColor, setThemeColor] = useState(coverLetterData.colorHex || "#0066cc");
-  const [selectedTemplate, setSelectedTemplate] = useState<Template>(coverLetterTemplates[0]);
-  const [showTemplates, setShowTemplates] = useState(false);
+  const [selectedTemplate, setSelectedTemplate] = useState(() => {
+    const savedTemplateId = coverLetterData.template || coverLetterTemplates[0].id;
+    return coverLetterTemplates.find(t => t.id === savedTemplateId) || coverLetterTemplates[0];
+  });
   const subscriptionLevel = useSubscriptionLevel();
   const premiumModal = usePremiumModal();
 
@@ -49,6 +51,11 @@ export default function CoverLetterPreviewSection({
     const template = coverLetterTemplates.find(t => t.id === templateId);
     if (template) {
       setSelectedTemplate(template);
+      setCoverLetterData({
+        ...coverLetterData,
+        template: template.id,
+        font: template.font
+      });
     }
   }
 
@@ -60,41 +67,10 @@ export default function CoverLetterPreviewSection({
           onChange={handleColorChange}
         />
         
-        <div className="relative">
-          <Button
-            variant="outline"
-            size="sm"
-            className="gap-2"
-            onClick={() => setShowTemplates(!showTemplates)}
-          >
-            <Layout className="h-4 w-4" />
-            Template
-          </Button>
-          
-          {showTemplates && (
-            <select 
-              value={selectedTemplate.id} 
-              onChange={(e) => {
-                handleTemplateChange(e.target.value);
-                setShowTemplates(false);
-              }} 
-              className="absolute right-0 top-full mt-1 w-[200px] border rounded p-1 max-h-[200px] overflow-y-auto bg-white shadow-lg"
-              size={6}
-              autoFocus
-              onBlur={() => setShowTemplates(false)}
-            >
-              {coverLetterTemplates.map(template => (
-                <option 
-                  key={template.id} 
-                  value={template.id}
-                  className="p-2 hover:bg-gray-100 cursor-pointer"
-                >
-                  {template.name}
-                </option>
-              ))}
-            </select>
-          )}
-        </div>
+        <TemplateSelector
+          currentTemplate={selectedTemplate.id}
+          onTemplateChange={handleTemplateChange}
+        />
       </div>
       
       <div className="flex w-full justify-center overflow-y-auto bg-secondary p-3">
@@ -102,7 +78,10 @@ export default function CoverLetterPreviewSection({
           coverLetterData={coverLetterData}
           className="max-w-2xl shadow-md"
           font={selectedTemplate.font}
-          style={selectedTemplate.style}
+          style={{
+            backgroundColor: selectedTemplate.style.backgroundColor,
+          }}
+          contentRef={contentRef}
         />
       </div>
     </div>

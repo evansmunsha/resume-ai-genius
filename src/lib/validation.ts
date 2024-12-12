@@ -299,6 +299,8 @@ export type CoverLetterValues = Omit<z.infer<typeof coverLetterSchema>, "photo">
   id?: string;
   photo?: File | string | null;
   title?: string;
+  template?: string;
+  font?: string;
 };
 
 export const generateExperienceSchema = z.object({

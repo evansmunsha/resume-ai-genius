@@ -87,6 +87,7 @@ interface CoverLetterSectionProps {
           <div>{applicationLink}</div>
         )}
       </div>
+      <hr className="border-gray-400" style={{color: colorHex}}/>
     </header>
   );
 }
@@ -182,11 +183,12 @@ function ContentSection({ coverLetterData, font }: CoverLetterSectionProps) {
 }
 
 function SignatureSection({ coverLetterData, font }: CoverLetterSectionProps) {
-  const styles = { fontFamily: font || 'sans-serif' };
+  const { colorHex } = coverLetterData;
+  const styles = { fontFamily: font || '' };
   return (
-    <div className="mt-4 break-inside-avoid" style={styles}>
+    <div className="mt-5 break-inside-avoid" style={styles}>
       <p className="text-gray-700">Sincerely,</p>
-      <p className="font-medium text-gray-900">
+      <p className="font-medium text-gray-900" style={{color: colorHex}}>
         {coverLetterData.firstName} {coverLetterData.lastName}
       </p>
     </div>
