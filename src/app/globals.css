@@ -305,3 +305,22 @@ body {
   font-family: 'Calibri';
   src: local('Calibri');
 }
+
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+  
+  body {
+    visibility: hidden;
+  }
+  
+  #coverLetterPreviewContent {
+    visibility: visible;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+}

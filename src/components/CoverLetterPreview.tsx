@@ -27,12 +27,14 @@ export default function CoverLetterPreview({
     fontFamily: font || 'sans-serif',
     backgroundColor: style?.backgroundColor || 'white',
     padding: '0.5rem',
+    color: 'black',
+    ...style,
   };
 
   return (
     <div 
       className={cn(
-        "w-full text-black h-fit",
+        "w-full h-fit print:w-[21cm] print:h-[29.7cm]",
         className
       )}
       ref={contentRef || containerRef}
@@ -46,11 +48,11 @@ export default function CoverLetterPreview({
         }}
         id="coverLetterPreviewContent"
       >
-        <div className="space-y-2" style={styles}>
-          <HeaderSection coverLetterData={coverLetterData} font={font} />
-          <RecipientSection coverLetterData={coverLetterData} font={font} />
-          <ContentSection coverLetterData={coverLetterData} font={font} />
-          <SignatureSection coverLetterData={coverLetterData} font={font} />
+        <div className="space-y-2 print:space-y-4" style={styles}>
+          <HeaderSection coverLetterData={coverLetterData} font={font} styles={styles} />
+          <RecipientSection coverLetterData={coverLetterData} font={font} styles={styles} />
+          <ContentSection coverLetterData={coverLetterData} font={font} styles={styles} />
+          <SignatureSection coverLetterData={coverLetterData} font={font} styles={styles} />
         </div>
       </div>
     </div>
@@ -59,16 +61,14 @@ export default function CoverLetterPreview({
 
 
 interface CoverLetterSectionProps {
-  coverLetterData: CoverLetterValues,
+  coverLetterData: CoverLetterValues;
   font?: string;
+  styles?: React.CSSProperties;
 }
 
- function HeaderSection({ coverLetterData, font }: CoverLetterSectionProps) {
+ function HeaderSection({ coverLetterData, font, styles }: CoverLetterSectionProps) {
   const {firstName, lastName, jobTitle, city, email, phone, applicationLink, country, colorHex} = coverLetterData;
-  const styles = { 
-    fontFamily: font || 'sans-serif',
-  };
-
+  
   return (
     <header className="space-y-4 break-inside-avoid flex flex-col" style={styles}>
       <div className="flex justify-between items-start">
@@ -93,13 +93,8 @@ interface CoverLetterSectionProps {
   );
 }
 
-function RecipientSection({ coverLetterData, font }: CoverLetterSectionProps) {
+function RecipientSection({ coverLetterData, font, styles }: CoverLetterSectionProps) {
   const today = format(new Date(), "MMMM d, yyyy");
-  const styles = { 
-    fontFamily: font || 'sans-serif',
-    borderBottom: 'none'
-  };
-  
   
   return (
     <div className="space-y-2 text-gray-800 break-inside-avoid" style={styles}>
@@ -120,10 +115,9 @@ function RecipientSection({ coverLetterData, font }: CoverLetterSectionProps) {
   );
 }
 
-function ContentSection({ coverLetterData, font }: CoverLetterSectionProps) {
+function ContentSection({ coverLetterData, font, styles }: CoverLetterSectionProps) {
   const recipientName = coverLetterData.recipientName?.[0]?.recipientName;
   const { colorHex } = coverLetterData;
-  const styles = { fontFamily: font || 'sans-serif' };
   
   return (
     <div className="space-y-2 text-gray-800 leading-relaxed" style={styles}>
@@ -184,9 +178,8 @@ function ContentSection({ coverLetterData, font }: CoverLetterSectionProps) {
   );
 }
 
-function SignatureSection({ coverLetterData, font }: CoverLetterSectionProps) {
+function SignatureSection({ coverLetterData, font, styles }: CoverLetterSectionProps) {
   const { colorHex } = coverLetterData;
-  const styles = { fontFamily: font || '' };
   return (
     <div className="mt-5 break-inside-avoid" style={styles}>
       <p className="text-gray-700">Sincerely,</p>
