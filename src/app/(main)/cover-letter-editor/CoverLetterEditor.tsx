@@ -23,6 +23,7 @@ export default function CoverLetterEditor({ coverLetterToEdit }: CoverLetterEdit
 
   const [coverLetterData, setCoverLetterData] = useState<CoverLetterValues>(
     coverLetterToEdit ? mapToCoverLetterValues(coverLetterToEdit) : {
+      id: searchParams.get("coverLetterId") || undefined,
       recipientName: [],
       achievements: [],
       skills: [],
