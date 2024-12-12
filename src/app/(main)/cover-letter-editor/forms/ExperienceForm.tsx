@@ -1,7 +1,6 @@
 import { EditorFormProps } from "@/lib/types/types";
 import { coverLetterContentSchema, CoverLetterContentValues } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
 import {
