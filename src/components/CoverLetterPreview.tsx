@@ -7,7 +7,6 @@ import useDimensions from "@/hooks/useDimensions";
 interface CoverLetterPreviewProps {
   coverLetterData: CoverLetterValues;
   className?: string;
-  font?: string;
   style?: React.CSSProperties;
   contentRef?: React.RefObject<HTMLDivElement>;
 }
@@ -16,7 +15,6 @@ interface CoverLetterPreviewProps {
 export default function CoverLetterPreview({
   coverLetterData,
   className,
-  font,
   style,
   contentRef
 }: CoverLetterPreviewProps) {
@@ -24,7 +22,7 @@ export default function CoverLetterPreview({
   const { width } = useDimensions(contentRef || containerRef);
 
   const styles = {
-    fontFamily: font || 'sans-serif',
+    fontFamily: style?.fontFamily || 'sans-serif',
     backgroundColor: style?.backgroundColor || 'white',
     padding: '0.5rem',
     color: 'black',
@@ -49,10 +47,10 @@ export default function CoverLetterPreview({
         id="coverLetterPreviewContent"
       >
         <div className="space-y-2 print:space-y-4" style={styles}>
-          <HeaderSection coverLetterData={coverLetterData} font={font} styles={styles} />
-          <RecipientSection coverLetterData={coverLetterData} font={font} styles={styles} />
-          <ContentSection coverLetterData={coverLetterData} font={font} styles={styles} />
-          <SignatureSection coverLetterData={coverLetterData} font={font} styles={styles} />
+          <HeaderSection coverLetterData={coverLetterData} styles={styles} />
+          <RecipientSection coverLetterData={coverLetterData} styles={styles} />
+          <ContentSection coverLetterData={coverLetterData} styles={styles} />
+          <SignatureSection coverLetterData={coverLetterData} styles={styles} />
         </div>
       </div>
     </div>
@@ -62,11 +60,10 @@ export default function CoverLetterPreview({
 
 interface CoverLetterSectionProps {
   coverLetterData: CoverLetterValues;
-  font?: string;
   styles?: React.CSSProperties;
 }
 
- function HeaderSection({ coverLetterData, font, styles }: CoverLetterSectionProps) {
+function HeaderSection({ coverLetterData, styles }: CoverLetterSectionProps) {
   const {firstName, lastName, jobTitle, city, email, phone, applicationLink, country, colorHex} = coverLetterData;
   
   return (
@@ -93,7 +90,7 @@ interface CoverLetterSectionProps {
   );
 }
 
-function RecipientSection({ coverLetterData, font, styles }: CoverLetterSectionProps) {
+function RecipientSection({ coverLetterData, styles }: CoverLetterSectionProps) {
   const today = format(new Date(), "MMMM d, yyyy");
   
   return (
@@ -115,7 +112,7 @@ function RecipientSection({ coverLetterData, font, styles }: CoverLetterSectionP
   );
 }
 
-function ContentSection({ coverLetterData, font, styles }: CoverLetterSectionProps) {
+function ContentSection({ coverLetterData, styles }: CoverLetterSectionProps) {
   const recipientName = coverLetterData.recipientName?.[0]?.recipientName;
   const { colorHex } = coverLetterData;
   
@@ -178,7 +175,7 @@ function ContentSection({ coverLetterData, font, styles }: CoverLetterSectionPro
   );
 }
 
-function SignatureSection({ coverLetterData, font, styles }: CoverLetterSectionProps) {
+function SignatureSection({ coverLetterData, styles }: CoverLetterSectionProps) {
   const { colorHex } = coverLetterData;
   return (
     <div className="mt-5 break-inside-avoid" style={styles}>

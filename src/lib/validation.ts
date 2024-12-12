@@ -293,14 +293,14 @@ export const coverLetterSchema = z.object({
   achievements: z.array(achievementSchema).optional(),
   colorHex: optionalString,
   borderStyle: optionalString,
+  template: optionalString,
+  font: optionalString,
 });
 
 export type CoverLetterValues = Omit<z.infer<typeof coverLetterSchema>, "photo"> & {
   id?: string;
   photo?: File | string | null;
   title?: string;
-  template?: string;
-  font?: string;
 };
 
 export const generateExperienceSchema = z.object({
