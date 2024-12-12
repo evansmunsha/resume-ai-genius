@@ -46,7 +46,7 @@ export default function CoverLetterEditor({ coverLetterToEdit }: CoverLetterEdit
   
   const currentStep = searchParams.get("step") || steps[0].key;
 
-  const { isSaving, hasUnsavedChanges } = useAutoSaveCoverLetter(coverLetterData); 
+  const { isSaving, hasUnsavedChanges } = useAutoSaveCoverLetter(coverLetterData);
 
   
   function setStep(key: string) {
