@@ -95,7 +95,13 @@ export default function CoverLetterEditor({ coverLetterToEdit }: CoverLetterEdit
           
         </div>
       </main>
-        <Footer currentStep={currentStep} setCurrentStep={setStep} showSmCoverLetterPreview={showSmCoverLetterPreview} setShowSmCoverLetterPreview={setShowSmCoverLetterPreview} isSaving={isSaving} />
+        <Footer 
+         currentStep={currentStep} 
+         setCurrentStep={setStep} 
+         showSmCoverLetterPreview={showSmCoverLetterPreview} 
+         setShowSmCoverLetterPreview={setShowSmCoverLetterPreview} 
+         isSaving={isSaving}
+        />
     </div>
   );
 }
