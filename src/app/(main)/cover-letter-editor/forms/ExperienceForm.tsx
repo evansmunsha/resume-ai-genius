@@ -26,19 +26,22 @@ export default function ExperienceForm({
   });
 
   useEffect(() => {
-    const subscription = form.watch(async (values) => {
+    const { unsubscribe } = form.watch(async (values) => {
       const isValid = await form.trigger();
       if (!isValid) return;
-      setCoverLetterData({
-        ...coverLetterData,
-        experience: values.experience || "",
-      });
+      setCoverLetterData({ ...coverLetterData, ...values });
     });
-    return () => subscription.unsubscribe();
+    return unsubscribe;
   }, [form, coverLetterData, setCoverLetterData]);
 
   return (
     <div className="mx-auto max-w-xl space-y-6">
+      <div className="space-y-1.5 text-center">
+        <h2 className="text-2xl font-semibold">Experience</h2>
+        <p className="text-sm text-muted-foreground">
+         Describe your experience.
+        </p>
+      </div>
       <Form {...form}>
         <form className="space-y-3">
           <FormField
@@ -52,6 +55,7 @@ export default function ExperienceForm({
                     {...field}
                     placeholder="Throughout my career, I have developed strong skills in..."
                     className="min-h-[200px]"
+                    onChange={(e) => field.onChange(e.target.value)} autoFocus
                   />
                 </FormControl>
                 <FormMessage />

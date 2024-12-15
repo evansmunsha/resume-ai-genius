@@ -26,19 +26,22 @@ export default function ClosingForm({
   });
 
   useEffect(() => {
-    const subscription = form.watch(async (values) => {
+    const { unsubscribe } = form.watch(async (values) => {
       const isValid = await form.trigger();
       if (!isValid) return;
-      setCoverLetterData({
-        ...coverLetterData,
-        closing: values.closing || "",
-      });
+      setCoverLetterData({ ...coverLetterData, ...values });
     });
-    return () => subscription.unsubscribe();
+    return unsubscribe;
   }, [form, coverLetterData, setCoverLetterData]);
 
   return (
     <div className="mx-auto max-w-xl space-y-6">
+      <div className="space-y-1.5 text-center">
+        <h2 className="text-2xl font-semibold">Closing</h2>
+        <p className="text-sm text-muted-foreground">
+          Thank the reader for their time and consideration.
+        </p>
+      </div>
       <Form {...form}>
         <form className="space-y-3">
           <FormField
@@ -52,6 +55,7 @@ export default function ClosingForm({
                     {...field}
                     placeholder="Thank you for considering my application. I look forward to..."
                     className="min-h-[200px]"
+                    onChange={(e) => field.onChange(e.target.value)} autoFocus
                   />
                 </FormControl>
                 <FormMessage />

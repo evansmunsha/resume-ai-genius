@@ -9,7 +9,7 @@ interface FooterProps {
   setCurrentStep: (step: string) => void;
   showSmCoverLetterPreview: boolean;
   setShowSmCoverLetterPreview: (show: boolean) => void;
-  isSaving: boolean;/*  */
+  isSaving: boolean;
 }
 
 export default function Footer({

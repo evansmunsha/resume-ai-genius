@@ -26,8 +26,11 @@ export default function OpeningForm({
   });
 
   useEffect(() => {
-    const subscription = form.watch((values) => {
+    const subscription = form.watch(async (values) => {
+      const isValid = await form.trigger();
+       if (!isValid) return;
       setCoverLetterData({
+        
         ...coverLetterData,
         opening: values.opening || "",
       });
@@ -57,6 +60,7 @@ export default function OpeningForm({
                     {...field}
                     placeholder="I am writing to express my strong interest in the [Position] role at [Company]..."
                     className="min-h-[200px]"
+                    onChange={(e) => field.onChange(e.target.value)} autoFocus
                   />
                 </FormControl>
                 <FormMessage />

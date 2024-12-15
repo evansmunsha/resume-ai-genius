@@ -61,7 +61,7 @@ export default function PersonalInfoForm({
                 <FormItem>
                   <FormLabel>First name</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} onChange={(e) => field.onChange(e.target.value)} autoFocus/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -74,7 +74,7 @@ export default function PersonalInfoForm({
                 <FormItem>
                   <FormLabel>Last name</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} onChange={(e) => field.onChange(e.target.value)} autoFocus/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -88,7 +88,7 @@ export default function PersonalInfoForm({
               <FormItem>
                 <FormLabel>Job title</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...field} onChange={(e) => field.onChange(e.target.value)} autoFocus/>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -102,7 +102,7 @@ export default function PersonalInfoForm({
                 <FormItem>
                   <FormLabel>City</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} onChange={(e) => field.onChange(e.target.value)} autoFocus/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -115,7 +115,7 @@ export default function PersonalInfoForm({
                 <FormItem>
                   <FormLabel>Country</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} onChange={(e) => field.onChange(e.target.value)} autoFocus/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

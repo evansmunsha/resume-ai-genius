@@ -165,7 +165,7 @@ function AchievementItem({ id, index, form, remove }: AchievementItemProps) {
           <FormItem>
             <FormLabel>Description</FormLabel>
             <FormControl>
-              <Textarea {...field} placeholder="Describe your achievement" />
+              <Textarea {...field} placeholder="Describe your achievement" onChange={(e) => field.onChange(e.target.value)} autoFocus/>
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -178,7 +178,7 @@ function AchievementItem({ id, index, form, remove }: AchievementItemProps) {
           <FormItem>
             <FormLabel>Impact</FormLabel>
             <FormControl>
-              <Textarea {...field} placeholder="What was the impact of this achievement?" />
+              <Textarea {...field} placeholder="What was the impact of this achievement?" onChange={(e) => field.onChange(e.target.value)} autoFocus />
             </FormControl>
             <FormMessage />
           </FormItem>

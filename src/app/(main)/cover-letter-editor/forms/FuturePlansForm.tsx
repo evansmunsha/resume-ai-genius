@@ -39,6 +39,12 @@ export default function FuturePlansForm({
 
   return (
     <div className="mx-auto max-w-xl space-y-6">
+      <div className="space-y-1.5 text-center">
+        <h2 className="text-2xl font-semibold">Future Plans</h2>
+        <p className="text-sm text-muted-foreground">
+          Highlight plans to contribute to the company&apos;s success.
+        </p>
+      </div>
       <Form {...form}>
         <form className="space-y-3">
           <FormField
@@ -52,6 +58,7 @@ export default function FuturePlansForm({
                     {...field}
                     placeholder="Looking ahead, I am excited about the opportunity to..."
                     className="min-h-[200px]"
+                    onChange={(e) => field.onChange(e.target.value)} autoFocus
                   />
                 </FormControl>
                 <FormMessage />

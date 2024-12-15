@@ -23,7 +23,6 @@ export default function CoverLetterEditor({ coverLetterToEdit }: CoverLetterEdit
 
   const [coverLetterData, setCoverLetterData] = useState<CoverLetterValues>(
     coverLetterToEdit ? mapToCoverLetterValues(coverLetterToEdit) : {
-      id: searchParams.get("coverLetterId") || undefined,
       recipientName: [],
       achievements: [],
       skills: [],
@@ -96,12 +95,12 @@ export default function CoverLetterEditor({ coverLetterToEdit }: CoverLetterEdit
         </div>
       </main>
         <Footer 
-         currentStep={currentStep} 
-         setCurrentStep={setStep} 
-         showSmCoverLetterPreview={showSmCoverLetterPreview} 
-         setShowSmCoverLetterPreview={setShowSmCoverLetterPreview} 
-         isSaving={isSaving}
-        />
+        currentStep={currentStep}
+        setCurrentStep={setStep}
+        showSmCoverLetterPreview={showSmCoverLetterPreview}
+        setShowSmCoverLetterPreview={setShowSmCoverLetterPreview} 
+        isSaving={isSaving} 
+      />
     </div>
   );
 }
