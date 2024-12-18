@@ -197,7 +197,7 @@ function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
               )}
             </div>
             <p className="text-xs font-semibold">{exp.company}</p>
-            <div className="whitespace-pre-line text-xs">{exp.description}</div>
+            <div className="whitespace-pre-line text-sm">{exp.description}</div>
           </div>
         ))}
       </div>
