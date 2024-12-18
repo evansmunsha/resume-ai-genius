@@ -4,18 +4,11 @@ import { ThemeProvider } from "next-themes";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { constructMetadata } from "@/lib/utils";
+import { Analytics } from '@vercel/analytics/next';
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = constructMetadata()
-/* export const metadata: Metadata = {
-  title: {
-    template: "%s - Resume AI Genius",
-    absolute: "Resume AI Genius",
-  },
-  description:
-    "Resume AI Genius is the easiest way to create a professional resume that will help you land your dream job.",
-}; */
 
 export default function RootLayout({
   children,
@@ -33,6 +26,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             {children}
+            <Analytics />
             <Toaster />
           </ThemeProvider>
         </body>
