@@ -13,7 +13,6 @@ const premiumFeatures = [
   "AI tools",
   "Up to 3 resumes",
   "Up to 3 cover letters",
-  "Premium templates"
 ];
 
 const premiumPlusFeatures = [

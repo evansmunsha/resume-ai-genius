@@ -109,21 +109,20 @@ export default function Home() {
                 features={[
                   "1 Resume",
                   "1 Cover Letter",
-                  "Basic Templates",
+                  "0 AI Generation",
                 ]}
               />
               <PricingCard
-                title="Pro"
+                title="Premium"
                 price="$9.99"
                 features={[
                   "3 Resumes",
                   "3 Cover Letters",
                   "AI Generation",
-                  "Premium Templates",
                 ]}
               />
               <PricingCard
-                title="Enterprise"
+                title="Premium Plus"
                 price="$19.99"
                 features={[
                   "Unlimited Resumes",

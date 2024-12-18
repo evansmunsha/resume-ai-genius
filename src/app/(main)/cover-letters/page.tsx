@@ -46,7 +46,7 @@ export default async function CoverLettersPage(props: any) {
   const totalPages = Math.ceil(totalCount / 12);
 
   return (
-    <main className="mx-auto max-w-7xl space-y-6 px-3 py-6">
+    <main className="mx-auto max-w-7xl w-full space-y-6 px-3 py-6">
       <CreateCoverLetterButton
         canCreate={canCreateCoverLetter(subscriptionLevel, totalCount)}
       />

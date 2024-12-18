@@ -67,6 +67,7 @@ export default function ResumeEditor({ resumeToEdit }: ResumeEditorProps) {
             )}
           </div>
           <div className="grow md:border-r" />
+          
           <ResumePreviewSection
             resumeData={resumeData}
             setResumeData={setResumeData}

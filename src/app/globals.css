@@ -75,12 +75,17 @@ body {
 @media print {
   #resumePreviewContent {
     zoom: 1 !important;  /* Reset zoom for printing */
-    padding: 0;          /* Remove padding when printing */
+    padding: 3;          /* Remove padding when printing */
   }
 }
 
 #resumePreviewContent {
   font-family: Inter;    /* Set font for resume preview */
+}
+
+@page {
+  size: A4;             /* Set page size to A4 */
+  margin: 0.6cm;        /* Set consistent margins */
 }
 
 /* Cover Letter print styles */
@@ -117,9 +122,6 @@ body {
     margin: 0;
   }
   
-  body {
-    visibility: hidden;
-  }
   
   #coverLetterPreviewContent {
     visibility: visible;

@@ -46,7 +46,7 @@ export default function CoverLetterPreview({
         }}
         id="coverLetterPreviewContent"
       >
-        <div className="space-y-2 print:space-y-4" style={styles}>
+        <div className="space-y-6 print:space-y-4" style={styles}>
           <HeaderSection coverLetterData={coverLetterData} styles={styles} />
           <RecipientSection coverLetterData={coverLetterData} styles={styles} />
           <ContentSection coverLetterData={coverLetterData} styles={styles} />
