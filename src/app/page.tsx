@@ -163,7 +163,7 @@ export default function Home() {
               </div>
             </div>
           </section>
-          <section className="mt-9 flex items-center justify-center bg-secondary w-full h-fit text-blue-800">
+          <section className="mt-9 flex items-center justify-center w-full h-fit text-blue-800">
            <Link href={"/tos"}>
             Terms of Service
            </Link>
