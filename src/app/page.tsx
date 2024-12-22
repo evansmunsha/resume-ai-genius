@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Check, Star, Users, Building, FileCheck, Bot, Shield, PenTool } from 'lucide-react'
+import { Check, Star, FileCheck, Bot, PenTool } from 'lucide-react'
 import Link from "next/link"
 import { useState } from "react"
 
