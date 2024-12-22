@@ -59,7 +59,7 @@ export default function LandingPage() {
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-950/50 to-transparent rounded-lg" />
               <img
-                src="/placeholder.svg?height=600&width=800"
+                src="/resume-preview.png"
                 alt="Resume preview"
                 className="rounded-lg shadow-2xl"
               />
