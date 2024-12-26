@@ -6,6 +6,9 @@ import { Badge } from "@/components/ui/badge"
 import { Check, Star, FileCheck, Bot, PenTool } from 'lucide-react'
 import Link from "next/link"
 import { useState } from "react"
+import Image from "next/image"
+import resumePreview from "@/assets/resume-preview.jpeg";
+import { DemoModal } from "@/components/DemoModal"
 
 export default function LandingPage() {
 
@@ -41,9 +44,8 @@ export default function LandingPage() {
                   Try For Free
                 </Link>
                 </Button>
-                <Button size="lg" variant="outline" className="text-white border-white hover:bg-white/10">
-                  Watch Demo
-                </Button>
+                
+                  <DemoModal />
               </div>
               <div className="flex items-center gap-4 text-white/80">
                 <div className="flex -space-x-2">
@@ -58,8 +60,9 @@ export default function LandingPage() {
             </div>
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-950/50 to-transparent rounded-lg" />
-              <img
-                src="/resume-preview.png"
+              <Image
+                src={resumePreview}
+                width={400}
                 alt="Resume preview"
                 className="rounded-lg shadow-2xl"
               />
