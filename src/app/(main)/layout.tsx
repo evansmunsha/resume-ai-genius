@@ -1,3 +1,5 @@
+'use server';
+
 import PremiumModal from "@/components/premium/PremiumModal";
 import { getUserSubscriptionLevel } from "@/lib/subscription";
 import { auth } from "@clerk/nextjs/server";
@@ -22,7 +24,8 @@ export default async function Layout({
       <div className="flex min-h-screen flex-col">
         <Navbar />
         {children}
-        <PremiumModal />
+        <PremiumModal />      
+            
       </div>
     </SubscriptionLevelProvider>
   );

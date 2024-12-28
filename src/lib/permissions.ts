@@ -1,3 +1,4 @@
+
 import { SubscriptionLevel } from "./subscription";
 
 export function canCreateResume(
@@ -16,9 +17,13 @@ export function canCreateResume(
   }
 }
 
+// Trial users will have PRO-level access
+
+
+
 export function canCreateCoverLetter(
   subscriptionLevel: SubscriptionLevel,
-  totalCount: number
+  totalCount: number,
 ): boolean {
   switch (subscriptionLevel) {
     case "FREE":
@@ -35,6 +40,8 @@ export function canCreateCoverLetter(
 export function canUseAITools(subscriptionLevel: SubscriptionLevel): boolean {
   return subscriptionLevel === "PRO" || subscriptionLevel === "ENTERPRISE";
 }
+
+
 
 export function canUseCustomizations(subscriptionLevel: SubscriptionLevel): boolean {
   return subscriptionLevel === "ENTERPRISE";

@@ -9,6 +9,8 @@ import { useState } from "react"
 import Image from "next/image"
 import resumePreview from "@/assets/resume-preview.jpeg";
 import { DemoModal } from "@/components/DemoModal"
+import { FeedbackForm } from "@/components/FeedbackForm"
+
 
 export default function LandingPage() {
 
@@ -24,6 +26,7 @@ export default function LandingPage() {
   
   return (
     <div className="min-h-screen">
+      
       {/* Hero Section - Enhanced with social proof and clearer CTA */}
       <section className="relative py-20 px-4 bg-gradient-to-b from-blue-950 to-blue-900">
         <div className="container mx-auto max-w-6xl">
@@ -196,8 +199,8 @@ export default function LandingPage() {
                 name: "Premium",
                 price: "$9.99",
                 popular: true,
-                features: ["3 Resumes", "3 Cover Letters", "AI Generation", "Premium Templates"],
-                cta: "Start Free Trial"
+                features: ["3 Resumes", "3 Cover Letters", "AI Generation",],
+                cta: "Start 3Days Trial"
               },
               {
                 name: "Premium Plus",
@@ -209,7 +212,7 @@ export default function LandingPage() {
                   "All Premium Features",
                   "Priority Support"
                 ],
-                cta: "Start Free Trial"
+                cta: "Start 3Days Trial"
               }
             ].map((plan, i) => (
               <Card key={i} className={plan.popular ? "border-green-500 shadow-lg relative" : ""}>
@@ -283,6 +286,20 @@ export default function LandingPage() {
               </Card>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-white">
+        <div className="container mx-auto max-w-3xl px-4">
+          <h2 className="text-3xl font-bold text-center mb-8">We Value Your Feedback</h2>
+          <Card>
+            <CardHeader>
+              <CardTitle>Help Us Improve</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <FeedbackForm />
+            </CardContent>
+          </Card>
         </div>
       </section>
 

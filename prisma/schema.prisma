@@ -83,6 +83,10 @@ model UserSubscription {
   stripeCurrentPeriodEnd  DateTime
   stripeCancelAtPeriodEnd Boolean  @default(false)
 
+  trialStart      DateTime?
+  trialEnd        DateTime?
+  hasTrialExpired Boolean   @default(false)
+  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -191,4 +195,13 @@ model Achievement {
 
   coverLetterId String
   coverLetter   CoverLetter @relation(fields: [coverLetterId], references: [id], onDelete: Cascade)
+}
+
+model Feedback {
+  id        String   @id @default(cuid())
+  rating    String
+  comment   String
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

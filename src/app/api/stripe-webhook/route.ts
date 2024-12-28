@@ -64,40 +64,39 @@ async function handleSessionCompleted(session: Stripe.Checkout.Session) {
 async function handleSubscriptionCreatedOrUpdated(subscriptionId: string) {
   const subscription = await stripe.subscriptions.retrieve(subscriptionId);
 
-  if (
-    subscription.status === "active" ||
-    subscription.status === "trialing" ||
-    subscription.status === "past_due"
-  ) {
-    await prisma.userSubscription.upsert({
-      where: {
-        userId: subscription.metadata.userId,
-      },
-      create: {
-        userId: subscription.metadata.userId,
-        stripeSubscriptionId: subscription.id,
-        stripeCustomerId: subscription.customer as string,
-        stripePriceId: subscription.items.data[0].price.id,
-        stripeCurrentPeriodEnd: new Date(
-          subscription.current_period_end * 1000,
-        ),
-        stripeCancelAtPeriodEnd: subscription.cancel_at_period_end,
-      },
-      update: {
-        stripePriceId: subscription.items.data[0].price.id,
-        stripeCurrentPeriodEnd: new Date(
-          subscription.current_period_end * 1000,
-        ),
-        stripeCancelAtPeriodEnd: subscription.cancel_at_period_end,
-      },
-    });
-  } else {
-    await prisma.userSubscription.deleteMany({
-      where: {
-        stripeCustomerId: subscription.customer as string,
-      },
-    });
-  }
+  await prisma.userSubscription.upsert({
+    where: { userId: subscription.metadata.userId },
+    create: {
+      userId: subscription.metadata.userId,
+      stripeSubscriptionId: subscription.id,
+      stripeCustomerId: subscription.customer as string,
+      stripePriceId: subscription.items.data[0].price.id,
+      stripeCurrentPeriodEnd: new Date(subscription.current_period_end * 1000),
+      stripeCancelAtPeriodEnd: subscription.cancel_at_period_end,
+      trialStart: subscription.trial_start
+        ? new Date(subscription.trial_start * 1000)
+        : null,
+      trialEnd: subscription.trial_end
+        ? new Date(subscription.trial_end * 1000)
+        : null,
+    },
+    update: {
+      stripePriceId: subscription.items.data[0].price.id,
+      stripeCurrentPeriodEnd: new Date(subscription.current_period_end * 1000),
+      stripeCancelAtPeriodEnd: subscription.cancel_at_period_end,
+      trialStart: subscription.trial_start
+        ? new Date(subscription.trial_start * 1000)
+        : null,
+      trialEnd: subscription.trial_end
+        ? new Date(subscription.trial_end * 1000)
+        : null,
+    },
+  });
+
+  console.log('Subscription Trial Start:', subscription.trial_start);
+console.log('Subscription Trial End:', subscription.trial_end);
+console.log('Subscription Status:', subscription.status);
+
 }
 
 async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
@@ -107,3 +106,4 @@ async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
     },
   });
 }
+
