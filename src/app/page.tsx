@@ -10,11 +10,15 @@ import Image from "next/image"
 import resumePreview from "@/assets/resume-preview.jpeg";
 import { DemoModal } from "@/components/DemoModal"
 import { FeedbackForm } from "@/components/FeedbackForm"
+import { env } from "@/env"
+import { toast } from "@/hooks/use-toast"
+import { createCheckoutSession } from "@/components/premium/actions"
 
 
 export default function LandingPage() {
 
   const [visibleAnswers, setVisibleAnswers] = useState<boolean[]>(Array().fill(false));
+  const [loading, setLoading] = useState(false);
 
   const toggleAnswer = (index: number) => {
     setVisibleAnswers((prev) => {
@@ -23,6 +27,22 @@ export default function LandingPage() {
       return newVisibleAnswers;
     });
   };
+
+  async function handlePremiumClick(priceId: string) {
+    try {
+      setLoading(true);
+      const redirectUrl = await createCheckoutSession(priceId);
+      window.location.href = redirectUrl;
+    } catch (error) {
+      console.error(error);
+      toast({
+        variant: "destructive",
+        description: "Something went wrong. Please try again.",
+      });
+    } finally {
+      setLoading(false);
+    }
+  }
   
   return (
     <div className="min-h-screen">
@@ -192,7 +212,7 @@ export default function LandingPage() {
               {
                 name: "Free",
                 price: "$0",
-                features: ["1 Resume", "1 Cover Letter", "Basic Templates"],
+                features: ["1 Resume", "1 Cover Letter",],
                 cta: "Get Started"
               },
               {
@@ -200,25 +220,46 @@ export default function LandingPage() {
                 price: "$9.99",
                 popular: true,
                 features: ["3 Resumes", "3 Cover Letters", "AI Generation",],
-                cta: "Start 3Days Trial"
+                cta: (
+                <Button
+                  variant="premium"
+                  onClick={() =>
+                    handlePremiumClick(
+                      env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_MONTHLY,
+                    )
+                  }
+                  disabled={loading}
+                >
+                  Get Premium
+                </Button>)
               },
               {
                 name: "Premium Plus",
                 price: "$19.99",
                 features: [
-                  "Unlimited Resumes",
-                  "Unlimited Cover Letters",
-                  "Advanced AI Features",
-                  "All Premium Features",
-                  "Priority Support"
+                  "Infinite resumes",
+                  "Infinite cover letters",
+                  "Design customizations",
+                  "Advanced AI features",
                 ],
-                cta: "Start 3Days Trial"
+                cta: (
+                <Button
+                  variant="premium"
+                  onClick={() =>
+                    handlePremiumClick(
+                      env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_PLUS_MONTHLY,
+                    )
+                  }
+                  disabled={loading}
+                >
+                   Start 3Days Trial
+                </Button>)
               }
             ].map((plan, i) => (
               <Card key={i} className={plan.popular ? "border-green-500 shadow-lg relative" : ""}>
                 {plan.popular && (
                   <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-green-500">
-                    Most Popular
+                    Most Popular"Start 3Days Trial"
                   </Badge>
                 )}
                 <CardHeader>
