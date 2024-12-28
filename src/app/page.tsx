@@ -213,7 +213,11 @@ export default function LandingPage() {
                 name: "Free",
                 price: "$0",
                 features: ["1 Resume", "1 Cover Letter",],
-                cta: "Get Started"
+                cta: (
+                  <Button variant={"default"}>
+                  <Link href={"/resumes"}>Get Started</Link>
+                </Button>
+                )
               },
               {
                 name: "Premium",
@@ -222,7 +226,7 @@ export default function LandingPage() {
                 features: ["3 Resumes", "3 Cover Letters", "AI Generation",],
                 cta: (
                 <Button
-                  variant="premium"
+                  variant="secondary"
                   onClick={() =>
                     handlePremiumClick(
                       env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_MONTHLY,
@@ -230,7 +234,7 @@ export default function LandingPage() {
                   }
                   disabled={loading}
                 >
-                  Get Premium
+                 Start 3Days Trial
                 </Button>)
               },
               {
@@ -244,7 +248,7 @@ export default function LandingPage() {
                 ],
                 cta: (
                 <Button
-                  variant="premium"
+                  variant="outline"
                   onClick={() =>
                     handlePremiumClick(
                       env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_PLUS_MONTHLY,
@@ -259,7 +263,7 @@ export default function LandingPage() {
               <Card key={i} className={plan.popular ? "border-green-500 shadow-lg relative" : ""}>
                 {plan.popular && (
                   <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-green-500">
-                    Most Popular"Start 3Days Trial"
+                    Most Popular
                   </Badge>
                 )}
                 <CardHeader>
@@ -280,9 +284,7 @@ export default function LandingPage() {
                   </ul>
                 </CardContent>
                 <CardFooter>
-                <Button className={`w-full ${plan.popular ? "bg-green-500 hover:bg-green-600" : ""}`}>
-                  <Link href={"/resumes"}>{plan.cta}</Link>
-                </Button>
+                
                 </CardFooter>
               </Card>
             ))}
