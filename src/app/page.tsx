@@ -13,20 +13,14 @@ import { FeedbackForm } from "@/components/FeedbackForm"
 import { env } from "@/env"
 import { toast } from "@/hooks/use-toast"
 import { createCheckoutSession } from "@/components/premium/actions"
+import { PricingSection } from "@/components/PricingSection"
+
 
 
 export default function LandingPage() {
 
   const [visibleAnswers, setVisibleAnswers] = useState<boolean[]>(Array().fill(false));
-  const [loading, setLoading] = useState(false);
-
-  const toggleAnswer = (index: number) => {
-    setVisibleAnswers((prev) => {
-      const newVisibleAnswers = [...prev];
-      newVisibleAnswers[index] = !newVisibleAnswers[index];
-      return newVisibleAnswers;
-    });
-  };
+  /* const [loading, setLoading] = useState(false);
 
   async function handlePremiumClick(priceId: string) {
     try {
@@ -42,7 +36,17 @@ export default function LandingPage() {
     } finally {
       setLoading(false);
     }
-  }
+  }*/
+
+  const toggleAnswer = (index: number) => {
+    setVisibleAnswers((prev) => {
+      const newVisibleAnswers = [...prev];
+      newVisibleAnswers[index] = !newVisibleAnswers[index];
+      return newVisibleAnswers;
+    });
+  }; 
+
+  
   
   return (
     <div className="min-h-screen">
@@ -201,32 +205,62 @@ export default function LandingPage() {
       </section>
 
       {/* Enhanced Pricing Section */}
-      <section className="py-20">
+      {/* <section className="py-20">
         <div className="container mx-auto max-w-6xl px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Simple Pricing</h2>
             <p className="text-gray-600">Choose the plan that works best for you</p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                name: "Free",
-                price: "$0",
-                features: ["1 Resume", "1 Cover Letter",],
-                cta: (
-                  <Button variant={"default"}>
-                  <Link href={"/resumes"}>Get Started</Link>
+            <Card>
+              <CardHeader>
+                <CardTitle>Free</CardTitle>
+                <div className="mt-4">
+                  <span className="text-4xl font-bold">$0</span>
+                  <span className="text-gray-500">/month</span>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3">
+                  {["1 Resume", "1 Cover Letter"].map((feature, i) => (
+                    <li key={i} className="flex items-center gap-2">
+                      <Check className="w-5 h-5 text-green-500" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+              <CardFooter>
+                <Button variant="default">
+                  <Link href="/resumes">Get Started</Link>
                 </Button>
-                )
-              },
-              {
-                name: "Premium",
-                price: "$9.99",
-                popular: true,
-                features: ["3 Resumes", "3 Cover Letters", "AI Generation",],
-                cta: (
+              </CardFooter>
+            </Card>
+
+            <Card className="border-green-500 shadow-lg relative">
+              <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-green-500">
+                Most Popular
+              </Badge>
+              <CardHeader>
+                <CardTitle>Premium</CardTitle>
+                <div className="mt-4">
+                  <span className="text-4xl font-bold">$9.99</span>
+                  <span className="text-gray-500">/month</span>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3">
+                  {["3 Resumes", "3 Cover Letters", "AI Generation"].map((feature, i) => (
+                    <li key={i} className="flex items-center gap-2">
+                      <Check className="w-5 h-5 text-green-500" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+              <CardFooter>
                 <Button
-                  variant="secondary"
+                  variant="premium"
                   onClick={() =>
                     handlePremiumClick(
                       env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_MONTHLY,
@@ -234,19 +268,35 @@ export default function LandingPage() {
                   }
                   disabled={loading}
                 >
-                 Start 3Days Trial
-                </Button>)
-              },
-              {
-                name: "Premium Plus",
-                price: "$19.99",
-                features: [
-                  "Infinite resumes",
-                  "Infinite cover letters",
-                  "Design customizations",
-                  "Advanced AI features",
-                ],
-                cta: (
+                  Start 3Days Trial
+                </Button>
+              </CardFooter>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Premium Plus</CardTitle>
+                <div className="mt-4">
+                  <span className="text-4xl font-bold">$19.99</span>
+                  <span className="text-gray-500">/month</span>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3">
+                  {[
+                    "Infinite resumes",
+                    "Infinite cover letters",
+                    "Design customizations",
+                    "Advanced AI features",
+                  ].map((feature, i) => (
+                    <li key={i} className="flex items-center gap-2">
+                      <Check className="w-5 h-5 text-green-500" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+              <CardFooter>
                 <Button
                   variant="outline"
                   onClick={() =>
@@ -256,40 +306,15 @@ export default function LandingPage() {
                   }
                   disabled={loading}
                 >
-                   Start 3Days Trial
-                </Button>)
-              }
-            ].map((plan, i) => (
-              <Card key={i} className={plan.popular ? "border-green-500 shadow-lg relative" : ""}>
-                {plan.popular && (
-                  <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-green-500">
-                    Most Popular
-                  </Badge>
-                )}
-                <CardHeader>
-                  <CardTitle>{plan.name}</CardTitle>
-                  <div className="mt-4">
-                    <span className="text-4xl font-bold">{plan.price}</span>
-                    <span className="text-gray-500">/month</span>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-3">
-                    {plan.features.map((feature, i) => (
-                      <li key={i} className="flex items-center gap-2">
-                        <Check className="w-5 h-5 text-green-500" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-                <CardFooter>
-                
-                </CardFooter>
-              </Card>
-            ))}
+                  Start 3Days Trial
+                </Button>
+              </CardFooter>
+            </Card>
           </div>
         </div>
+      </section> */}
+      <section className="py-20">
+        <PricingSection />
       </section>
 
       {/* Enhanced FAQ Section */}

@@ -77,21 +77,31 @@ model Education {
 model UserSubscription {
   id                      String   @id @default(cuid())
   userId                  String   @unique
+  userEmail               String?
   stripeCustomerId        String   @unique
   stripeSubscriptionId    String   @unique
   stripePriceId           String
   stripeCurrentPeriodEnd  DateTime
   stripeCancelAtPeriodEnd Boolean  @default(false)
 
-  trialStart      DateTime?
-  trialEnd        DateTime?
-  hasTrialExpired Boolean   @default(false)
-  
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  subscriptionStatus      String   @default("free")
+  subscriptionEndDate     DateTime?
+
+  // Separate trials for each paid plan
+  proTrialStart           DateTime?
+  proTrialEnd             DateTime?
+  proTrialExpired         Boolean   @default(false)
+
+  enterpriseTrialStart    DateTime?
+  enterpriseTrialEnd      DateTime?
+  enterpriseTrialExpired  Boolean   @default(false)
+
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
 
   @@map("user_subscriptions")
 }
+
 
 
 
