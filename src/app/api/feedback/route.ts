@@ -7,11 +7,13 @@ import { auth } from '@clerk/nextjs/server'
 const prisma = new PrismaClient()
 
 export async function POST(req: Request) {
+  let userId: string | null = null;
   try {
-    const { userId } = await auth()
+    const auth_result = await auth();
+    userId = auth_result.userId;
     if (!userId) {
-      logger.warn('Unauthorized attempt to submit feedback')
-      return new NextResponse("Unauthorized", { status: 401 })
+      logger.warn('Unauthorized attempt to submit feedback');
+      return new NextResponse("Unauthorized", { status: 401 });
     }
 
     const json = await req.json()
@@ -29,20 +31,22 @@ export async function POST(req: Request) {
     return NextResponse.json(feedback)
   } catch (error) {
     if (error instanceof Error) {
-      logger.error({ err: error }, 'Error submitting feedback')
+      logger.error(error, 'Error submitting feedback')
       return new NextResponse(`Error: ${error.message}`, { status: 500 })
     }
-    logger.error('Unknown error submitting feedback')
+    logger.error(new Error('Unknown error'), 'Error submitting feedback')
     return new NextResponse("Internal Error", { status: 500 })
   }
 }
 
 export async function GET(req: Request) {
+  let userId: string | null = null;
   try {
-    const { userId } = await auth()
+    const auth_result = await auth();
+    userId = auth_result.userId;
     if (!userId) {
-      logger.warn('Unauthorized attempt to fetch feedback')
-      return new NextResponse("Unauthorized", { status: 401 })
+      logger.warn('Unauthorized attempt to fetch feedback');
+      return new NextResponse("Unauthorized", { status: 401 });
     }
 
     const url = new URL(req.url)
@@ -71,10 +75,10 @@ export async function GET(req: Request) {
     })
   } catch (error) {
     if (error instanceof Error) {
-      logger.error({ err: error }, 'Error fetching feedback')
+      logger.error(error, 'Error fetching feedback')
       return new NextResponse(`Error: ${error.message}`, { status: 500 })
     }
-    logger.error('Unknown error fetching feedback')
+    logger.error(new Error('Unknown error'), 'Error fetching feedback')
     return new NextResponse("Internal Error", { status: 500 })
   }
 }
