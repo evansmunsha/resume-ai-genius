@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Smile, Frown, Meh, ThumbsUp } from 'lucide-react'
@@ -46,6 +45,7 @@ export default function FeedbackPage() {
       setFeedbacks(data.feedbacks)
       setPagination(data.pagination)
     } catch (error) {
+      console.log('feedback',error)
       toast({
         title: "Error",
         description: "Failed to fetch feedback. Please try again.",
