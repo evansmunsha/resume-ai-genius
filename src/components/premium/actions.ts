@@ -8,40 +8,40 @@ import { redirect } from "next/navigation";
 import { logger } from "@/lib/logger";
 
 export async function createCheckoutSession(priceId: string): Promise<string | void> {
-  // Get the current authenticated user
-  const user = await currentUser();
-
-  if (!user) {
-    // Redirect to sign-in page if no user is authenticated
-    redirect('/sign-in?redirect_url=/');
-  }
-
-  // Retrieve the Stripe Customer ID from user metadata
-  const stripeCustomerId = user.privateMetadata.stripeCustomerId as string | undefined;
-
-  if (!priceId) {
-    throw new Error("Missing price ID.");
-  }
-
-  // Ensure necessary environment variables are set
-  if (!env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_MONTHLY || !env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_PLUS_MONTHLY) {
-    throw new Error("Environment variables for price IDs are missing.");
-  }
-
-  // Determine the plan type based on the price ID
-  const isPro = priceId === env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_MONTHLY;
-  const isEnterprise = priceId === env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_PLUS_MONTHLY;
-  const planName = isEnterprise ? "enterprise" : isPro ? "pro" : "free";
-
-  // Set the plan description based on the selected type
-  const description = isEnterprise
-    ? "Unlimited resumes & cover letters with advanced AI features. Includes all premium templates, design customization, and priority support."
-    : "Create professional resumes & cover letters with AI assistance. Includes 3 documents each, AI tools, and premium templates.";
-
-  // Trial duration is set to 3 days
-  const TRIAL_DURATION = 3 * 24 * 60 * 60; // 3 days in seconds
-
   try {
+    // Get the current authenticated user
+    const user = await currentUser();
+    logger.info({ userId: user?.id }, 'Starting checkout session creation');
+
+    if (!user) {
+      redirect('/sign-in?redirect_url=/');
+    }
+
+    // Retrieve the Stripe Customer ID from user metadata
+    const stripeCustomerId = user.privateMetadata.stripeCustomerId as string | undefined;
+
+    if (!priceId) {
+      throw new Error("Missing price ID.");
+    }
+
+    // Ensure necessary environment variables are set
+    if (!env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_MONTHLY || !env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_PLUS_MONTHLY) {
+      throw new Error("Environment variables for price IDs are missing.");
+    }
+
+    // Determine the plan type based on the price ID
+    const isPro = priceId === env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_MONTHLY;
+    const isEnterprise = priceId === env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_PLUS_MONTHLY;
+    const planName = isEnterprise ? "enterprise" : isPro ? "pro" : "free";
+
+    // Set the plan description based on the selected type
+    const description = isEnterprise
+      ? "Unlimited resumes & cover letters with advanced AI features. Includes all premium templates, design customization, and priority support."
+      : "Create professional resumes & cover letters with AI assistance. Includes 3 documents each, AI tools, and premium templates.";
+
+    // Trial duration is set to 3 days
+    const TRIAL_DURATION = 3 * 24 * 60 * 60; // 3 days in seconds
+
     // Check if the user has an existing subscription or has had one in the past
     const existingSubscription = await prisma.userSubscription.findUnique({
       where: { userId: user.id },
@@ -135,15 +135,21 @@ export async function createCheckoutSession(priceId: string): Promise<string | v
       discounts: discountCode ? [{ 
         promotion_code: discountCode
       }] : undefined,
+    }).catch(error => {
+      logger.error(error, 'Stripe API error', user.id);
+      throw error;
     });
 
     if (!session.url) {
+      logger.error(new Error('No session URL'), 'Stripe session creation failed', user.id);
       throw new Error("Failed to create checkout session: Missing session URL.");
     }
 
+    logger.info({ userId: user.id, sessionId: session.id }, 'Checkout session created successfully');
     return session.url;
+
   } catch (error) {
-    console.error("Error creating Stripe Checkout session:", error);
+    logger.error(error instanceof Error ? error : new Error('Unknown error'), 'Checkout session creation failed');
     throw new Error("An error occurred while creating the checkout session. Please try again.");
   }
 }
