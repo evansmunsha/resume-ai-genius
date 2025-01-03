@@ -11,7 +11,6 @@ import { useToast } from "@/hooks/use-toast";
 import { createCheckoutSession } from "./premium/actions";
 import { DiscountBanner } from "./DiscountBanner";
 import { ErrorBoundary } from "./ErrorBoundary";
-import { logger } from "@/lib/logger";
 
 type SubscriptionStatus = "FREE" | "PRO" | "ENTERPRISE";
 

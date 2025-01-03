@@ -22,16 +22,3 @@ export const coverLetterTemplates: Template[] = [
   },
   // Load others dynamically
 ];
-
-// Preload common templates
-const preloadTemplates = () => {
-  if (typeof window !== 'undefined') {
-    const commonTemplates = ['modern', 'classic']
-    commonTemplates.forEach(template => {
-      const link = document.createElement('link')
-      link.rel = 'prefetch'
-      link.href = `/templates/${template}.js`
-      document.head.appendChild(link)
-    })
-  }
-} 
