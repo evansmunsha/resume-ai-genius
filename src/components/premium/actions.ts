@@ -9,19 +9,17 @@ import { logger } from "@/lib/logger";
 
 export async function createCheckoutSession(priceId: string): Promise<string | void> {
   try {
-    // Get the current authenticated user
     const user = await currentUser();
-    logger.info({ userId: user?.id }, 'Starting checkout session creation');
-
+    
     if (!user) {
       redirect('/sign-in?redirect_url=/');
     }
 
-    // Retrieve the Stripe Customer ID from user metadata
     const stripeCustomerId = user.privateMetadata.stripeCustomerId as string | undefined;
 
+    // Basic validation
     if (!priceId) {
-      throw new Error("Missing price ID.");
+      throw new Error("Price ID is required");
     }
 
     // Ensure necessary environment variables are set
@@ -102,8 +100,11 @@ export async function createCheckoutSession(priceId: string): Promise<string | v
 
     // Create a new Stripe Checkout session
     const session = await stripe.checkout.sessions.create({
-      line_items: [{ price: priceId, quantity: 1 }],
       mode: "subscription",
+      line_items: [{ 
+        price: priceId,
+        quantity: 1 
+      }],
       success_url: `${env.NEXT_PUBLIC_BASE_URL}/billing/success`,
       cancel_url: `${env.NEXT_PUBLIC_BASE_URL}/billing`,
       customer: stripeCustomerId,
@@ -140,16 +141,15 @@ export async function createCheckoutSession(priceId: string): Promise<string | v
       throw error;
     });
 
-    if (!session.url) {
-      logger.error(new Error('No session URL'), 'Stripe session creation failed', user.id);
-      throw new Error("Failed to create checkout session: Missing session URL.");
+    if (!session?.url) {
+      throw new Error("Failed to create checkout URL");
     }
 
-    logger.info({ userId: user.id, sessionId: session.id }, 'Checkout session created successfully');
     return session.url;
 
   } catch (error) {
-    logger.error(error instanceof Error ? error : new Error('Unknown error'), 'Checkout session creation failed');
-    throw new Error("An error occurred while creating the checkout session. Please try again.");
+    console.error("Stripe error:", error);
+    logger.error(error instanceof Error ? error : new Error('Unknown error'), 'Checkout failed');
+    throw new Error("Failed to create checkout session");
   }
 }
