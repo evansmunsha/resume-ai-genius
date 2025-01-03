@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label"
 import { Smile, Frown, Meh, ThumbsUp } from 'lucide-react'
 import { feedbackSchema, FeedbackInput } from '@/lib/validations/feedback'
 import { useToast } from '@/hooks/use-toast'
+import Link from 'next/link'
 
 const ratingOptions = [
   { value: 'Poor', icon: Frown, color: 'text-red-500' },
@@ -40,6 +41,7 @@ export function FeedbackForm() {
       }
 
       toast({
+        variant: "premium",
         title: "Feedback Submitted",
         description: "Thank you for your feedback!",
       })
@@ -56,7 +58,7 @@ export function FeedbackForm() {
   const rating = watch('rating')
 
   if (!user) {
-    return <p className="text-center text-gray-500">Please sign in to leave feedback.</p>
+    return <p className="text-center text-gray-500">Please <Link className='p-0 text-blue-700' href="/sign-in?redirect_url=/">sign in</Link> to leave feedback.</p>
   }
 
   return (

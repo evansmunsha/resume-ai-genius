@@ -2,9 +2,9 @@
 
 import { Button } from "@/components/ui/button";
 import { Palette } from "lucide-react";
-import { Color, ColorChangeHandler, TwitterPicker } from "react-color";
+import { Color, ColorResult, TwitterPicker } from "react-color";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { useState } from "react";
+import { useState, useCallback, memo } from "react";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
 import usePremiumModal from "@/hooks/usePremiumModal";
@@ -13,10 +13,10 @@ import { useSubscriptionLevel } from "../SubscriptionLevelProvider";
 
 interface ColorThemeSelectorProps {
   Color: Color | undefined;
-  onChange: ColorChangeHandler;
+  onChange: (color: ColorResult) => void;
 }
 
-export default function ColorThemeSelector({
+export const ColorThemeSelector = memo(function ColorThemeSelector({
   Color,
   onChange,
 }: ColorThemeSelectorProps) {
@@ -24,6 +24,10 @@ export default function ColorThemeSelector({
   const { theme } = useTheme();
   const subscriptionLevel = useSubscriptionLevel();
   const premiumModal = usePremiumModal();
+
+  const handleColorChange = useCallback((color: ColorResult) => {
+    onChange(color);
+  }, [onChange]);
 
   return (
     <Popover open={showPopover} onOpenChange={setShowPopover}>
@@ -54,7 +58,7 @@ export default function ColorThemeSelector({
       >
         <TwitterPicker 
           color={Color} 
-          onChange={onChange} 
+          onChange={handleColorChange} 
           triangle="top-right"
           styles={{
             default: {
@@ -67,4 +71,4 @@ export default function ColorThemeSelector({
       </PopoverContent>
     </Popover>
   );
-} 
+}); 

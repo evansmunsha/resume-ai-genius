@@ -83,6 +83,9 @@ model UserSubscription {
   stripePriceId           String
   stripeCurrentPeriodEnd  DateTime
   stripeCancelAtPeriodEnd Boolean  @default(false)
+  
+  stripeDiscountApplied   Boolean   @default(false)
+  discountUsedAt          DateTime?
 
   subscriptionStatus      String   @default("free")
   subscriptionEndDate     DateTime?

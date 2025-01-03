@@ -4,7 +4,7 @@ import CoverLetterPreview from "@/components/CoverLetterPreview";
 import { CoverLetterValues } from "@/lib/validation";
 import { useState, useRef } from "react";
 import { cn } from "@/lib/utils";
-import ColorThemeSelector from "./ColorThemeSelector";
+import { ColorThemeSelector } from "./ColorThemeSelector";
 import { useSubscriptionLevel } from "../SubscriptionLevelProvider";
 import { canUseCustomizations } from "@/lib/permissions";
 import usePremiumModal from "@/hooks/usePremiumModal";

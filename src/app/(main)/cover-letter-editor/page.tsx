@@ -1,20 +1,19 @@
 import prisma from "@/lib/prisma";
-import { coverLetterDataInclude } from "@/lib/types/types"; // Updated import for cover letter
+import { coverLetterDataInclude } from "@/lib/types/types";
 import { auth } from "@clerk/nextjs/server";
 import { Metadata } from "next";
 import CoverLetterEditor from "./CoverLetterEditor";
 
 interface PageProps {
-  searchParams: Promise<{ coverLetterId?: string }>; // Updated to coverLetterId
+  searchParams: Promise<{ coverLetterId?: string }>;
 }
 
 export const metadata: Metadata = {
-  title: "Design your cover letter", // Updated title
+  title: "Design your cover letter",
 };
 
 export default async function Page({ searchParams }: PageProps) {
-  const { coverLetterId } = await searchParams; // Updated variable name
-
+  const { coverLetterId } = await searchParams;
   const { userId } = await auth();
 
   if (!userId) {
@@ -30,9 +29,5 @@ export default async function Page({ searchParams }: PageProps) {
       })
     : null;
 
-  return (
-    <>
-     <CoverLetterEditor coverLetterToEdit={coverLetterToEdit} />
-    </>
-  );
+  return <CoverLetterEditor coverLetterToEdit={coverLetterToEdit} />;
 }

@@ -72,6 +72,8 @@ export default function CoverLetterEditor({ coverLetterToEdit }: CoverLetterEdit
           saved automatically.
         </p>
       </header>
+      
+
       <main className="relative grow">
         <div className="absolute bottom-0 top-0 flex w-full">
           <div className={cn("w-full space-y-3 overflow-y-auto p-3 pr-0 md:w-1/2 md:block",

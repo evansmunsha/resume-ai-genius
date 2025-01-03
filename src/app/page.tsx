@@ -1,42 +1,29 @@
 /* eslint-disable no-unused-vars */
 "use client"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Check, Star, FileCheck, Bot, PenTool } from 'lucide-react'
 import Link from "next/link"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import resumePreview from "@/assets/resume-preview.jpeg";
 import { DemoModal } from "@/components/DemoModal"
-import { FeedbackForm } from "@/components/FeedbackForm"
-import { env } from "@/env"
-import { toast } from "@/hooks/use-toast"
-import { createCheckoutSession } from "@/components/premium/actions"
-import { PricingSection } from "@/components/PricingSection"
+import dynamic from 'next/dynamic'
 
+// Dynamically import heavy components
+const PricingSection = dynamic(() => 
+  import('@/components/PricingSection').then(mod => mod.PricingSection), {
+    loading: () => <div className="animate-pulse h-32 bg-gray-100 rounded" />
+})
 
+const FeedbackFormSection = dynamic(() => 
+  import('@/components/FeedbackForm').then(mod => mod.FeedbackForm), {
+    loading: () => <div className="animate-pulse h-32 bg-gray-100 rounded" />
+})
 
 export default function LandingPage() {
-
-  const [visibleAnswers, setVisibleAnswers] = useState<boolean[]>(Array().fill(false));
-  /* const [loading, setLoading] = useState(false);
-
-  async function handlePremiumClick(priceId: string) {
-    try {
-      setLoading(true);
-      const redirectUrl = await createCheckoutSession(priceId);
-      window.location.href = redirectUrl;
-    } catch (error) {
-      console.error(error);
-      toast({
-        variant: "destructive",
-        description: "Something went wrong. Please try again.",
-      });
-    } finally {
-      setLoading(false);
-    }
-  }*/
+  const [visibleAnswers, setVisibleAnswers] = useState<boolean[]>(Array.from({ length: 5 }, () => false));
 
   const toggleAnswer = (index: number) => {
     setVisibleAnswers((prev) => {
@@ -46,12 +33,9 @@ export default function LandingPage() {
     });
   }; 
 
-  
-  
   return (
     <div className="min-h-screen">
-      
-      {/* Hero Section - Enhanced with social proof and clearer CTA */}
+      {/* Hero Section */}
       <section className="relative py-20 px-4 bg-gradient-to-b from-blue-950 to-blue-900">
         <div className="container mx-auto max-w-6xl">
           <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -67,12 +51,9 @@ export default function LandingPage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button size="lg" className="bg-green-500 hover:bg-green-600">
-                <Link href={"/resumes"}>
-                  Try For Free
-                </Link>
+                  <Link href={"/resumes"}>Try For Free</Link>
                 </Button>
-                
-                  <DemoModal />
+                <DemoModal />
               </div>
               <div className="flex items-center gap-4 text-white/80">
                 <div className="flex -space-x-2">
@@ -90,6 +71,10 @@ export default function LandingPage() {
               <Image
                 src={resumePreview}
                 width={400}
+                height={300}
+                priority
+                quality={75}
+                placeholder="blur"
                 alt="Resume preview"
                 className="rounded-lg shadow-2xl"
               />
@@ -114,7 +99,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Features Section - Enhanced with more details */}
+      {/* Features Section */}
       <section className="py-20">
         <div className="container mx-auto max-w-6xl px-4">
           <div className="text-center mb-12">
@@ -130,7 +115,7 @@ export default function LandingPage() {
                 <CardTitle>AI-Powered</CardTitle>
               </CardHeader>
               <CardContent>
-                Advanced AI technology analyzes your experience and skills to create tailored, professional documents that highlight your strengths.
+                Advanced AI technology analyzes your experience and skills to create tailored, professional documents.
               </CardContent>
             </Card>
             <Card>
@@ -139,7 +124,7 @@ export default function LandingPage() {
                 <CardTitle>ATS-Friendly</CardTitle>
               </CardHeader>
               <CardContent>
-                Our documents are optimized to pass through Applicant Tracking Systems, increasing your chances of landing interviews.
+                Our documents are optimized to pass through Applicant Tracking Systems.
               </CardContent>
             </Card>
             <Card>
@@ -148,14 +133,14 @@ export default function LandingPage() {
                 <CardTitle>Complete Package</CardTitle>
               </CardHeader>
               <CardContent>
-                Get a matching resume and cover letter pair that maintains consistent branding and messaging throughout.
+                Get a matching resume and cover letter pair that maintains consistent branding.
               </CardContent>
             </Card>
           </div>
         </div>
       </section>
 
-      {/* Enhanced Testimonials Section */}
+      {/* Testimonials Section */}
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto max-w-6xl px-4">
           <h2 className="text-3xl font-bold text-center mb-12">What Our Users Say</h2>
@@ -204,120 +189,12 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Enhanced Pricing Section */}
-      {/* <section className="py-20">
-        <div className="container mx-auto max-w-6xl px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Simple Pricing</h2>
-            <p className="text-gray-600">Choose the plan that works best for you</p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card>
-              <CardHeader>
-                <CardTitle>Free</CardTitle>
-                <div className="mt-4">
-                  <span className="text-4xl font-bold">$0</span>
-                  <span className="text-gray-500">/month</span>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-3">
-                  {["1 Resume", "1 Cover Letter"].map((feature, i) => (
-                    <li key={i} className="flex items-center gap-2">
-                      <Check className="w-5 h-5 text-green-500" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-              <CardFooter>
-                <Button variant="default">
-                  <Link href="/resumes">Get Started</Link>
-                </Button>
-              </CardFooter>
-            </Card>
-
-            <Card className="border-green-500 shadow-lg relative">
-              <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-green-500">
-                Most Popular
-              </Badge>
-              <CardHeader>
-                <CardTitle>Premium</CardTitle>
-                <div className="mt-4">
-                  <span className="text-4xl font-bold">$9.99</span>
-                  <span className="text-gray-500">/month</span>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-3">
-                  {["3 Resumes", "3 Cover Letters", "AI Generation"].map((feature, i) => (
-                    <li key={i} className="flex items-center gap-2">
-                      <Check className="w-5 h-5 text-green-500" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-              <CardFooter>
-                <Button
-                  variant="premium"
-                  onClick={() =>
-                    handlePremiumClick(
-                      env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_MONTHLY,
-                    )
-                  }
-                  disabled={loading}
-                >
-                  Start 3Days Trial
-                </Button>
-              </CardFooter>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Premium Plus</CardTitle>
-                <div className="mt-4">
-                  <span className="text-4xl font-bold">$19.99</span>
-                  <span className="text-gray-500">/month</span>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-3">
-                  {[
-                    "Infinite resumes",
-                    "Infinite cover letters",
-                    "Design customizations",
-                    "Advanced AI features",
-                  ].map((feature, i) => (
-                    <li key={i} className="flex items-center gap-2">
-                      <Check className="w-5 h-5 text-green-500" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-              <CardFooter>
-                <Button
-                  variant="outline"
-                  onClick={() =>
-                    handlePremiumClick(
-                      env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_PLUS_MONTHLY,
-                    )
-                  }
-                  disabled={loading}
-                >
-                  Start 3Days Trial
-                </Button>
-              </CardFooter>
-            </Card>
-          </div>
-        </div>
-      </section> */}
+      {/* Pricing Section */}
       <section className="py-20">
         <PricingSection />
       </section>
 
-      {/* Enhanced FAQ Section */}
+      {/* FAQ Section */}
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto max-w-3xl px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
@@ -357,6 +234,7 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Feedback Section */}
       <section className="py-20 bg-white">
         <div className="container mx-auto max-w-3xl px-4">
           <h2 className="text-3xl font-bold text-center mb-8">We Value Your Feedback</h2>
@@ -365,13 +243,13 @@ export default function LandingPage() {
               <CardTitle>Help Us Improve</CardTitle>
             </CardHeader>
             <CardContent>
-              <FeedbackForm />
+              <FeedbackFormSection />
             </CardContent>
           </Card>
         </div>
       </section>
 
-      {/* Call to Action */}
+      {/* CTA Section */}
       <section className="py-20 bg-blue-950 text-white">
         <div className="container mx-auto max-w-4xl px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
@@ -381,9 +259,7 @@ export default function LandingPage() {
             Join thousands of successful job seekers who have already created their perfect resume
           </p>
           <Button size="lg" className="bg-green-500 hover:bg-green-600">
-          <Link href={"/resumes"}>
-            Get Started For Free
-           </Link>
+            <Link href={"/resumes"}>Get Started For Free</Link>
           </Button>
         </div>
       </section>
@@ -398,24 +274,6 @@ export default function LandingPage() {
                 Creating professional resumes and cover letters with AI technology.
               </p>
             </div>
-            {/* <div>
-              <h4 className="font-bold text-white mb-4">Product</h4>
-              <ul className="space-y-2 text-sm">
-                <li>Features</li>
-                <li>Pricing</li>
-                <li>Templates</li>
-                <li>Examples</li>
-              </ul>
-            </div> */}
-            {/* <div>
-              <h4 className="font-bold text-white mb-4">Company</h4>
-              <ul className="space-y-2 text-sm">
-                <li>About</li>
-                <li>Blog</li>
-                <li>Careers</li>
-                <li>Contact</li>
-              </ul>
-            </div> */}
             <div>
               <h4 className="font-bold text-white mb-4">Legal</h4>
               <ul className="space-y-2 text-sm">
@@ -425,8 +283,8 @@ export default function LandingPage() {
               </ul>
             </div>
           </div>
-          <div className="border-t border-gray-800 mt-12 pt-8 text-center text-sm">
-            <p>&copy; 2024 Resume AI Genius. All rights reserved.</p>
+          <div className="border-t border-gray-800 mt-4 pt-3 text-center text-sm">
+            <p>&copy; 2024-2025 Resume AI Genius. All rights reserved.</p>
           </div>
         </div>
       </footer>

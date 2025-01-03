@@ -1,15 +1,18 @@
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster as UIToaster } from "@/components/ui/toaster";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "next-themes";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { constructMetadata } from "@/lib/utils";
-import { SpeedInsights } from '@vercel/speed-insights/next';
-import { Analytics } from '@vercel/analytics/next';
+import dynamic from 'next/dynamic'
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = constructMetadata()
+
+// Defer non-critical components
+const Analytics = dynamic(() => import('@vercel/analytics/react').then(mod => mod.Analytics))
+const SpeedInsights = dynamic(() => import('@vercel/speed-insights/next').then(mod => mod.SpeedInsights))
 
 export default function RootLayout({
   children,
@@ -27,9 +30,9 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             {children}
-            <SpeedInsights />
             <Analytics />
-            <Toaster />
+            <SpeedInsights />
+            <UIToaster />
           </ThemeProvider>
         </body>
       </html>
