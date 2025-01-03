@@ -3,9 +3,9 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Check, Star, FileCheck, Bot, PenTool } from 'lucide-react'
+import { FileCheck, Bot, PenTool, Star } from 'lucide-react'
 import Link from "next/link"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import Image from "next/image"
 import resumePreview from "@/assets/resume-preview.jpeg";
 import { DemoModal } from "@/components/DemoModal"

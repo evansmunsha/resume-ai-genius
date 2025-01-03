@@ -47,6 +47,7 @@ export function FeedbackForm() {
       })
       reset()
     } catch (error) {
+      console.error("Failed to submit feedback:", error);
       toast({
         title: "Error",
         description: "Failed to submit feedback. Please try again.",

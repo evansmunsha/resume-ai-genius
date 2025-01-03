@@ -33,7 +33,6 @@ export default function FeedbackPage() {
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([])
   const [pagination, setPagination] = useState<PaginationInfo | null>(null)
   const [isLoading, setIsLoading] = useState(true)
-  const router = useRouter()
   const { toast } = useToast()
 
   const fetchFeedbacks = async (page: number = 1) => {
