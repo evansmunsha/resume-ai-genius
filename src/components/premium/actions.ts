@@ -4,16 +4,15 @@ import { env } from "@/env";
 import stripe from "@/lib/stripe";
 import { currentUser } from "@clerk/nextjs/server";
 import prisma from "@/lib/prisma";
-import { redirect } from "next/navigation";
-import { logger } from "@/lib/logger";
 
 export async function createCheckoutSession(priceId: string): Promise<string | void> {
   try {
     const user = await currentUser();
-    
-    if (!user) {
-      redirect('/sign-in?redirect_url=/');
-    }
+
+  if (!user) {
+    throw new Error("Unauthorized: No user is authenticated.");
+  }
+
 
     const stripeCustomerId = user.privateMetadata.stripeCustomerId as string | undefined;
 
@@ -94,9 +93,7 @@ export async function createCheckoutSession(priceId: string): Promise<string | v
       }
     }
 
-    if (discountCode) {
-      logger.discountApplied(user.id, discountCode, 20);
-    }
+    
 
     // Create a new Stripe Checkout session
     const session = await stripe.checkout.sessions.create({
@@ -136,20 +133,23 @@ export async function createCheckoutSession(priceId: string): Promise<string | v
       discounts: discountCode ? [{ 
         promotion_code: discountCode
       }] : undefined,
+      
     }).catch(error => {
-      logger.error(error, 'Stripe API error', user.id);
-      throw error;
+      console.log('Creating checkout session with:', {
+        priceId,
+        userId: user.id,
+        email: user.emailAddresses[0]?.emailAddress
+      });
     });
 
     if (!session?.url) {
-      throw new Error("Failed to create checkout URL");
+      throw new Error("No checkout URL returned");
     }
 
     return session.url;
 
   } catch (error) {
-    console.error("Stripe error:", error);
-    logger.error(error instanceof Error ? error : new Error('Unknown error'), 'Checkout failed');
+    console.error('Checkout error:', error);
     throw new Error("Failed to create checkout session");
   }
 }
