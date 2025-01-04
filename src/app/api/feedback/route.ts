@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server'
 import { PrismaClient } from '@prisma/client'
 import { feedbackSchema } from '@/lib/validations/feedback'
-import logger from '@/lib/logger'
 import { auth } from '@clerk/nextjs/server'
 
 const prisma = new PrismaClient()
@@ -12,8 +11,13 @@ export async function POST(req: Request) {
     const auth_result = await auth();
     userId = auth_result.userId;
     if (!userId) {
-      logger.warn('Unauthorized attempt to submit feedback');
-      return new NextResponse("Unauthorized", { status: 401 });
+      return new NextResponse("Unauthorized", { 
+        status: 401,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json',
+        }
+      });
     }
 
     const json = await req.json()
@@ -27,15 +31,18 @@ export async function POST(req: Request) {
       },
     })
 
-    logger.info({ feedbackId: feedback.id }, 'Feedback submitted successfully')
-    return NextResponse.json(feedback)
+    return NextResponse.json(feedback, {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+      }
+    })
   } catch (error) {
-    if (error instanceof Error) {
-      logger.error(error, 'Error submitting feedback')
-      return new NextResponse(`Error: ${error.message}`, { status: 500 })
-    }
-    logger.error(new Error('Unknown error'), 'Error submitting feedback')
-    return new NextResponse("Internal Error", { status: 500 })
+    console.error('Feedback error:', error);
+    return NextResponse.json(
+      { error: 'Failed to submit feedback' },
+      { status: 500 }
+    );
   }
 }
 
@@ -45,8 +52,13 @@ export async function GET(req: Request) {
     const auth_result = await auth();
     userId = auth_result.userId;
     if (!userId) {
-      logger.warn('Unauthorized attempt to fetch feedback');
-      return new NextResponse("Unauthorized", { status: 401 });
+      return new NextResponse("Unauthorized", { 
+        status: 401,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json',
+        }
+      });
     }
 
     const url = new URL(req.url)
@@ -63,7 +75,6 @@ export async function GET(req: Request) {
       prisma.feedback.count(),
     ])
 
-    logger.info({ page, limit, total }, 'Feedback fetched successfully')
     return NextResponse.json({
       feedbacks,
       pagination: {
@@ -72,14 +83,18 @@ export async function GET(req: Request) {
         total,
         pages: Math.ceil(total / limit),
       },
+    }, {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+      }
     })
   } catch (error) {
-    if (error instanceof Error) {
-      logger.error(error, 'Error fetching feedback')
-      return new NextResponse(`Error: ${error.message}`, { status: 500 })
-    }
-    logger.error(new Error('Unknown error'), 'Error fetching feedback')
-    return new NextResponse("Internal Error", { status: 500 })
+    console.error('Feedback fetch error:', error);
+    return NextResponse.json(
+      { error: 'Failed to fetch feedback' },
+      { status: 500 }
+    );
   }
 }
 
