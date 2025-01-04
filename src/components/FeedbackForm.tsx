@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useUser } from '@clerk/nextjs'
@@ -11,6 +11,7 @@ import { Smile, Frown, Meh, ThumbsUp } from 'lucide-react'
 import { feedbackSchema, FeedbackInput } from '@/lib/validations/feedback'
 import { useToast } from '@/hooks/use-toast'
 import Link from 'next/link'
+import { Loader2 } from 'lucide-react'
 
 const ratingOptions = [
   { value: 'Poor', icon: Frown, color: 'text-red-500' },
@@ -42,15 +43,14 @@ export function FeedbackForm() {
 
       toast({
         variant: "premium",
-        title: "Feedback Submitted",
-        description: "Thank you for your feedback!",
+        title: "Thank you! 🎉",
+        description: "Your feedback helps us improve.",
       })
       reset()
     } catch (error) {
-      console.error("Failed to submit feedback:", error);
       toast({
-        title: "Error",
-        description: "Failed to submit feedback. Please try again.",
+        title: "Oops!",
+        description: "Please try again in a moment.",
         variant: "destructive",
       })
     }
@@ -63,9 +63,9 @@ export function FeedbackForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      <div>
-        <fieldset>
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 max-w-xl mx-auto">
+      <div className="transition-all duration-200">
+        <fieldset aria-label="Rating selection">
           <legend className="text-lg font-semibold mb-4">How would you rate your experience?</legend>
           <div className="flex flex-wrap justify-center gap-4">
             {ratingOptions.map(({ value, icon: Icon, color }) => (
@@ -73,9 +73,9 @@ export function FeedbackForm() {
                 <button
                   type="button"
                   onClick={() => setValue('rating', value)}
-                  className={`p-4 rounded-full transition-all ${
+                  className={`p-4 rounded-full transition-all hover:scale-105 ${
                     rating === value
-                      ? `bg-primary text-primary-foreground ${color} scale-110`
+                      ? `bg-primary/10 border-2 border-primary ${color} scale-110`
                       : 'bg-secondary hover:bg-secondary/80'
                   }`}
                 >
@@ -88,18 +88,32 @@ export function FeedbackForm() {
         </fieldset>
         {errors.rating && <p className="text-red-500 text-sm mt-2 text-center">{errors.rating.message}</p>}
       </div>
-      <div>
-        <Label htmlFor="comment" className="text-lg font-semibold">Any additional comments?</Label>
+      <div className="relative">
         <Textarea
-          id="comment"
+          maxLength={500}
           {...register('comment')}
           placeholder="Share your thoughts..."
           className="mt-2 h-32"
         />
-        {errors.comment && <p className="text-red-500 text-sm mt-2">{errors.comment.message}</p>}
+        <span className="absolute bottom-2 right-2 text-xs text-gray-400">
+          {watch('comment')?.length || 0}/500
+        </span>
       </div>
-      <Button type="submit" className="w-full" disabled={isSubmitting}>
-        {isSubmitting ? 'Submitting...' : 'Submit Feedback'}
+      <Button 
+        type="submit"
+        disabled={isSubmitting}
+        className="relative"
+      >
+        {isSubmitting ? (
+          <>
+            <span className="opacity-0">Submit</span>
+            <span className="absolute inset-0 flex items-center justify-center">
+              <Loader2 className="h-4 w-4 animate-spin" />
+            </span>
+          </>
+        ) : (
+          'Submit Feedback'
+        )}
       </Button>
     </form>
   )

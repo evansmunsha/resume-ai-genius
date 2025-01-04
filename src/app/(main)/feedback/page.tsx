@@ -1,11 +1,12 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Smile, Frown, Meh, ThumbsUp } from 'lucide-react'
 import { useToast } from '@/hooks/use-toast'
 import Loading from '@/app/loading'
+import { Loader2 } from 'lucide-react'
 
 interface Feedback {
   id: string
@@ -33,6 +34,9 @@ export default function FeedbackPage() {
   const [pagination, setPagination] = useState<PaginationInfo | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const { toast } = useToast()
+  const [page, setPage] = useState(1)
+  const [hasMore, setHasMore] = useState(true)
+  const loader = useRef(null)
 
   const fetchFeedbacks = async (page: number = 1) => {
     setIsLoading(true)
@@ -56,6 +60,43 @@ export default function FeedbackPage() {
     }
   }
 
+  const loadMore = useCallback(async () => {
+    if (!hasMore) return
+    
+    try {
+      const nextPage = page + 1
+      const response = await fetch(`/api/feedback?page=${nextPage}&limit=10`)
+      const data = await response.json()
+      
+      setFeedbacks(prev => [...prev, ...data.feedbacks])
+      setHasMore(data.feedbacks.length > 0)
+      setPage(nextPage)
+    } catch (error) {
+      toast({
+        title: "Couldn't load more",
+        description: "Please try again",
+        variant: "destructive",
+      })
+    }
+  }, [page, hasMore])
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries[0].isIntersecting && hasMore) {
+          loadMore()
+        }
+      },
+      { threshold: 1.0 }
+    )
+
+    if (loader.current) {
+      observer.observe(loader.current)
+    }
+
+    return () => observer.disconnect()
+  }, [loadMore, hasMore])
+
   useEffect(() => {
     fetchFeedbacks()
   }, [])
@@ -73,12 +114,12 @@ export default function FeedbackPage() {
         {feedbacks.length === 0 ? (
           <p className="text-center text-gray-500">No feedback submitted yet.</p>
         ) : (
-          <div className="grid gap-6">
+          <div className="grid gap-6 animate-fade-in">
             {feedbacks.map((feedback) => {
               const Icon = ratingIcons[feedback.rating as keyof typeof ratingIcons]
               return (
-                <Card key={feedback.id}>
-                  <CardHeader className="flex flex-row items-center gap-4">
+                <Card key={feedback.id} className="transform transition-all duration-200 hover:scale-[1.02] hover:shadow-lg">
+                  <CardHeader className="flex flex-row items-center gap-4 bg-gray-50/50">
                     <Icon className={`w-8 h-8 ${
                       feedback.rating === 'Excellent' ? 'text-blue-500' :
                       feedback.rating === 'Good' ? 'text-green-500' :
@@ -86,18 +127,24 @@ export default function FeedbackPage() {
                       'text-red-500'
                     }`} />
                     <div>
-                      <CardTitle>{feedback.rating}</CardTitle>
+                      <CardTitle className="text-lg">{feedback.rating}</CardTitle>
                       <p className="text-sm text-gray-500">
-                        {new Date(feedback.createdAt).toLocaleString()}
+                        {new Date(feedback.createdAt).toLocaleDateString()} at {new Date(feedback.createdAt).toLocaleTimeString()}
                       </p>
                     </div>
                   </CardHeader>
-                  <CardContent>
-                    <p>{feedback.comment}</p>
+                  <CardContent className="mt-4">
+                    <p className="text-gray-700">{feedback.comment}</p>
                   </CardContent>
                 </Card>
               )
             })}
+            
+            {hasMore && (
+              <div ref={loader} className="flex justify-center p-4">
+                <Loader2 className="h-6 w-6 animate-spin" />
+              </div>
+            )}
           </div>
         )}
         {pagination && (
