@@ -77,6 +77,7 @@ export default function FeedbackPage() {
       setHasMore(data.feedbacks.length > 0)
       setPage(nextPage)
     } catch (error) {
+      console.log(error)
       toast({
         title: "Couldn't load more",
         description: "Please try again",
@@ -125,6 +126,7 @@ export default function FeedbackPage() {
         description: "Your feedback has been removed successfully.",
       });
     } catch (error) {
+      console.log(error)
       toast({
         title: "Error",
         description: "Failed to delete feedback. Please try again.",
