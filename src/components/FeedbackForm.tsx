@@ -1,12 +1,10 @@
 "use client"
 
-import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useUser } from '@clerk/nextjs'
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
 import { Smile, Frown, Meh, ThumbsUp } from 'lucide-react'
 import { feedbackSchema, FeedbackInput } from '@/lib/validations/feedback'
 import { useToast } from '@/hooks/use-toast'
