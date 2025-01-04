@@ -3,10 +3,11 @@
 import { useEffect, useState, useRef, useCallback } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Smile, Frown, Meh, ThumbsUp } from 'lucide-react'
+import { Smile, Frown, Meh, ThumbsUp, Trash2 } from 'lucide-react'
 import { useToast } from '@/hooks/use-toast'
 import Loading from '@/app/loading'
 import { Loader2 } from 'lucide-react'
+import { useUser } from '@clerk/nextjs'
 
 interface Feedback {
   id: string
@@ -37,6 +38,10 @@ export default function FeedbackPage() {
   const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(true)
   const loader = useRef(null)
+  const { user } = useUser()
+
+  // Check if current user is admin
+  const isAdmin = user?.id === process.env.NEXT_PUBLIC_ADMIN_USER_ID;
 
   const fetchFeedbacks = async (page: number = 1) => {
     setIsLoading(true)
@@ -101,6 +106,33 @@ export default function FeedbackPage() {
     fetchFeedbacks()
   }, [])
 
+  const handleDelete = async (feedbackId: string) => {
+    if (!confirm('Are you sure you want to delete this feedback?')) return;
+    
+    try {
+      const response = await fetch(`/api/feedback?id=${feedbackId}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) throw new Error('Failed to delete feedback');
+
+      // Remove the feedback from state
+      setFeedbacks(prev => prev.filter(f => f.id !== feedbackId));
+      
+      toast({
+        variant:"premium",
+        title: "Feedback deleted",
+        description: "Your feedback has been removed successfully.",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to delete feedback. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
   if (isLoading) {
     return <div className="flex justify-center items-center min-h-screen">
       <Loading/>
@@ -119,19 +151,31 @@ export default function FeedbackPage() {
               const Icon = ratingIcons[feedback.rating as keyof typeof ratingIcons]
               return (
                 <Card key={feedback.id} className="transform transition-all duration-200 hover:scale-[1.02] hover:shadow-lg">
-                  <CardHeader className="flex flex-row items-center gap-4 bg-gray-50/50">
-                    <Icon className={`w-8 h-8 ${
-                      feedback.rating === 'Excellent' ? 'text-blue-500' :
-                      feedback.rating === 'Good' ? 'text-green-500' :
-                      feedback.rating === 'Fair' ? 'text-yellow-500' :
-                      'text-red-500'
-                    }`} />
-                    <div>
-                      <CardTitle className="text-lg">{feedback.rating}</CardTitle>
-                      <p className="text-sm text-gray-500">
-                        {new Date(feedback.createdAt).toLocaleDateString()} at {new Date(feedback.createdAt).toLocaleTimeString()}
-                      </p>
+                  <CardHeader className="flex flex-row items-center justify-between bg-gray-50/50">
+                    <div className="flex items-center gap-4">
+                      <Icon className={`w-8 h-8 ${
+                        feedback.rating === 'Excellent' ? 'text-blue-500' :
+                        feedback.rating === 'Good' ? 'text-green-500' :
+                        feedback.rating === 'Fair' ? 'text-yellow-500' :
+                        'text-red-500'
+                      }`} />
+                      <div>
+                        <CardTitle className="text-lg">{feedback.rating}</CardTitle>
+                        <p className="text-sm text-gray-500">
+                          {new Date(feedback.createdAt).toLocaleDateString()} at {new Date(feedback.createdAt).toLocaleTimeString()}
+                        </p>
+                      </div>
                     </div>
+                    {isAdmin && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDelete(feedback.id)}
+                        className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    )}
                   </CardHeader>
                   <CardContent className="mt-4">
                     <p className="text-gray-700">{feedback.comment}</p>

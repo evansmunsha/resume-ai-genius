@@ -98,3 +98,32 @@ export async function GET(req: Request) {
   }
 }
 
+export async function DELETE(req: Request) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const feedbackId = searchParams.get('id');
+    const auth_result = await auth();
+    const userId = auth_result.userId;
+
+    // Check if user is admin (your Clerk user ID)
+    const isAdmin = userId === process.env.ADMIN_USER_ID;
+
+    if (!userId || !isAdmin) {
+      return new NextResponse("Unauthorized: Admin access required", { status: 403 });
+    }
+
+    if (!feedbackId) {
+      return new NextResponse("Feedback ID is required", { status: 400 });
+    }
+
+    await prisma.feedback.delete({
+      where: { id: feedbackId }
+    });
+
+    return new NextResponse("Feedback deleted", { status: 200 });
+  } catch (error) {
+    console.error('Delete feedback error:', error);
+    return new NextResponse("Error deleting feedback", { status: 500 });
+  }
+}
+
