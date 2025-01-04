@@ -109,8 +109,8 @@ export function mapToCoverLetterValues(data: CoverLetterServerData): CoverLetter
 
 
 export function constructMetadata({
-  title = 'Build Your Dream Resume & Cover Letter in Just Minutes',
-  description = 'Resume AI Genius is the easiest way to create a professional resume that will help you land your dream job. plus a Cover Letter.',
+  title = '🚀 AI-Powered Resume & Cover Letter Builder | Resume AI Genius',
+  description = 'Create stunning resumes & cover letters in minutes with AI. Professional templates, instant customization, ATS-friendly. Join thousands of successful job seekers today!',
   image = '/opengraph-image.jpeg',
   icons = '/favicon.ico',
   noIndex = false,
@@ -130,8 +130,14 @@ export function constructMetadata({
       images: [
         {
           url: image,
+          width: 1200,
+          height: 630,
+          alt: 'Resume AI Genius - Smart Resume Builder',
         },
       ],
+      siteName: 'Resume AI Genius',
+      type: 'website',
+      locale: 'en_US',
     },
     twitter: {
       card: 'summary_large_image',
@@ -139,9 +145,27 @@ export function constructMetadata({
       description,
       images: [image],
       creator: '@evansensteen',
+      site: '@resumeaigenius',
     },
     icons,
+    keywords: [
+      'resume builder',
+      'AI resume',
+      'cover letter generator',
+      'job application',
+      'career tools',
+      'professional resume',
+      'ATS-friendly resume',
+      'CV maker',
+    ],
+    authors: [{ name: 'Resume AI Genius Team' }],
     metadataBase: new URL('https://resume-ai-genius.vercel.app'),
+    alternates: {
+      canonical: 'https://resume-ai-genius.vercel.app',
+    },
+    verification: {
+      google: 'your-google-verification-code',
+    },
     ...(noIndex && {
       robots: {
         index: false,

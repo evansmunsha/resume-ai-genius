@@ -10,6 +10,7 @@ import Image from "next/image"
 import resumePreview from "@/assets/resume-preview.jpeg";
 import { DemoModal } from "@/components/DemoModal"
 import dynamic from 'next/dynamic'
+import { SocialShare } from "@/components/SocialShare"
 
 // Dynamically import heavy components
 const PricingSection = dynamic(() => 
@@ -263,6 +264,21 @@ export default function LandingPage() {
           </Button>
         </div>
       </section>
+
+      {/* Add Newsletter Section */}
+      <section className="bg-gray-50 py-16">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center">
+            <div className="mt-8 flex justify-center">
+              <div className="text-center">
+                <p className="text-sm text-gray-600 mb-2">Share with friends</p>
+                <SocialShare />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
 
       {/* Footer */}
       <footer className="py-12 bg-gray-900 text-gray-400">
