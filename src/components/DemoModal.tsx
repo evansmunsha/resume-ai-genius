@@ -23,7 +23,7 @@ export function DemoModal() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[900px] w-[90vw]">
         <DialogHeader>
-          <DialogTitle>Resume Demo</DialogTitle>
+          <DialogTitle>Resume Demo.</DialogTitle>
           <DialogDescription>
             Watch how easy it is to create your resume with our AI-powered tool.
           </DialogDescription>
