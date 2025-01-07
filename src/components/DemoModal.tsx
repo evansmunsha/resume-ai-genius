@@ -29,14 +29,14 @@ export function DemoModal() {
           </DialogDescription>
         </DialogHeader>
         <div className="aspect-video w-full h-[calc(100vh-200px)]">
-        <iframe
-          width="100%"
-          height="100%"
-          src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1"
-          title="Resume Demo Video"
-          allow="autoplay; encrypted-media"
-          allowFullScreen
-        />
+          <iframe
+            width="100%"
+            height="100%"
+            src="https://www.youtube.com/embed/Ad9adNiY4GI?autoplay=1&mute=1"
+            title="Resume Demo Video"
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+          />
         </div>
       </DialogContent>
     </Dialog>
