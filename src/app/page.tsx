@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { FileCheck, Bot, PenTool, Star } from 'lucide-react'
+import { FileCheck, Bot, PenTool, Star, Check } from 'lucide-react'
 import Link from "next/link"
 import { useState } from "react"
 import Image from "next/image"
@@ -33,7 +33,7 @@ export default function LandingPage() {
       return newVisibleAnswers;
     });
   }; 
-
+  
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -50,11 +50,13 @@ export default function LandingPage() {
               <p className="text-lg text-gray-300">
                 Join thousands of job seekers who have landed their dream jobs using our AI-powered platform
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-green-500 hover:bg-green-600">
+              <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                <Button size="lg" className="bg-green-500 hover:bg-green-600 w-full sm:w-auto">
                   <Link href={"/resumes"}>Try For Free</Link>
                 </Button>
-                <DemoModal />
+                <div className="w-full sm:w-auto">
+                  <DemoModal />
+                </div>
               </div>
               <div className="flex items-center gap-4 text-white/80">
                 <div className="flex -space-x-2">
@@ -79,6 +81,104 @@ export default function LandingPage() {
                 alt="Resume preview"
                 className="rounded-lg shadow-2xl"
               />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Why It Matters Section */}
+      <section className="py-20 bg-gradient-to-b from-white to-gray-50">
+        <div className="container mx-auto max-w-6xl px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Your Career Success Starts Here
+            </h2>
+            <p className="text-gray-600 text-lg max-w-3xl mx-auto">
+              In today's competitive job market, you have just <span className="font-semibold text-blue-600">7 seconds</span> to make a lasting impression. Make every word count.
+            </p>
+          </div>
+
+          {/* Statistics Grid */}
+          <div className="grid md:grid-cols-3 gap-8 mb-16">
+            <div className="bg-white p-6 rounded-lg shadow-md text-center">
+              <div className="text-3xl font-bold text-red-500 mb-2">75%</div>
+              <p className="text-gray-700">of resumes are rejected by ATS before reaching human eyes</p>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md text-center">
+              <div className="text-3xl font-bold text-blue-500 mb-2">2X</div>
+              <p className="text-gray-700">more likely to get interviews with a tailored cover letter</p>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md text-center">
+              <div className="text-3xl font-bold text-green-500 mb-2">93%</div>
+              <p className="text-gray-700">of employers value well-written cover letters</p>
+            </div>
+          </div>
+
+          {/* Features Grid */}
+          <div className="grid md:grid-cols-2 gap-12">
+            <div className="space-y-6">
+              <h3 className="text-2xl font-bold text-gray-900">Why AI-Powered Documents Matter</h3>
+              <ul className="space-y-4">
+                <li className="flex items-start gap-3">
+                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-green-100 flex items-center justify-center">
+                    <Check className="w-4 h-4 text-green-600" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold">ATS-Optimized Content</h4>
+                    <p className="text-gray-600">Our AI ensures your documents pass Applicant Tracking Systems with optimized keywords and formatting</p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-green-100 flex items-center justify-center">
+                    <Check className="w-4 h-4 text-green-600" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold">Professional Phrasing</h4>
+                    <p className="text-gray-600">Transform basic job descriptions into compelling achievements that catch recruiters' attention</p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-green-100 flex items-center justify-center">
+                    <Check className="w-4 h-4 text-green-600" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold">Tailored Applications</h4>
+                    <p className="text-gray-600">Customize each document to match specific job requirements and company culture</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div className="space-y-6">
+              <h3 className="text-2xl font-bold text-gray-900">Stand Out From The Crowd</h3>
+              <div className="bg-blue-50 p-6 rounded-lg border border-blue-100">
+                <h4 className="font-semibold text-blue-900 mb-3">What Makes Us Different</h4>
+                <ul className="space-y-3 text-gray-700">
+                  <li className="flex items-center gap-2">
+                    <span className="text-blue-500">•</span>
+                    Smart AI that understands industry context
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-blue-500">•</span>
+                    Real-time optimization suggestions
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-blue-500">•</span>
+                    Professional templates designed by experts
+                  </li>
+                </ul>
+              </div>
+              
+              <div className="bg-green-50 p-4 sm:p-6 rounded-lg border border-green-100">
+                <div className="flex flex-col items-center">
+                  <div className="w-full sm:w-auto">
+                    <DemoModal />
+                  </div>
+                  <p className="text-sm text-gray-600 mt-4 text-center">
+                    See how our AI helps create compelling documents in minutes
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -195,6 +295,178 @@ export default function LandingPage() {
         <PricingSection />
       </section>
 
+      {/* Resume & Cover Letter Guide Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="container mx-auto max-w-6xl px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Craft Documents That Get You Hired
+            </h2>
+            <p className="text-gray-600 text-lg">
+              Learn the difference between average and outstanding job applications
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-12">
+            {/* Resume Guide */}
+            <div className="space-y-8">
+              <h3 className="text-2xl font-bold text-blue-900">Resume Writing Guide</h3>
+              
+              <div className="bg-white rounded-lg shadow-md overflow-hidden">
+                <div className="p-6 bg-red-50 border-l-4 border-red-500">
+                  <h4 className="font-semibold text-red-900 mb-3">❌ Common Mistakes</h4>
+                  <ul className="space-y-2 text-gray-700">
+                    <li className="flex items-start gap-2">
+                      <span className="text-red-500">•</span>
+                      Generic objectives like "Seeking a challenging position"
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-red-500">•</span>
+                      Listing job duties without measurable achievements
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-red-500">•</span>
+                      Including personal information (age, marital status)
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-red-500">•</span>
+                      Using complex fonts or graphics that confuse ATS
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="p-6 bg-green-50 border-l-4 border-green-500">
+                  <h4 className="font-semibold text-green-900 mb-3">✅ AI-Powered Excellence</h4>
+                  <ul className="space-y-2 text-gray-700">
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-500">•</span>
+                      Quantified achievements: "Increased sales by 45% in 6 months"
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-500">•</span>
+                      Industry-specific keywords optimized for ATS
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-500">•</span>
+                      Action verbs: "Spearheaded," "Implemented," "Orchestrated"
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-500">•</span>
+                      Clean, professional formatting that passes ATS
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="bg-blue-50 p-6 rounded-lg">
+                <h4 className="font-semibold text-blue-900 mb-3">🤖 How AI Helps</h4>
+                <ul className="space-y-3 text-gray-700">
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-500">1.</span>
+                    Analyzes job descriptions to identify key requirements
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-500">2.</span>
+                    Suggests powerful action verbs and industry-specific terminology
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-500">3.</span>
+                    Transforms basic job duties into impressive achievements
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Cover Letter Guide */}
+            <div className="space-y-8">
+              <h3 className="text-2xl font-bold text-blue-900">Cover Letter Mastery</h3>
+              
+              <div className="bg-white rounded-lg shadow-md overflow-hidden">
+                <div className="p-6 bg-red-50 border-l-4 border-red-500">
+                  <h4 className="font-semibold text-red-900 mb-3">❌ What to Avoid</h4>
+                  <div className="bg-white p-4 rounded border border-red-200 mb-4">
+                    <p className="text-sm text-gray-700 italic">
+                      "Dear Hiring Manager, I am writing to apply for the position I saw advertised. 
+                      I believe I would be a great fit for your company..."
+                    </p>
+                    <p className="text-red-600 text-sm mt-2">
+                      ↑ Generic, impersonal, and fails to grab attention
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-6 bg-green-50 border-l-4 border-green-500">
+                  <h4 className="font-semibold text-green-900 mb-3">✅ Winning Approach</h4>
+                  <div className="bg-white p-4 rounded border border-green-200 mb-4">
+                    <p className="text-sm text-gray-700 italic">
+                      "Dear Mr. Smith, Your company's recent innovation in sustainable technology 
+                      caught my attention. With my 5 years of experience in renewable energy and 
+                      proven track record of reducing implementation costs by 30%..."
+                    </p>
+                    <p className="text-green-600 text-sm mt-2">
+                      ↑ Personalized, specific, and demonstrates research
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-blue-50 p-6 rounded-lg">
+                <h4 className="font-semibold text-blue-900 mb-3">🤖 AI Writing Assistant</h4>
+                <ul className="space-y-3 text-gray-700">
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-500">1.</span>
+                    Generates compelling openings that grab attention
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-500">2.</span>
+                    Tailors content to specific job requirements
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-500">3.</span>
+                    Creates natural transitions between paragraphs
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-500">4.</span>
+                    Ensures proper tone and professional language
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* Quick Tips Box */}
+          <div className="mt-12 bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg p-8 text-white">
+            <h3 className="text-xl font-bold mb-4">💡 Pro Tips for Success</h3>
+            <div className="grid md:grid-cols-3 gap-6">
+              <div>
+                <h4 className="font-semibold mb-2">Research First</h4>
+                <p className="text-sm text-blue-100">
+                  Study the company and role thoroughly before writing. Our AI helps identify key company values and requirements.
+                </p>
+              </div>
+              <div>
+                <h4 className="font-semibold mb-2">Customize Always</h4>
+                <p className="text-sm text-blue-100">
+                  Never use the same document twice. Let AI help you tailor each application to the specific role.
+                </p>
+              </div>
+              <div>
+                <h4 className="font-semibold mb-2">Review & Refine</h4>
+                <p className="text-sm text-blue-100">
+                  Use our AI tools to polish your content, but always add your personal touch to stand out.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-12 text-center">
+            <Button size="lg" className="bg-green-500 hover:bg-green-600">
+              <Link href="/resumes">Create Your Winning Application</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* FAQ Section */}
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto max-w-3xl px-4">
@@ -279,6 +551,122 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Add new Why Standout Section */}
+      <section className="py-20 bg-gradient-to-b from-white to-gray-50">
+        <div className="container mx-auto max-w-6xl px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Why Your Resume & Cover Letter Matter More Than Ever
+            </h2>
+            <p className="text-gray-600 text-lg max-w-3xl mx-auto">
+              In today's competitive job market, you have just <span className="font-semibold text-blue-600">7 seconds</span> to make a lasting impression. Make them count.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6">
+              <div className="bg-white p-6 rounded-lg shadow-md">
+                <h3 className="text-xl font-semibold mb-3 text-blue-900">The Hard Truth About Hiring</h3>
+                <ul className="space-y-3 text-gray-700">
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-500 font-bold">75%</span> of resumes never reach human eyes due to ATS rejection
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-500 font-bold">88%</span> of resumes are rejected due to poor formatting
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-500 font-bold">98%</span> of Fortune 500 companies use ATS systems
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-white p-6 rounded-lg shadow-md">
+                <h3 className="text-xl font-semibold mb-3 text-green-900">The Resume AI Genius Advantage</h3>
+                <ul className="space-y-3 text-gray-700">
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-500 font-bold">100%</span> ATS-optimized templates
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-500 font-bold">3X</span> more likely to get interviews with our AI-powered content
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-500 font-bold">24/7</span> AI assistance for perfect phrasing
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              <div className="bg-blue-50 p-6 rounded-lg border border-blue-100">
+                <h3 className="text-xl font-semibold mb-4 text-blue-900">Your Career Journey Matters</h3>
+                <p className="text-gray-700 mb-4">
+                  Every job application is more than just paperwork – it's your personal brand story. In a world where opportunities are abundant but competition is fierce, standing out isn't optional – it's essential.
+                </p>
+                <Button className="w-full bg-blue-600 hover:bg-blue-700">
+                  <Link href="/resumes">Start Your Success Story</Link>
+                </Button>
+              </div>
+
+              <div className="bg-green-50 p-6 rounded-lg border border-green-100">
+                <h3 className="text-xl font-semibold mb-4 text-green-900">Why AI Makes the Difference</h3>
+                <p className="text-gray-700 mb-4">
+                  Our AI doesn't just fill templates – it understands your unique value proposition and crafts compelling narratives that resonate with both ATS systems and human recruiters.
+                </p>
+                <DemoModal />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Social Proof Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto max-w-6xl px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">Real Success Stories</h2>
+            <p className="text-gray-600">Join thousands who've transformed their job search</p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="bg-gradient-to-br from-blue-50 to-white p-6 rounded-lg shadow-md">
+              <p className="text-gray-700 mb-4">
+                "After 6 months of job hunting with no success, Resume AI Genius helped me land 3 interviews in my first week!"
+              </p>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-blue-100 rounded-full"></div>
+                <div>
+                  <p className="font-semibold">Sarah K.</p>
+                  <p className="text-sm text-gray-500">Software Engineer</p>
+                </div>
+              </div>
+            </div>
+            {/* Add 2 more success stories */}
+          </div>
+        </div>
+      </section>
+
+      {/* Call to Action Section */}
+      <section className="py-20 bg-gradient-to-br from-blue-900 to-blue-800 text-white">
+        <div className="container mx-auto max-w-4xl px-4 text-center">
+          <h2 className="text-4xl font-bold mb-6">
+            Don't Let Your Dream Job Slip Away
+          </h2>
+          <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+            Every day you wait is another opportunity missed. Create your professional resume and cover letter now with AI-powered precision.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button size="lg" className="bg-green-500 hover:bg-green-600">
+              <Link href="/resumes">Create Your Resume Now</Link>
+            </Button>
+            <Button size="lg" variant="outline" className="text-white border-white hover:bg-white/10">
+              <Link href="/cover-letters">Write a Cover Letter</Link>
+            </Button>
+          </div>
+          <p className="mt-6 text-sm text-gray-400">
+            Join over 10,000+ professionals who've trusted Resume AI Genius
+          </p>
+        </div>
+      </section>
 
       {/* Footer */}
       <footer className="py-12 bg-gray-900 text-gray-400">
