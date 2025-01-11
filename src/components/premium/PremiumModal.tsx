@@ -13,8 +13,6 @@ interface SubscriptionData {
   status: "FREE" | "PRO" | "ENTERPRISE";
   proTrialEndsAt: string | null;
   enterpriseTrialEndsAt: string | null;
-  discountEligible: boolean;
-  discountUsed: boolean;
 }
 
 const premiumFeatures = [
@@ -91,13 +89,6 @@ export default function PremiumModal() {
       setLoading(false);
     }
   }
-
-  const getDiscountedPrice = (originalPrice: number) => {
-    if (subscriptionData?.discountEligible && !subscriptionData?.discountUsed) {
-      return (originalPrice * 0.8).toFixed(2); // 20% discount
-    }
-    return originalPrice.toFixed(2);
-  };
 
   return (
     <Dialog
