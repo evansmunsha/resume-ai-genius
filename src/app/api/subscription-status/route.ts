@@ -26,23 +26,17 @@ export async function GET() {
         proTrialEndsAt: null,
         enterpriseTrialEndsAt: null,
         trialExpired: false,
-        recentlyExpired: false,
-        discountEligible: false
+        trialEndingSoon: false
       });
     }
     
     const now = new Date();
     const HOURS_24 = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
-    const DISCOUNT_WINDOW = 7 * 24 * 60 * 60 * 1000; // 7 days for discount eligibility
 
     // Check if trial is ending soon
     const proTrialEndingSoon = subscription.proTrialEnd ? 
       (new Date(subscription.proTrialEnd).getTime() - now.getTime() <= HOURS_24 && 
-       new Date(subscription.proTrialEnd).getTime() > now.getTime()) : // Make sure trial hasn't ended
-      false;
-    
-    const recentlyExpired = subscription.proTrialEnd ? 
-      (now.getTime() - new Date(subscription.proTrialEnd).getTime() <= DISCOUNT_WINDOW) : 
+       new Date(subscription.proTrialEnd).getTime() > now.getTime()) : 
       false;
 
     const isProTrialActive = subscription.proTrialEnd ? 
@@ -71,10 +65,6 @@ export async function GET() {
       status = 'FREE';
     }
     
-    console.log(`Determined status: ${status}`);
-    console.log(`Pro trial end date: ${subscription.proTrialEnd}`);
-    console.log(`Enterprise trial end date: ${subscription.enterpriseTrialEnd}`);
-    
     // Check if trials just expired
     if (subscription.proTrialEnd && new Date(subscription.proTrialEnd) < now && !subscription.proTrialExpired) {
       await prisma.userSubscription.update({
@@ -99,7 +89,6 @@ export async function GET() {
     });
     
   } catch (error) {
-    // Only log the error message in production
     if (process.env.NODE_ENV === 'production') {
       console.error('Subscription status error:', (error as Error).message);
     }
