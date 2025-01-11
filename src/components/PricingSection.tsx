@@ -312,4 +312,3 @@ export function PricingSectionContent() {
     </Suspense>
   );
 }
-
