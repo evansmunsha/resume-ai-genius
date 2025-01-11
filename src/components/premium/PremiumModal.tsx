@@ -118,10 +118,7 @@ export default function PremiumModal() {
             <div className="flex w-1/2 flex-col space-y-5">
               <h3 className="text-center text-lg font-bold">Premium</h3>
               <div className="text-center">
-                <span className="text-3xl font-bold">${getDiscountedPrice(9.99)}</span>
-                {subscriptionData?.discountEligible && (
-                  <span className="ml-2 line-through text-gray-400">$9.99</span>
-                )}
+                <span className="text-3xl font-bold">$3</span>
                 <span className="text-gray-500">/month</span>
               </div>
               <ul className="list-inside space-y-2">
@@ -149,10 +146,7 @@ export default function PremiumModal() {
                 Premium Plus
               </h3>
               <div className="text-center">
-                <span className="text-3xl font-bold">${getDiscountedPrice(19.99)}</span>
-                {subscriptionData?.discountEligible && (
-                  <span className="ml-2 line-through text-gray-400">$19.99</span>
-                )}
+                <span className="text-3xl font-bold">$5</span>
                 <span className="text-gray-500">/month</span>
               </div>
               <ul className="list-inside space-y-2">
@@ -176,19 +170,6 @@ export default function PremiumModal() {
               </Button>
             </div>
           </div>
-          {subscriptionData?.discountEligible && !subscriptionData?.discountUsed && (
-            <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-md">
-              <p className="text-sm text-green-800 text-center font-medium">
-                Special One-Time Offer: 20% off your first payment
-              </p>
-              <p className="text-xs text-green-600 text-center mt-1">
-                Use code{' '}
-                <span className="font-mono bg-green-100 px-2 py-0.5 rounded">
-                  {subscriptionData.status === 'PRO' ? 'PROTRIAL20' : 'PLUSTRIAL20'}
-                </span>
-              </p>
-            </div>
-          )}
         </div>
       </DialogContent>
     </Dialog>

@@ -7,34 +7,33 @@ import prisma from "@/lib/prisma";
 
 export async function createCheckoutSession(priceId: string): Promise<string | void> {
   try {
-  const user = await currentUser();
+    const user = await currentUser();
 
-  if (!user) {
-    throw new Error("Unauthorized: No user is authenticated.");
-  }
+    if (!user) {
+      throw new Error("Unauthorized: No user is authenticated.");
+    }
 
-
-  const stripeCustomerId = user.privateMetadata.stripeCustomerId as string | undefined;
+    const stripeCustomerId = user.privateMetadata.stripeCustomerId as string | undefined;
 
     // Basic validation
-  if (!priceId) {
+    if (!priceId) {
       throw new Error("Price ID is required");
-  }
+    }
 
-  // Ensure necessary environment variables are set
-  if (!env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_MONTHLY || !env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_PLUS_MONTHLY) {
-    throw new Error("Environment variables for price IDs are missing.");
-  }
+    // Ensure necessary environment variables are set
+    if (!env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_MONTHLY || !env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_PLUS_MONTHLY) {
+      throw new Error("Environment variables for price IDs are missing.");
+    }
 
-  // Determine the plan type based on the price ID
-  const isPro = priceId === env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_MONTHLY;
-  const isEnterprise = priceId === env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_PLUS_MONTHLY;
-  const planName = isEnterprise ? "enterprise" : isPro ? "pro" : "free";
+    // Determine the plan type based on the price ID
+    const isPro = priceId === env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_MONTHLY;
+    const isEnterprise = priceId === env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_PLUS_MONTHLY;
+    const planName = isEnterprise ? "enterprise" : isPro ? "pro" : "free";
 
-  // Set the plan description based on the selected type
-  const description = isEnterprise
-    ? "Unlimited resumes & cover letters with advanced AI features. Includes all premium templates, design customization, and priority support."
-    : "Create professional resumes & cover letters with AI assistance. Includes 3 documents each, AI tools, and premium templates.";
+    // Set the plan description based on the selected type
+    const description = isEnterprise
+      ? "Unlimited resumes & cover letters with advanced AI features. Includes all premium templates, design customization, and priority support."
+      : "Create professional resumes & cover letters with AI assistance. Includes 3 documents each, AI tools, and premium templates.";
 
     // Trial duration is set to 3 days
     const TRIAL_DURATION = 3 * 24 * 60 * 60; // 3 days in seconds
@@ -79,22 +78,6 @@ export async function createCheckoutSession(priceId: string): Promise<string | v
       }
     }
 
-    // Apply discount if eligible
-    let discountCode;
-    if (existingSubscription?.proTrialExpired && existingSubscription.proTrialEnd) {
-      const trialEndDate = new Date(existingSubscription.proTrialEnd);
-      const now = new Date();
-      const daysSinceExpiry = (now.getTime() - trialEndDate.getTime()) / (1000 * 60 * 60 * 24);
-      
-      if (daysSinceExpiry <= 7 && !existingSubscription.discountUsedAt) {
-        discountCode = isPro 
-          ? env.STRIPE_POST_TRIAL_PRO_COUPON_ID 
-          : env.STRIPE_POST_TRIAL_ENTERPRISE_COUPON_ID;
-      }
-    }
-
-    
-
     // Create a new Stripe Checkout session
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",
@@ -129,11 +112,7 @@ export async function createCheckoutSession(priceId: string): Promise<string | v
       billing_address_collection: "auto",
       payment_method_types: ["card"],
       phone_number_collection: { enabled: false },
-      allow_promotion_codes: true,
-      discounts: discountCode ? [{ 
-        promotion_code: discountCode
-      }] : undefined,
-      
+      allow_promotion_codes: false,
     })
 
     if (!session?.url) {

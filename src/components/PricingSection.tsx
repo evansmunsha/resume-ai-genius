@@ -9,7 +9,6 @@ import { Check, Loader2 } from 'lucide-react';
 import { env } from "@/env";
 import { useToast } from "@/hooks/use-toast";
 import { createCheckoutSession } from "./premium/actions";
-import { DiscountBanner } from "./DiscountBanner";
 import { ErrorBoundary } from "./ErrorBoundary";
 
 type SubscriptionStatus = "FREE" | "PRO" | "ENTERPRISE";
@@ -20,8 +19,6 @@ interface SubscriptionData {
   enterpriseTrialEndsAt: string | null;
   trialExpired: boolean;
   trialEndingSoon: boolean;
-  discountEligible: boolean;
-  discountUsed: boolean;
 }
 
 export function PricingSection() {
@@ -48,9 +45,7 @@ export function PricingSectionContent() {
           proTrialEndsAt: null, 
           enterpriseTrialEndsAt: null, 
           trialExpired: false, 
-          trialEndingSoon: false, 
-          discountEligible: false, 
-          discountUsed: false 
+          trialEndingSoon: false 
         });
         setIsLoading(false);
         return;
@@ -176,14 +171,6 @@ export function PricingSectionContent() {
     }
   };
 
-  const getDiscountedPrice = (originalPrice: string) => {
-    if (subscriptionData?.discountEligible) {
-      const price = parseFloat(originalPrice);
-      return (price * 0.8).toFixed(2); // 20% discount
-    }
-    return originalPrice;
-  };
-
   const isDisabled = (buttonText: string, title: string) => 
     buttonText === "Current Plan" || 
     buttonText === "Trial Active" ||
@@ -198,9 +185,6 @@ export function PricingSectionContent() {
     priceId: string
   ) => {
     const buttonText = getButtonText(title);
-    const displayPrice = subscriptionData?.discountEligible 
-      ? getDiscountedPrice(price) 
-      : price;
     
     return (
       <Card className={isPopular ? "border-green-500 shadow-lg relative" : ""}>
@@ -212,12 +196,7 @@ export function PricingSectionContent() {
         <CardHeader>
           <CardTitle>{title}</CardTitle>
           <div className="mt-4">
-            <span className="text-4xl font-bold">${displayPrice}</span>
-            {subscriptionData?.discountEligible && (
-              <span className="ml-2 line-through text-gray-400">
-                ${price}
-              </span>
-            )}
+            <span className="text-4xl font-bold">${price}</span>
             <span className="text-gray-500">/month</span>
           </div>
         </CardHeader>
@@ -276,7 +255,8 @@ export function PricingSectionContent() {
           {subscriptionData?.trialEndingSoon && timeLeft && (
             <div className="text-center mb-8 p-4 bg-orange-50 border border-orange-200 rounded-md">
               <p className="text-sm text-orange-800 font-semibold">
-                ⏰ Your trial ends in {timeLeft}! Subscribe now to keep your premium features.
+                ⏰ Your {subscriptionData.proTrialEndsAt ? "Premium" : subscriptionData.enterpriseTrialEndsAt ? "Premium Plus" : ""} trial ends in {timeLeft}! 
+                Your subscription will begin automatically.
               </p>
             </div>
           )}
@@ -290,14 +270,14 @@ export function PricingSectionContent() {
           )}
           {renderPricingCard(
             "Premium",
-            "9.99",
+            "3",
             ["3 Resumes", "3 Cover Letters", "AI Generation"],
             true,
             env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_MONTHLY
           )}
           {renderPricingCard(
             "Premium Plus",
-            "19.99",
+            "5",
             [
               "Infinite resumes",
               "Infinite cover letters",
@@ -321,41 +301,12 @@ export function PricingSectionContent() {
           {subscriptionData?.trialExpired && (
             <div className="text-center mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-md">
               <p className="text-sm text-yellow-800">
-                Your trial has expired. Subscribe now to continue enjoying premium features!
+                Your {subscriptionData.proTrialEndsAt ? "Premium" : subscriptionData.enterpriseTrialEndsAt ? "Premium Plus" : ""} trial has expired. 
+                Your subscription has begun.
               </p>
         </div>
           )}
-          {subscriptionData?.discountEligible && !subscriptionData?.discountUsed && (
-            <div className="text-center mt-4 p-4 bg-green-50 border border-green-200 rounded-md">
-              <p className="text-sm text-green-800 font-semibold">
-                Special One-Time Offer: Get 20% off your first payment!
-              </p>
-              <p className="text-xs text-green-600 mt-1">
-                Use code{' '}
-                <span className="font-mono bg-green-100 px-2 py-0.5 rounded">
-                  {subscriptionData.status === 'PRO' ? 'PROTRIAL20' : 'PLUSTRIAL20'}
-                </span>
-                {' '}at checkout
-              </p>
-              <p className="text-xs text-green-600 mt-1">
-                Limited time offer - Subscribe within 7 days of trial expiry
-              </p>
-        </div>
-          )}
-          {subscriptionData?.discountUsed && (
-            <div className="text-center mt-4 p-4 bg-gray-50 border border-gray-200 rounded-md">
-              <p className="text-sm text-gray-600">
-                You've already used your post-trial discount.
-              </p>
-            </div>
-          )}
-          {subscriptionData?.discountEligible && (
-            <DiscountBanner 
-              isEligible={true}
-              originalPrice={9.99}
-              discountPercentage={20}
-            />
-          )}
+          
       </div>
     </section>
     </Suspense>

@@ -90,29 +90,12 @@ export async function GET() {
       });
     }
 
-    // Add discount eligibility check
-    const isDiscountEligible = subscription?.proTrialExpired && 
-      subscription.proTrialEnd && 
-      !subscription.discountUsedAt && 
-      (now.getTime() - new Date(subscription.proTrialEnd).getTime() <= DISCOUNT_WINDOW);
-    
-    console.log("Trial end dates:", {
-      proTrialEnd: subscription?.proTrialEnd,
-      enterpriseTrialEnd: subscription?.enterpriseTrialEnd,
-      now: new Date()
-    });
-    
     return NextResponse.json({
       status,
       proTrialEndsAt: isProTrialActive ? subscription.proTrialEnd?.toISOString() : null,
       enterpriseTrialEndsAt: isEnterpriseTrialActive ? subscription.enterpriseTrialEnd?.toISOString() : null,
       trialExpired: subscription.proTrialExpired || subscription.enterpriseTrialExpired,
       trialEndingSoon: proTrialEndingSoon,
-      recentlyExpired,
-      discountEligible: isDiscountEligible,
-      discountAmount: isDiscountEligible ? 20 : 0,
-      stripeDiscountApplied: subscription?.stripeDiscountApplied || false,
-      discountUsed: !!subscription?.discountUsedAt,
     });
     
   } catch (error) {
