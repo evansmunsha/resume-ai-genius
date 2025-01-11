@@ -16,10 +16,6 @@ export const env = createEnv({
     OPENAI_API_KEY: z.string().min(1),
     STRIPE_SECRET_KEY: z.string().min(1),
     STRIPE_WEBHOOK_SECRET: z.string().min(1),
-    STRIPE_POST_TRIAL_PRO_COUPON_ID: z.string().min(1),
-    STRIPE_POST_TRIAL_ENTERPRISE_COUPON_ID: z.string().min(1),
-    STRIPE_POST_TRIAL_PRO_COUPON_CODE: z.string().min(1),
-    STRIPE_POST_TRIAL_ENTERPRISE_COUPON_CODE: z.string().min(1),
   },
   client: {
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1),
