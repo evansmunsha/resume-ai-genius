@@ -22,11 +22,57 @@ export default async function Page() {
     where: { userId },
   });
 
-  const priceInfo = subscription
+  const now = new Date();
+
+  // Debug logs
+  console.log("Subscription data:", JSON.stringify(subscription, null, 2));
+  console.log("Current time:", now);
+
+  // Check if subscription is actually active
+  const isSubscriptionActive = subscription?.stripeSubscriptionId && 
+    subscription.stripeCurrentPeriodEnd > now &&
+    subscription.subscriptionStatus !== "free" &&
+    !subscription.stripeCancelAtPeriodEnd;
+
+  // Check for active trials
+  const hasActiveProTrial = subscription?.proTrialEnd && 
+    new Date(subscription.proTrialEnd) > now && 
+    !subscription.proTrialExpired;
+
+  const hasActiveEnterpriseTrial = subscription?.enterpriseTrialEnd && 
+    new Date(subscription.enterpriseTrialEnd) > now && 
+    !subscription.enterpriseTrialExpired;
+
+  // Debug logs
+  console.log("Status checks:", {
+    isSubscriptionActive,
+    hasActiveProTrial,
+    hasActiveEnterpriseTrial,
+    proTrialExpired: subscription?.proTrialExpired,
+    enterpriseTrialExpired: subscription?.enterpriseTrialExpired,
+    stripeSubscriptionId: subscription?.stripeSubscriptionId,
+    currentPeriodEnd: subscription?.stripeCurrentPeriodEnd,
+  });
+
+  // Only fetch price info for active subscriptions
+  const priceInfo = isSubscriptionActive && subscription?.stripePriceId
     ? await stripe.prices.retrieve(subscription.stripePriceId, {
         expand: ["product"],
       })
     : null;
+
+  // Determine current plan name
+  let planName = "FREE";
+  if (isSubscriptionActive && priceInfo?.product) {
+    planName = (priceInfo.product as Stripe.Product).name;
+  } else if (hasActiveProTrial) {
+    planName = "Premium (Trial)";
+  } else if (hasActiveEnterpriseTrial) {
+    planName = "Premium Plus (Trial)";
+  }
+
+  // Debug log
+  console.log("Final plan name:", planName);
 
   return (
     <main className="mx-auto w-full max-w-7xl space-y-6 px-3 py-6">
@@ -34,12 +80,12 @@ export default async function Page() {
       <p>
         Your current plan:{" "}
         <span className="font-bold">
-          {priceInfo ? (priceInfo.product as Stripe.Product).name : "FREE"}
+          {planName}
         </span>
       </p>
-      {subscription ? (
+      {isSubscriptionActive ? (
         <>
-          {subscription.stripeCancelAtPeriodEnd && (
+          {subscription?.stripeCancelAtPeriodEnd && (
             <p className="text-destructive">
               Your subscription will be canceled on{" "}
               {formatDate(subscription.stripeCurrentPeriodEnd, "MMMM dd, yyyy")}
