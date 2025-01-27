@@ -7,7 +7,7 @@ import useDimensions from "@/hooks/useDimensions";
 import { BorderStyles } from "@/app/(main)/editor/BorderStyleButton";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { Briefcase, GraduationCap, Award, Globe, ChevronRight } from 'lucide-react';
+import { Briefcase, GraduationCap, Globe, } from 'lucide-react';
 
 interface TemplateProps {
   resumeData: ResumeValues;

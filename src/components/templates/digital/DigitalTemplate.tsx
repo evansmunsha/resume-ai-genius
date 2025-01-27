@@ -9,7 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
-import { Briefcase, GraduationCap, Award, Globe, Mail, Phone, MapPin, Linkedin, Github, Twitter } from 'lucide-react';
+import {Mail, Phone, MapPin,} from 'lucide-react';
 
 interface TemplateProps {
   resumeData: ResumeValues;

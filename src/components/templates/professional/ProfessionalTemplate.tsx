@@ -1,13 +1,11 @@
 import { ResumeValues } from "@/lib/validation";
 import { cn } from "@/lib/utils";
-import { useRef, useState, useEffect } from "react";
-import Image from "next/image";
+import { useRef} from "react";
 import { formatDate } from "date-fns";
 import useDimensions from "@/hooks/useDimensions";
-import { BorderStyles } from "@/app/(main)/editor/BorderStyleButton";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Briefcase, GraduationCap, Award, Globe, Mail, Phone, MapPin, Linkedin } from 'lucide-react';
+import { Globe, Mail, Phone, MapPin } from 'lucide-react';
 
 interface TemplateProps {
   resumeData: ResumeValues;
@@ -89,10 +87,10 @@ function HeaderSection({ resumeData }: SectionProps) {
             <span>{email}</span>
           </div>
         )}
-        <div className="flex items-center">
+        {/* <div className="flex items-center">
           <Linkedin className="w-4 h-4 mr-1" />
           <span>linkedin.com/in/yourprofile</span>
-        </div>
+        </div> */}
       </div>
     </header>
   );

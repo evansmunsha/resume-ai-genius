@@ -4,7 +4,7 @@ import { env } from "@/env";
 import { useToast } from "@/hooks/use-toast";
 import usePremiumModal from "@/hooks/usePremiumModal";
 import { Check } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "../ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { createCheckoutSession } from "./actions";
@@ -33,25 +33,6 @@ export default function PremiumModal() {
   const { open, setOpen } = usePremiumModal();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
-  const [subscriptionData, setSubscriptionData] = useState<SubscriptionData | null>(null);
-
-  useEffect(() => {
-    const fetchSubscriptionStatus = async () => {
-      try {
-        const response = await fetch('/api/subscription-status');
-        if (response.ok) {
-          const data = await response.json();
-          setSubscriptionData(data);
-        }
-      } catch (error) {
-        console.error("Error fetching subscription status:", error);
-      }
-    };
-
-    if (open) {
-      fetchSubscriptionStatus();
-    }
-  }, [open]);
 
   async function handlePremiumClick(priceId: string) {
     try {

@@ -5,7 +5,7 @@ import { useUser } from "@clerk/nextjs";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Check, Loader2, Info } from 'lucide-react';
+import { Check, Loader2 } from 'lucide-react';
 import { env } from "@/env";
 import { useToast } from "@/hooks/use-toast";
 import { createCheckoutSession } from "./premium/actions";
@@ -26,7 +26,6 @@ export function PricingSectionContent() {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(true);
   const [loadingStates, setLoadingStates] = useState<Record<string, boolean>>({});
-  const [subscriptionData, setSubscriptionData] = useState<unknown>(null);
 
   useEffect(() => {
     const fetchSubscriptionStatus = async () => {
@@ -35,10 +34,6 @@ export function PricingSectionContent() {
       setIsLoading(true);
       try {
         const response = await fetch('/api/subscription-status');
-        if (response.ok) {
-          const data = await response.json();
-          setSubscriptionData(data);
-        }
         console.log("Fetch successful.");
       } catch (error) {
         console.error("Fetch failed:", error);
@@ -139,9 +134,10 @@ export function PricingSectionContent() {
           ) : (
             <Button
               onClick={() => handleOneTimePaymentClick(priceId)}
-              className="w-full"
+              className={`w-full ${loadingStates[priceId] ? 'loading' : ''}`}
+              disabled={loadingStates[priceId]}
             >
-              Purchase Now
+              {loadingStates[priceId] ? 'Processing...' : 'Purchase Now'}
             </Button>
           )}
         </CardFooter>

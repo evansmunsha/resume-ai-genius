@@ -4,6 +4,14 @@ import { Check } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { PricingSection } from '@/components/PricingSection';
+import dynamic from 'next/dynamic';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+
+
+const FeedbackFormSection = dynamic(() => 
+  import('@/components/FeedbackForm').then(mod => mod.FeedbackForm), {
+    loading: () => <div className="animate-pulse h-32 bg-gray-100 rounded" />
+})
 
 const NewLandingPage = () => {
   return (
@@ -73,6 +81,20 @@ const NewLandingPage = () => {
           <p className="text-lg">Choose a plan that suits your needs and start building your professional resume today!</p>
         </section>
         <PricingSection />
+      </section>
+
+      <section className="py-20 bg-white">
+        <div className="container mx-auto max-w-3xl px-4">
+          <h2 className="text-3xl font-bold text-center mb-8">We Value Your Feedback</h2>
+          <Card>
+            <CardHeader>
+              <CardTitle>Help Us Improve</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <FeedbackFormSection />
+            </CardContent>
+          </Card>
+        </div>
       </section>
     </div>
   );

@@ -8,7 +8,7 @@ import { BorderStyles } from "@/app/(main)/editor/BorderStyleButton";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Briefcase, GraduationCap, Award, Globe, Mail, Phone, MapPin, Linkedin } from 'lucide-react';
+import { Award, Globe, Mail, Phone, MapPin } from 'lucide-react';
 
 interface TemplateProps {
   resumeData: ResumeValues;
@@ -52,7 +52,7 @@ export function CorporateTemplate({ resumeData, contentRef, className }: Templat
             </div>
             <div className="space-y-6">
               <SkillsSection resumeData={resumeData} />
-              <CertificationsSection resumeData={resumeData} />
+              {/* <CertificationsSection resumeData={resumeData} /> */}
               <LanguagesSection resumeData={resumeData} />
             </div>
           </div>
@@ -114,10 +114,10 @@ function HeaderSection({ resumeData }: SectionProps) {
               <span>{email}</span>
             </div>
           )}
-          <div className="flex items-center">
+          {/* <div className="flex items-center">
             <Linkedin className="w-4 h-4 mr-1" />
             <span>linkedin.com/in/yourprofile</span>
-          </div>
+          </div> */}
         </div>
       </div>
     </header>
@@ -215,7 +215,7 @@ function SkillsSection({ resumeData }: SectionProps) {
   );
 }
 
-function CertificationsSection({ resumeData }: SectionProps) {
+/* function CertificationsSection({ resumeData }: SectionProps) {
   const { certifications } = resumeData;
 
   if (!certifications?.length) return null;
@@ -240,7 +240,7 @@ function CertificationsSection({ resumeData }: SectionProps) {
       ))}
     </section>
   );
-}
+} */
 
 function LanguagesSection({ resumeData }: SectionProps) {
   const { languages } = resumeData;

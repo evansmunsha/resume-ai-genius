@@ -98,7 +98,7 @@ function PersonalInfoHeader({ resumeData }: SectionProps) {
   }
 
 function TechnicalSkillsSection({ resumeData }: SectionProps) {
-  const { skills, colorHex, borderStyle } = resumeData;
+  const { skills, colorHex } = resumeData;
 
   if (!skills?.length) return null;
   // Group skills by category (you might want to add categories to your schema)

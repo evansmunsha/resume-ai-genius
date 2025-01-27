@@ -7,7 +7,7 @@ import useDimensions from "@/hooks/useDimensions";
 import { BorderStyles } from "@/app/(main)/editor/BorderStyleButton";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { Briefcase, GraduationCap, Award, Globe, Palette, Camera, Code, Music } from 'lucide-react';
+import { Briefcase, GraduationCap, Globe, Palette, Camera, Code, Music,} from 'lucide-react';
 import React from "react";
 
 interface TemplateProps {
@@ -74,6 +74,10 @@ function HeaderSection({ resumeData }: SectionProps) {
     if (photo === null) setPhotoSrc("");
     return () => URL.revokeObjectURL(objectUrl);
   }, [photo]);
+
+  useEffect(() => {
+    // Ensure useEffect is called consistently in the component.
+  }, []);
 
   return (
     <header className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white p-4">

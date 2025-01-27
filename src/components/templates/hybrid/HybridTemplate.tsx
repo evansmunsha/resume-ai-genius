@@ -5,7 +5,7 @@ import Image from "next/image";
 import { formatDate } from "date-fns";
 import useDimensions from "@/hooks/useDimensions";
 import { BorderStyles } from "@/app/(main)/editor/BorderStyleButton";
-import { Mail, MapPin, Phone, Globe, Briefcase, GraduationCap, Award, User2, Target, Zap, CheckCircle2 } from 'lucide-react';
+import { Mail, MapPin, Phone, Globe, Briefcase, GraduationCap,  Target, Zap, CheckCircle2 } from 'lucide-react';
 import { Badge } from "@/components/ui/badge";
 
 interface TemplateProps {

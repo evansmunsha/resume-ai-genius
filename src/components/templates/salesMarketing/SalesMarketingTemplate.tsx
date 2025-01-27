@@ -57,7 +57,6 @@ export function SalesMarketingTemplate({ resumeData, contentRef, className }: Te
 function PersonalInfoHeader({ resumeData }: SectionProps) {
   const { photo, firstName, lastName, jobTitle, city, country, phone, email, colorHex, borderStyle } = resumeData;
   const [photoSrc, setPhotoSrc] = useState(photo instanceof File ? "" : photo);
-  if (!email?.length || !phone?.length || !city?.length || !country?.length) return null;
 
   useEffect(() => {
     const objectUrl = photo instanceof File ? URL.createObjectURL(photo) : "";
@@ -65,6 +64,8 @@ function PersonalInfoHeader({ resumeData }: SectionProps) {
     if (photo === null) setPhotoSrc("");
     return () => URL.revokeObjectURL(objectUrl);
   }, [photo]);
+
+  if (!email?.length || !phone?.length || !city?.length || !country?.length) return null;
 
   return (
     <div className="flex items-center justify-between pb-4 border-b-2" style={{ borderColor: colorHex }}>
