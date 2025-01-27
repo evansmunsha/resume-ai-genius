@@ -21,68 +21,32 @@ export async function createCheckoutSession(priceId: string): Promise<string | v
     }
 
     // Ensure necessary environment variables are set
-    if (!env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_MONTHLY || !env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_PLUS_MONTHLY) {
-      throw new Error("Environment variables for price IDs are missing.");
+    if (!env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_MONTHLY || 
+        !env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_PLUS_MONTHLY) {
+      throw new Error("Subscription price IDs are missing.");
     }
 
     // Determine the plan type based on the price ID
     const isPro = priceId === env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_MONTHLY;
     const isEnterprise = priceId === env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_PLUS_MONTHLY;
-    const planName = isEnterprise ? "enterprise" : isPro ? "pro" : "free";
+
+    let planName = "free"; // Default plan name
+    if (isPro) {
+      planName = "pro";
+    } else if (isEnterprise) {
+      planName = "enterprise";
+    }
 
     // Set the plan description based on the selected type
-    const description = isEnterprise
-      ? "Unlimited resumes & cover letters with advanced AI features. Includes all premium templates, design customization, and priority support."
-      : "Create professional resumes & cover letters with AI assistance. Includes 3 documents each, AI tools, and premium templates.";
+    const description = isPro || isEnterprise 
+      ? "One-time payment for premium access to our Pro or Enterprise plans, which include additional features and support." 
+      : "Free access with limited features.";
 
-    // Trial duration is set to 3 days
-    const TRIAL_DURATION = 3 * 24 * 60 * 60; // 3 days in seconds
-
-    // Check if the user has an existing subscription or has had one in the past
-    const existingSubscription = await prisma.userSubscription.findUnique({
-      where: { userId: user.id },
-    });
-
-    // Prevent creating checkout for active trials
-    if (existingSubscription) {
-      if (
-        (isPro && existingSubscription.proTrialEnd && new Date(existingSubscription.proTrialEnd) > new Date()) ||
-        (isEnterprise && existingSubscription.enterpriseTrialEnd && new Date(existingSubscription.enterpriseTrialEnd) > new Date())
-      ) {
-        throw new Error("You already have an active trial for this plan");
-      }
-    }
-
-    let trialEnd: number | undefined;
-    if (existingSubscription) {
-      // Separate trials for Pro and Enterprise tiers
-      if (isPro && !existingSubscription.proTrialExpired) {
-        trialEnd = Math.floor(Date.now() / 1000) + TRIAL_DURATION;
-      } else if (isEnterprise && !existingSubscription.enterpriseTrialExpired) {
-        trialEnd = Math.floor(Date.now() / 1000) + TRIAL_DURATION;
-      }
-    } else {
-      // Check if any subscription exists with ANY of user's email addresses
-      const emailUsed = await prisma.userSubscription.findFirst({
-        where: { 
-          OR: user.emailAddresses.map(email => ({ userEmail: email.emailAddress }))
-        }
-      });
-
-      if (emailUsed) {
-        // If email was ever used before, no trial is offered
-        console.log("Email previously used, no trial offered");
-        trialEnd = undefined;
-      } else {
-        trialEnd = Math.floor(Date.now() / 1000) + TRIAL_DURATION; // 3 days from now for new users
-      }
-    }
-
-    // Create a new Stripe Checkout session
+    // Create a new Stripe Checkout session for one-time payment
     const session = await stripe.checkout.sessions.create({
-      mode: "subscription",
+      mode: "payment", // Change to payment mode
       line_items: [{ 
-        price: priceId,
+        price: priceId, // Use the price ID for the one-time payment
         quantity: 1 
       }],
       success_url: `${env.NEXT_PUBLIC_BASE_URL}/billing/success`,
@@ -94,16 +58,12 @@ export async function createCheckoutSession(priceId: string): Promise<string | v
         planName,
         description,
       },
-      subscription_data: {
-        metadata: { userId: user.id },
-        trial_end: trialEnd,
-      },
       custom_text: {
         terms_of_service_acceptance: {
           message: `I have read the Resume & Cover Letter AI Genius's [terms of service](${env.NEXT_PUBLIC_BASE_URL}/tos) and agree to them.`,
         },
         submit: {
-          message: `Get ${planName.charAt(0).toUpperCase() + planName.slice(1)} Access`,
+          message: `Get Premium Access`,
         },
       },
       consent_collection: {
@@ -112,8 +72,7 @@ export async function createCheckoutSession(priceId: string): Promise<string | v
       billing_address_collection: "auto",
       payment_method_types: ["card"],
       phone_number_collection: { enabled: false },
-      allow_promotion_codes: false,
-    })
+    });
 
     if (!session?.url) {
       throw new Error("No checkout URL returned");

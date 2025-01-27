@@ -20,10 +20,12 @@ export function fileReplacer(key: unknown, value: unknown) {
     : value;
 }
 
+
 export function mapToResumeValues(data: ResumeServerData): ResumeValues {
   return {
     id: data.id,
     title: data.title || undefined,
+    selectedTemplate: data.selectedTemplate || "startup",
     description: data.description || undefined,
     photo: data.photoUrl || undefined,
     firstName: data.firstName || undefined,
@@ -47,6 +49,7 @@ export function mapToResumeValues(data: ResumeServerData): ResumeValues {
       endDate: edu.endDate?.toISOString().split("T")[0],
     })),
     skills: data.skills,
+    languages: data.languages,
     borderStyle: data.borderStyle,
     colorHex: data.colorHex,
     summary: data.summary || undefined,

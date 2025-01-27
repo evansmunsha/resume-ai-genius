@@ -1,5 +1,11 @@
 import { z } from "zod";
 
+const dateSchema = z.union([
+  z.string(),
+  z.date().transform(date => date.toISOString()),
+  z.null()
+]).optional();
+
 export const optionalString = z.string().trim().optional().or(z.literal(""));
 
 export const generalInfoSchema = z.object({
@@ -37,11 +43,11 @@ export const workExperienceSchema = z.object({
   workExperiences: z
     .array(
       z.object({
-        position: optionalString,
-        company: optionalString,
-        startDate: optionalString,
-        endDate: optionalString,
-        description: optionalString,
+        position: z.string().optional(),
+        company: z.string().optional(),
+        startDate: dateSchema,
+        endDate: dateSchema,
+        description: z.string().optional(),
       }),
     )
     .optional(),
@@ -57,10 +63,10 @@ export const educationSchema = z.object({
   educations: z
     .array(
       z.object({
-        degree: optionalString,
-        school: optionalString,
-        startDate: optionalString,
-        endDate: optionalString,
+        degree: z.string().optional(),
+        school: z.string().optional(),
+        startDate: dateSchema,
+        endDate: dateSchema,
       }),
     )
     .optional(),
@@ -74,6 +80,12 @@ export const skillsSchema = z.object({
 
 export type SkillsValues = z.infer<typeof skillsSchema>;
 
+export const languagesSchema = z.object({
+  languages: z.array(z.string().trim()).optional(),
+});
+
+export type LanguagesValues = z.infer<typeof languagesSchema>;
+
 export const summarySchema = z.object({
   summary: optionalString,
 });
@@ -82,23 +94,26 @@ export type SummaryValues = z.infer<typeof summarySchema>;
 
 
 
-
+// Resume schema using the certification schema CertificationsForm
 export const resumeSchema = z.object({
-  ...generalInfoSchema.shape,
   ...personalInfoSchema.shape,
   ...workExperienceSchema.shape,
   ...educationSchema.shape,
   ...summarySchema.shape,
   ...skillsSchema.shape,
+  ...languagesSchema.shape,
   colorHex: optionalString,
   borderStyle: optionalString,
+  selectedTemplate: z.string().optional(),
 });
 
+// Update the ResumeValues type
 export type ResumeValues = Omit<z.infer<typeof resumeSchema>, "photo"> & {
   id?: string;
   photo?: File | string | null;
+  selectedTemplate?: string;
+  languages?: string[];
 };
-
 
 export const generateWorkExperienceSchema = z.object({
   description: z
@@ -117,6 +132,7 @@ export const generateSummarySchema = z.object({
   ...workExperienceSchema.shape,
   ...educationSchema.shape,
   ...skillsSchema.shape,
+  ...languagesSchema.shape,
 });
 
 export type GenerateSummaryInput = z.infer<typeof generateSummarySchema>;
@@ -342,4 +358,3 @@ export const generateOpeningSchema = z.object({
 });
 
 export type GenerateOpeningInput = z.infer<typeof generateOpeningSchema>;
-

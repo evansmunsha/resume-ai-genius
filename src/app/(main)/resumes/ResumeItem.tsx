@@ -1,7 +1,6 @@
 "use client";
 
 import LoadingButton from "@/components/LoadingButton";
-import ResumePreview from "@/components/ResumePreview";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -26,6 +25,7 @@ import Link from "next/link";
 import { useRef, useState, useTransition } from "react";
 import { useReactToPrint } from "react-to-print";
 import { deleteResume } from "./actions";
+import ResumePreview from "@/components/ResumePreview";
 
 interface ResumeItemProps {
   resume: ResumeServerData;

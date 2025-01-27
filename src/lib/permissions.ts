@@ -9,7 +9,7 @@ export function canCreateResume(
     case "FREE":
       return totalCount < 1;
     case "PRO":
-      return totalCount < 3;
+      return totalCount < 5;
     case "ENTERPRISE":
       return true;
     default:
@@ -29,7 +29,7 @@ export function canCreateCoverLetter(
     case "FREE":
       return totalCount < 1;
     case "PRO":
-      return totalCount < 3;
+      return totalCount < 5;
     case "ENTERPRISE":
       return true;
     default:

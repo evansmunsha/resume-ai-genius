@@ -8,8 +8,13 @@ import { auth } from "@clerk/nextjs/server";
 import { del, put } from "@vercel/blob";
 import path from "path";
 
+
 export async function saveResume(values: ResumeValues) {
   const { id } = values;
+
+  if (id === undefined) {
+    console.warn("id is not defined in values");
+  }
 
   console.log("received values", values);
 
@@ -35,7 +40,9 @@ export async function saveResume(values: ResumeValues) {
   }
 
   const existingResume = id
-    ? await prisma.resume.findUnique({ where: { id, userId } })
+    ? await prisma.resume.findUnique({ 
+        where: { id, userId },
+      })
     : null;
 
   if (id && !existingResume) {
@@ -71,52 +78,54 @@ export async function saveResume(values: ResumeValues) {
     newPhotoUrl = null;
   }
 
-  if (id) {
-    return prisma.resume.update({
-      where: { id },
-      data: {
-        ...resumeValues,
-        photoUrl: newPhotoUrl,
-        workExperiences: {
-          deleteMany: {},
-          create: workExperiences?.map((exp) => ({
-            ...exp,
-            startDate: exp.startDate ? new Date(exp.startDate) : undefined,
-            endDate: exp.endDate ? new Date(exp.endDate) : undefined,
-          })),
-        },
-        educations: {
-          deleteMany: {},
-          create: educations?.map((edu) => ({
-            ...edu,
-            startDate: edu.startDate ? new Date(edu.startDate) : undefined,
-            endDate: edu.endDate ? new Date(edu.endDate) : undefined,
-          })),
-        },
-        updatedAt: new Date(),
-      },
-    });
-  } else {
-    return prisma.resume.create({
-      data: {
-        ...resumeValues,
-        userId,
-        photoUrl: newPhotoUrl,
-        workExperiences: {
-          create: workExperiences?.map((exp) => ({
-            ...exp,
-            startDate: exp.startDate ? new Date(exp.startDate) : undefined,
-            endDate: exp.endDate ? new Date(exp.endDate) : undefined,
-          })),
-        },
-        educations: {
-          create: educations?.map((edu) => ({
-            ...edu,
-            startDate: edu.startDate ? new Date(edu.startDate) : undefined,
-            endDate: edu.endDate ? new Date(edu.endDate) : undefined,
-          })),
-        },
-      },
-    });
-  }
+  const resume = await prisma.resume.upsert({
+    where: {
+      id: id || "",
+    },
+    create: {
+      ...resumeValues,
+      userId,
+      photoUrl: newPhotoUrl,
+      workExperiences: workExperiences ? {
+        create: workExperiences.map((exp) => ({
+          ...exp,
+          startDate: exp.startDate ? new Date(exp.startDate) : undefined,
+          endDate: exp.endDate ? new Date(exp.endDate) : undefined,
+        })),
+      } : undefined,
+      educations: educations ? {
+        create: educations.map((edu) => ({
+          ...edu,
+          startDate: edu.startDate ? new Date(edu.startDate) : undefined,
+          endDate: edu.endDate ? new Date(edu.endDate) : undefined,
+        })),
+      } : undefined,
+    },
+    update: {
+      ...resumeValues,
+      photoUrl: newPhotoUrl,
+      workExperiences: workExperiences ? {
+        deleteMany: {},
+        create: workExperiences.map((exp) => ({
+          ...exp,
+          startDate: exp.startDate ? new Date(exp.startDate) : undefined,
+          endDate: exp.endDate ? new Date(exp.endDate) : undefined,
+        })),
+      } : undefined,
+      educations: educations ? {
+        deleteMany: {},
+        create: educations.map((edu) => ({
+          ...edu,
+          startDate: edu.startDate ? new Date(edu.startDate) : undefined,
+          endDate: edu.endDate ? new Date(edu.endDate) : undefined,
+        })),
+      } : undefined,
+    },
+    include: {
+      workExperiences: true,
+      educations: true,
+    },
+  });
+
+  return resume;
 }

@@ -14,16 +14,14 @@ export default function Page() {
       <p>
         Welcome to Resume & Cover Letter AI Genius. These Terms of Service (&quot;Terms&quot;)
         govern your use of our website and services, including any paid
-        subscription plans. By accessing or using Resume & Cover Letter AI Genius (&quot;the
+        lifetime deal. By accessing or using Resume & Cover Letter AI Genius (&quot;the
         Service&quot;), you agree to be bound by these Terms. If you do not
         agree to these Terms, do not use the Service.
       </p>
       <h2 className="text-xl font-semibold">1. Overview</h2>
       <p>
         Resume & Cover Letter AI Genius is a SaaS platform that provides resume and cover letter building tools
-        powered by artificial intelligence. We offer both a free tier and paid
-        subscription plans (&quot;Paid Plans&quot;). Payments for Paid Plans are
-        processed through Stripe, our third-party payment provider.
+        powered by artificial intelligence. We offer a lifetime deal that provides unlimited access to all features without recurring payments.
       </p>
       <h2 className="text-xl font-semibold">2. Eligibility</h2>
       <p>
@@ -33,52 +31,33 @@ export default function Page() {
       </p>
       <h2 className="text-xl font-semibold">3. Account Registration</h2>
       <p>
-        To access some features of the Service, including Paid Plans, you must
+        To access some features of the Service, you must
         create an account. When registering, you agree to provide accurate and
         current information. You are responsible for maintaining the security of
         your account and password. We are not liable for any loss or damage
         resulting from unauthorized access to your account.
       </p>
-      <h2 className="text-xl font-semibold">4. Free Tier</h2>
+      <h2 className="text-xl font-semibold">4. Lifetime Deal</h2>
       <p>
-        We offer a free tier of the Service that includes limited access to
-        certain features. While on the free tier, you can create one resume and one cover letter with
-        basic functionality. Some advanced features, templates, and AI tools may only be
-        available to Paid Plan subscribers.
+        We offer a lifetime deal for the Service that provides unlimited access to all features without recurring payments. 
+        Once purchased, you will have access to all current and future features of the platform for life.
       </p>
-      <h2 className="text-xl font-semibold">5. Paid Subscription Plans</h2>
+      <h2 className="text-xl font-semibold">5. Lifetime Deal</h2>
       <p>
-        If you choose to upgrade to a Paid Plan, you will be required to provide
-        payment details via Stripe. All payments are processed securely by
-        Stripe in accordance with their terms and privacy policy. By
-        subscribing, you agree to the following terms:
+        By purchasing the lifetime deal, you will gain unlimited access to the Service without any recurring fees. 
+        Payments for the lifetime deal are processed through Stripe, our third-party payment provider.
       </p>
       <ul className="list-inside list-disc">
         <li>
-          <strong>Subscription Fees:</strong> Fees for Paid Plans are billed on
-          a recurring basis (monthly or annually) depending on the subscription
-          plan you select. Prices may vary depending on your location and are
-          subject to change with prior notice.
+          <strong>One-Time Payment:</strong> The lifetime deal requires a one-time payment, and you will not be billed again.
         </li>
         <li>
-          <strong>Payment Method:</strong> You must provide a valid payment
-          method (credit card, debit card, etc.) to subscribe to a Paid Plan.
-          Your subscription will automatically renew unless you cancel before
-          the renewal date.
-        </li>
-        <li>
-          <strong>Refund Policy:</strong> Resume & Cover Letter AI Genius does not offer
-          refunds for any payments already processed. However, you can cancel
-          your subscription at any time, and you will continue to have access to
-          the Paid Plan features until the end of your current billing period.
+          <strong>Refund Policy:</strong> Resume & Cover Letter AI Genius does not offer refunds for the lifetime deal once the payment is processed.
         </li>
       </ul>
-      <h2 className="text-xl font-semibold">6. Cancelation of Subscription</h2>
+      <h2 className="text-xl font-semibold">6. Cancelation of Lifetime Deal</h2>
       <p>
-        You can cancel your subscription at any time by logging into your
-        account and following the cancelation process. Cancelation will take
-        effect at the end of the current billing cycle, and you will not be
-        charged further.
+        As this is a lifetime deal, there are no subscriptions to cancel. Your access to the Service is permanent.
       </p>
       <h2 className="text-xl font-semibold">
         7. Changes to Services and Pricing
@@ -86,9 +65,8 @@ export default function Page() {
       <p>
         We reserve the right to modify or discontinue the Service (or any part
         of it) at any time, with or without notice. We may also adjust pricing
-        for Paid Plans; however, any price changes will not affect your current
-        subscription period and will be communicated before taking effect on
-        renewals.
+        for the lifetime deal; however, any price changes will not affect your current
+        access to the Service.
       </p>
       <h2 className="text-xl font-semibold">8. License to Use the Service</h2>
       <p>
@@ -175,9 +153,7 @@ export default function Page() {
 
       <h2 className="text-xl font-semibold">19. Document Storage and Security</h2>
       <p>
-        Documents created using our Service are stored on our secure servers. Free tier users&apos; documents may be 
-        deleted after 30 days of inactivity. Premium users&apos; documents are retained for the duration of their 
-        subscription. We recommend maintaining your own backup copies of important documents. We employ industry-standard 
+        Documents created using our Service are stored on our secure servers. We employ industry-standard 
         security measures to protect your documents, but cannot guarantee absolute security.
       </p>
 
@@ -197,8 +173,7 @@ export default function Page() {
       </p>
       <h2 className="text-xl font-semibold">22. Export and Portability</h2>
       <p>
-        You may export your resumes and cover letters in PDF format. If you cancel your subscription, 
-        you will have 30 days to export your documents before they may become inaccessible.
+        You may export your resumes and cover letters in PDF format. 
       </p>
       <h2 className="text-xl font-semibold">23. Contact Us</h2>
       <p>

@@ -1,4 +1,132 @@
-/* eslint-disable no-unused-vars */
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { Check } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { PricingSection } from '@/components/PricingSection';
+
+const NewLandingPage = () => {
+  return (
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <section className="py-20 bg-gradient-to-b from-blue-950 to-blue-900 text-white text-center">
+        <h1 className="text-4xl font-bold">Welcome to Your Resume Builder</h1>
+        <p className="mt-4 text-lg">Create stunning resumes in minutes!</p>
+        <Link href="/resumes" className="w-full">
+          <Button className="mt-6 bg-green-500 hover:bg-green-600">Get Started</Button>
+        </Link>
+      </section>
+
+
+      {/* Features Section */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto max-w-6xl px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">Features</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="border p-6 rounded-lg shadow-md">
+              <Check className="w-6 h-6 text-green-500" />
+              <h3 className="text-xl font-semibold">AI-Powered</h3>
+              <p>Get AI-generated content tailored to your skills.</p>
+            </div>
+            <div className="border p-6 rounded-lg shadow-md">
+              <Check className="w-6 h-6 text-green-500" />
+              <h3 className="text-xl font-semibold">ATS-Friendly</h3>
+              <p>Ensure your resume gets past Applicant Tracking Systems.</p>
+
+            </div>
+            <div className="border p-6 rounded-lg shadow-md">
+              <Check className="w-6 h-6 text-green-500" />
+              <h3 className="text-xl font-semibold">Custom Templates</h3>
+              <p>Choose from a variety of professional templates.</p>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      {/* Image Section */}
+      <section className="py-20 bg-gray-50 text-center">
+        <h2 className="text-3xl font-bold mb-4">Example Resumes</h2>
+        <Image src="/path/to/your/image.jpg" alt="Resume example" width={600} height={400} />
+      </section>
+
+      {/* GIF Section */}
+      <section className="py-20 bg-gray-50 text-center">
+        <h2 className="text-3xl font-bold mb-4">See It in Action</h2>
+        <img
+          src="/path/to/your/animation.gif"  // Replace with your actual GIF path
+          alt="Demo of the tool in action"
+          className="mx-auto"
+          width={600}
+        />
+        <p className="mt-4 text-lg text-gray-700">
+          Watch how our tool simplifies your resume creation process!
+        </p>
+      </section>
+
+      {/* Pricing Section */}
+      <section className="py-20 bg-gray-50 text-center">
+        {/* Pricing Section Introduction */}
+        <section className="py-20 bg-white text-center">
+          <h2 className="text-3xl font-bold mb-4">Affordable Pricing Plans</h2>
+          <p className="text-lg">Choose a plan that suits your needs and start building your professional resume today!</p>
+        </section>
+        <PricingSection />
+      </section>
+    </div>
+  );
+};
+
+export default NewLandingPage;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 
 "use client"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -12,7 +140,7 @@ import { DemoModal } from "@/components/DemoModal"
 import dynamic from 'next/dynamic'
 import { SocialShare } from "@/components/SocialShare"
 
-// Dynamically import heavy components
+
 const PricingSection = dynamic(() => 
   import('@/components/PricingSection').then(mod => mod.PricingSection), {
     loading: () => <div className="animate-pulse h-32 bg-gray-100 rounded" />
@@ -36,7 +164,7 @@ export default function LandingPage() {
   
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
+     
       <section className="relative py-20 px-4 bg-gradient-to-b from-blue-950 to-blue-900">
         <div className="container mx-auto max-w-6xl">
           <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -86,7 +214,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Why It Matters Section */}
+      
       <section className="py-20 bg-gradient-to-b from-white to-gray-50">
         <div className="container mx-auto max-w-6xl px-4">
           <div className="text-center mb-12">
@@ -98,7 +226,7 @@ export default function LandingPage() {
             </p>
           </div>
 
-          {/* Statistics Grid */}
+         
           <div className="grid md:grid-cols-3 gap-8 mb-16">
             <div className="bg-white p-6 rounded-lg shadow-md text-center">
               <div className="text-3xl font-bold text-red-500 mb-2">75%</div>
@@ -114,7 +242,7 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {/* Features Grid */}
+          
           <div className="grid md:grid-cols-2 gap-12">
             <div className="space-y-6">
               <h3 className="text-2xl font-bold text-gray-900">Why AI-Powered Documents Matter</h3>
@@ -184,7 +312,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Trust Signals */}
+      
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto max-w-6xl px-4">
           <div className="text-center mb-8">
@@ -200,7 +328,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Features Section */}
+      
       <section className="py-20">
         <div className="container mx-auto max-w-6xl px-4">
           <div className="text-center mb-12">
@@ -241,7 +369,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Testimonials Section */}
+      
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto max-w-6xl px-4">
           <h2 className="text-3xl font-bold text-center mb-12">What Our Users Say</h2>
@@ -290,12 +418,12 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Pricing Section */}
+      
       <section className="py-20">
         <PricingSection />
       </section>
 
-      {/* Resume & Cover Letter Guide Section */}
+      
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto max-w-6xl px-4">
           <div className="text-center mb-16">
@@ -308,7 +436,7 @@ export default function LandingPage() {
           </div>
 
           <div className="grid lg:grid-cols-2 gap-12">
-            {/* Resume Guide */}
+            
             <div className="space-y-8">
               <h3 className="text-2xl font-bold text-blue-900">Resume Writing Guide</h3>
               
@@ -377,7 +505,7 @@ export default function LandingPage() {
               </div>
             </div>
 
-            {/* Cover Letter Guide */}
+           
             <div className="space-y-8">
               <h3 className="text-2xl font-bold text-blue-900">Cover Letter Mastery</h3>
               
@@ -434,7 +562,7 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {/* Quick Tips Box */}
+          
           <div className="mt-12 bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg p-8 text-white">
             <h3 className="text-xl font-bold mb-4">💡 Pro Tips for Success</h3>
             <div className="grid md:grid-cols-3 gap-6">
@@ -467,7 +595,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* FAQ Section */}
+      
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto max-w-3xl px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
@@ -507,7 +635,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Feedback Section*/}
+      
       <section className="py-20 bg-white">
         <div className="container mx-auto max-w-3xl px-4">
           <h2 className="text-3xl font-bold text-center mb-8">We Value Your Feedback</h2>
@@ -522,7 +650,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* CTA Section */}
+      
       <section className="py-20 bg-blue-950 text-white">
         <div className="container mx-auto max-w-4xl px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
@@ -537,7 +665,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Add Newsletter Section */}
+      
       <section className="bg-gray-50 py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
@@ -551,7 +679,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Add new Why Standout Section */}
+      
       <section className="py-20 bg-gradient-to-b from-white to-gray-50">
         <div className="container mx-auto max-w-6xl px-4">
           <div className="text-center mb-12">
@@ -619,7 +747,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Social Proof Section */}
+      
       <section className="py-16 bg-white">
         <div className="container mx-auto max-w-6xl px-4">
           <div className="text-center mb-12">
@@ -640,12 +768,12 @@ export default function LandingPage() {
                 </div>
               </div>
             </div>
-            {/* Add 2 more success stories */}
+            
           </div>
         </div>
       </section>
 
-      {/* Call to Action Section */}
+      
       <section className="py-20 bg-gradient-to-br from-blue-900 to-blue-800 text-white">
         <div className="container mx-auto max-w-4xl px-4 text-center">
           <h2 className="text-4xl font-bold mb-6">
@@ -668,7 +796,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Footer */}
+      
       <footer className="py-12 bg-gray-900 text-gray-400">
         <div className="container mx-auto max-w-6xl px-4">
           <div className="grid md:grid-cols-4 gap-8">
@@ -694,4 +822,4 @@ export default function LandingPage() {
       </footer>
     </div>
   )
-}
+}  */

@@ -11,21 +11,22 @@ import { createCheckoutSession } from "./actions";
 
 interface SubscriptionData {
   status: "FREE" | "PRO" | "ENTERPRISE";
-  proTrialEndsAt: string | null;
-  enterpriseTrialEndsAt: string | null;
 }
 
 const premiumFeatures = [
   "AI tools",
-  "Up to 3 resumes",
-  "Up to 3 cover letters",
+  "Up to 5 resumes",
+  "Up to 5 cover letters",
+  "AI generation features",
+  "Access to premium templates",
 ];
 
 const premiumPlusFeatures = [
-  "Infinite resumes",
-  "Infinite cover letters",
-  "Design customizations",
+  "Unlimited resumes",
+  "Unlimited cover letters",
+  "Custom design options",
   "Advanced AI features",
+  "Priority support",
 ];
 
 export default function PremiumModal() {
@@ -55,19 +56,6 @@ export default function PremiumModal() {
   async function handlePremiumClick(priceId: string) {
     try {
       setLoading(true);
-      
-      if (
-        (subscriptionData?.proTrialEndsAt && priceId === env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_MONTHLY) ||
-        (subscriptionData?.enterpriseTrialEndsAt && priceId === env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_PLUS_MONTHLY)
-      ) {
-        toast({
-          title: "Trial Already Active",
-          description: "You already have an active trial for this plan.",
-          variant: "destructive",
-        });
-        return;
-      }
-
       const redirectUrl = await createCheckoutSession(priceId);
       if (redirectUrl) {
         window.location.href = redirectUrl;
@@ -104,13 +92,17 @@ export default function PremiumModal() {
           <DialogTitle>Resume & Cover Letter AI Genius Premium</DialogTitle>
         </DialogHeader>
         <div className="space-y-6">
-          <p>Get a premium subscription to unlock more features for both resumes and cover letters.</p>
+          <p>Get a one time deal to unlock more features for both resumes and cover letters.</p>
           <div className="flex">
-            <div className="flex w-1/2 flex-col space-y-5">
+            <div className="flex w-1/2 flex-col space-y-2">
               <h3 className="text-center text-lg font-bold">Premium</h3>
-              <div className="text-center">
-                <span className="text-3xl font-bold">$3</span>
-                <span className="text-gray-500">/month</span>
+              <div className="text-center flex flex-col items-center">
+                <h3 className="text-xl font-bold">Lifetime Deal</h3>
+                <div>
+                  <span className="text-gray-500 font-bold text-lg line-through">$330</span>
+                  <span className="text-3xl font-bold text-green-500">$199</span>
+                </div>
+                <span className="text-gray-500">One-time payment. No Subscription.</span>
               </div>
               <ul className="list-inside space-y-2">
                 {premiumFeatures.map((feature) => (
@@ -132,13 +124,18 @@ export default function PremiumModal() {
               </Button>
             </div>
             <div className="mx-6 border-l" />
-            <div className="flex w-1/2 flex-col space-y-5">
+            <div className="flex w-1/2 flex-col space-y-2">
               <h3 className="bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-center text-lg font-bold text-transparent">
                 Premium Plus
               </h3>
-              <div className="text-center">
-                <span className="text-3xl font-bold">$5</span>
-                <span className="text-gray-500">/month</span>
+              <div className="text-center flex flex-col items-center">
+                <h3 className="text-xl font-bold">Lifetime Deal</h3>
+                <div>
+
+                  <span className="text-gray-500 font-bold text-lg line-through">$450</span>
+                  <span className="text-3xl font-bold text-green-500">$299</span>
+                </div>
+                <span className="text-gray-500">One-time payment. No Subscription.</span>
               </div>
               <ul className="list-inside space-y-2">
                 {premiumPlusFeatures.map((feature) => (

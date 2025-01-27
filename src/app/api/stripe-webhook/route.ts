@@ -128,25 +128,6 @@ async function handleSubscriptionCreatedOrUpdated(subscription: Stripe.Subscript
       stripeCancelAtPeriodEnd: subscription.cancel_at_period_end,
       subscriptionStatus,
       subscriptionEndDate: new Date(subscription.current_period_end * 1000),
-      // Set trial information based on the subscription type
-      proTrialStart: isPro && subscription.trial_start
-        ? new Date(subscription.trial_start * 1000)
-        : null,
-      proTrialEnd: isPro && subscription.trial_end
-        ? new Date(subscription.trial_end * 1000)
-        : null,
-      proTrialExpired: isPro && subscription.trial_end 
-        ? now > new Date(subscription.trial_end * 1000) 
-        : false,
-      enterpriseTrialStart: isEnterprise && subscription.trial_start
-        ? new Date(subscription.trial_start * 1000)
-        : null,
-      enterpriseTrialEnd: isEnterprise && subscription.trial_end
-        ? new Date(subscription.trial_end * 1000)
-        : null,
-      enterpriseTrialExpired: isEnterprise && subscription.trial_end
-        ? now > new Date(subscription.trial_end * 1000)
-        : false,
     },
     update: {
       stripeSubscriptionId: subscription.id,
@@ -155,25 +136,6 @@ async function handleSubscriptionCreatedOrUpdated(subscription: Stripe.Subscript
       stripeCancelAtPeriodEnd: subscription.cancel_at_period_end,
       subscriptionStatus,
       subscriptionEndDate: new Date(subscription.current_period_end * 1000),
-      // Update trial information based on the subscription type
-      proTrialStart: isPro && subscription.trial_start
-        ? new Date(subscription.trial_start * 1000)
-        : undefined,
-      proTrialEnd: isPro && subscription.trial_end
-        ? new Date(subscription.trial_end * 1000)
-        : undefined,
-      proTrialExpired: isPro && subscription.trial_end 
-        ? now > new Date(subscription.trial_end * 1000) 
-        : undefined,
-      enterpriseTrialStart: isEnterprise && subscription.trial_start
-        ? new Date(subscription.trial_start * 1000)
-        : undefined,
-      enterpriseTrialEnd: isEnterprise && subscription.trial_end
-        ? new Date(subscription.trial_end * 1000)
-        : undefined,
-      enterpriseTrialExpired: isEnterprise && subscription.trial_end
-        ? now > new Date(subscription.trial_end * 1000)
-        : undefined,
     },
   });
 
@@ -195,8 +157,6 @@ async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
     data: {
       subscriptionStatus: "free",
       subscriptionEndDate: null,
-      proTrialExpired: true,
-      enterpriseTrialExpired: true,
     },
   });
 
@@ -205,7 +165,7 @@ async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
 
 // Helper function to determine the subscription status
 function determineSubscriptionStatus(subscription: Stripe.Subscription): 'free' | 'pro' | 'enterprise' {
-  if (subscription.status === 'trialing' || subscription.status === 'active') {
+  if (subscription.status === 'active') {
     const priceId = subscription.items.data[0].price.id;
     if (priceId === env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_PLUS_MONTHLY) {
       return 'enterprise';

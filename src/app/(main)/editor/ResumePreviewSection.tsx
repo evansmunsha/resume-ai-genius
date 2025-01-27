@@ -1,27 +1,40 @@
-import ResumePreview from "@/components/ResumePreview";
+"use client";
+
+import { TemplateId, templates } from "@/components/templates/index";
 import { cn } from "@/lib/utils";
 import { ResumeValues } from "@/lib/validation";
-import BorderStyleButton from "./BorderStyleButton";
+import { Dispatch, SetStateAction } from "react";
 import ColorPicker from "./ColorPicker";
+import BorderStyleButton from "./BorderStyleButton";
+
 
 interface ResumePreviewSectionProps {
   resumeData: ResumeValues;
-  setResumeData: (data: ResumeValues) => void;
+  setResumeData: Dispatch<SetStateAction<ResumeValues>>;
+  selectedTemplate: TemplateId;
+  onTemplateChange: (template: TemplateId) => void;
   className?: string;
 }
 
 export default function ResumePreviewSection({
   resumeData,
   setResumeData,
+  selectedTemplate,
   className,
 }: ResumePreviewSectionProps) {
+  const Template = templates[selectedTemplate]?.component;
+
+  if (!Template) {
+    return <div>Template not found</div>;
+  }
+
   return (
     <div
       className={cn("group relative hidden w-full md:flex md:w-1/2", className)}
     >
-      <div className="absolute left-1 top-1 flex flex-none flex-col gap-3 opacity-50 transition-opacity group-hover:opacity-100 lg:left-3 lg:top-3 xl:opacity-100">
+      <div className="absolute right-6 top-4 z-10 flex items-center gap-2 opacity-0 transition-opacity group-hover:opacity-100">
         <ColorPicker
-          color={resumeData.colorHex}
+          color={resumeData?.colorHex}
           onChange={(color) =>
             setResumeData({ ...resumeData, colorHex: color.hex })
           }
@@ -34,8 +47,7 @@ export default function ResumePreviewSection({
         />
       </div>
       <div className="flex w-full justify-center overflow-y-auto bg-secondary p-3">
-      
-        <ResumePreview
+        <Template 
           resumeData={resumeData}
           className="max-w-2xl shadow-md"
         />

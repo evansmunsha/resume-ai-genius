@@ -14,6 +14,7 @@ model Resume {
 
   title       String?
   description String?
+  selectedTemplate String @default("minimal")
 
   photoUrl    String?
   colorHex    String  @default("#000000")
@@ -27,9 +28,12 @@ model Resume {
   phone       String?
   email       String?
 
+  certifications Certification[]
+
   workExperiences WorkExperience[]
   educations      Education[]
   skills          String[]
+  languages       String[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -70,8 +74,22 @@ model Education {
   updatedAt DateTime @updatedAt
 
   @@map("educations")
-}
 
+
+}
+model Certification {
+  id          String   @id @default(cuid())
+  name        String?
+  issuer      String?
+  dateObtained DateTime?
+  expiryDate  DateTime?
+  description String?
+  url         String?
+  resumeId    String
+  resume      Resume   @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
 
 
 model UserSubscription {
@@ -84,29 +102,14 @@ model UserSubscription {
   stripeCurrentPeriodEnd  DateTime
   stripeCancelAtPeriodEnd Boolean  @default(false)
   
-  stripeDiscountApplied   Boolean   @default(false)
-  discountUsedAt          DateTime?
-
   subscriptionStatus      String   @default("free")
   subscriptionEndDate     DateTime?
-
-  // Separate trials for each paid plan
-  proTrialStart           DateTime?
-  proTrialEnd             DateTime?
-  proTrialExpired         Boolean   @default(false)
-
-  enterpriseTrialStart    DateTime?
-  enterpriseTrialEnd      DateTime?
-  enterpriseTrialExpired  Boolean   @default(false)
 
   createdAt               DateTime @default(now())
   updatedAt               DateTime @updatedAt
 
   @@map("user_subscriptions")
 }
-
-
-
 
 model CoverLetter {
   id     String @id @default(cuid())
@@ -150,7 +153,6 @@ model CoverLetter {
   @@map("cover_letters")
 }
 
-
 model RecipientInfo {
   id              String     @id @default(cuid())
   recipientName   String
@@ -162,7 +164,6 @@ model RecipientInfo {
   coverLetter     CoverLetter @relation(fields: [coverLetterId], references: [id], onDelete: Cascade)
   @@map("recipient_info")
 }
-
 
 model JobDescription {
   id                String   @id @default(cuid())
@@ -209,6 +210,8 @@ model Achievement {
   coverLetterId String
   coverLetter   CoverLetter @relation(fields: [coverLetterId], references: [id], onDelete: Cascade)
 }
+
+
 
 model Feedback {
   id        String   @id @default(cuid())

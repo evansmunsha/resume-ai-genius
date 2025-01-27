@@ -29,7 +29,7 @@ export default async function ResumesPage(props: any) {
   const totalPages = Math.ceil(totalCount / 12);
 
   return (
-    <main className="mx-auto w-full max-w-7xl space-y-6 px-3 py-6">
+    <main className="mx-auto w-full max-w-7xl space-y-3 px-3 py-3">
       <CreateResumeButton
         canCreate={canCreateResume(subscriptionLevel, totalCount)}
       />

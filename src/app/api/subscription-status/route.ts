@@ -23,30 +23,12 @@ export async function GET() {
       console.log("No subscription found, returning free status");
       return NextResponse.json({
         status: 'FREE',
-        proTrialEndsAt: null,
-        enterpriseTrialEndsAt: null,
-        trialExpired: false,
-        trialEndingSoon: false
       });
     }
-    
+
     const now = new Date();
-    const HOURS_24 = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
-    // Check if trial is ending soon
-    const proTrialEndingSoon = subscription.proTrialEnd ? 
-      (new Date(subscription.proTrialEnd).getTime() - now.getTime() <= HOURS_24 && 
-       new Date(subscription.proTrialEnd).getTime() > now.getTime()) : 
-      false;
-
-    const isProTrialActive = subscription.proTrialEnd ? 
-      (new Date(subscription.proTrialEnd) > now && !subscription.proTrialExpired) : 
-      false;
-
-    const isEnterpriseTrialActive = subscription.enterpriseTrialEnd ? 
-      (new Date(subscription.enterpriseTrialEnd) > now && !subscription.enterpriseTrialExpired) : 
-      false;
-    
+    // Determine subscription status
     let status: 'FREE' | 'PRO' | 'ENTERPRISE';
 
     if (subscription.stripeCurrentPeriodEnd > now) {
@@ -57,35 +39,12 @@ export async function GET() {
       } else {
         status = 'FREE';
       }
-    } else if (isEnterpriseTrialActive) {
-      status = 'ENTERPRISE';
-    } else if (isProTrialActive) {
-      status = 'PRO';
     } else {
       status = 'FREE';
-    }
-    
-    // Check if trials just expired
-    if (subscription.proTrialEnd && new Date(subscription.proTrialEnd) < now && !subscription.proTrialExpired) {
-      await prisma.userSubscription.update({
-      where: { userId: user.id },
-        data: { proTrialExpired: true }
-      });
-    }
-
-    if (subscription.enterpriseTrialEnd && new Date(subscription.enterpriseTrialEnd) < now && !subscription.enterpriseTrialExpired) {
-      await prisma.userSubscription.update({
-      where: { userId: user.id },
-        data: { enterpriseTrialExpired: true }
-      });
     }
 
     return NextResponse.json({
       status,
-      proTrialEndsAt: isProTrialActive ? subscription.proTrialEnd?.toISOString() : null,
-      enterpriseTrialEndsAt: isEnterpriseTrialActive ? subscription.enterpriseTrialEnd?.toISOString() : null,
-      trialExpired: subscription.proTrialExpired || subscription.enterpriseTrialExpired,
-      trialEndingSoon: proTrialEndingSoon,
     });
     
   } catch (error) {
