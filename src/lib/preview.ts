@@ -1,6 +1,5 @@
-import { Template } from "@/components/templates/registry";
 import { put } from "@vercel/blob";
-import { env } from "@/env";
+import { Template } from "@/components/templates";
 
 export async function generateAndUploadPreview(template: Template, previewDataUrl: string) {
   try {
