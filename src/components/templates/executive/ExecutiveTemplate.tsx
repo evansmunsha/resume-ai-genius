@@ -43,15 +43,15 @@ export function ExecutiveTemplate({ resumeData, contentRef, className }: Templat
         id="resumePreviewContent"
         ref={contentRef}
       >
-        <main className="p-8 space-y-8 print:break-inside-avoid">
+        <main className="p-3 space-y-2 print:break-inside-avoid">
           <HeaderSection resumeData={resumeData} />
-          <div className="grid grid-cols-3 gap-8">
-            <div className="col-span-2 space-y-8">
+          <div className="grid grid-cols-3 gap-2">
+            <div className="col-span-2 space-y-2">
               <ExecutiveSummarySection resumeData={resumeData} />
               <WorkExperienceSection resumeData={resumeData} />
               <EducationSection resumeData={resumeData} />
             </div>
-            <div className="space-y-8">
+            <div className="space-y-2">
               <SkillsSection resumeData={resumeData} />
               <AchievementsSection resumeData={resumeData} />
               {/* <CertificationsSection resumeData={resumeData} /> */}
