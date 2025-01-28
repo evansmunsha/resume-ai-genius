@@ -34,22 +34,9 @@ export default async function Page() {
     subscription.subscriptionStatus !== "free" &&
     !subscription.stripeCancelAtPeriodEnd;
 
-  // Check for active trials
-  const hasActiveProTrial = subscription?.proTrialEnd && 
-    new Date(subscription.proTrialEnd) > now && 
-    !subscription.proTrialExpired;
-
-  const hasActiveEnterpriseTrial = subscription?.enterpriseTrialEnd && 
-    new Date(subscription.enterpriseTrialEnd) > now && 
-    !subscription.enterpriseTrialExpired;
-
   // Debug logs
   console.log("Status checks:", {
     isSubscriptionActive,
-    hasActiveProTrial,
-    hasActiveEnterpriseTrial,
-    proTrialExpired: subscription?.proTrialExpired,
-    enterpriseTrialExpired: subscription?.enterpriseTrialExpired,
     stripeSubscriptionId: subscription?.stripeSubscriptionId,
     currentPeriodEnd: subscription?.stripeCurrentPeriodEnd,
   });
@@ -65,10 +52,6 @@ export default async function Page() {
   let planName = "FREE";
   if (isSubscriptionActive && priceInfo?.product) {
     planName = (priceInfo.product as Stripe.Product).name;
-  } else if (hasActiveProTrial) {
-    planName = "Premium (Trial)";
-  } else if (hasActiveEnterpriseTrial) {
-    planName = "Premium Plus (Trial)";
   }
 
   // Debug log
