@@ -8,7 +8,7 @@ import { BorderStyles } from "@/app/(main)/editor/BorderStyleButton";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Award, Globe, Mail, Phone, MapPin } from 'lucide-react';
+import { Globe, Mail, Phone, MapPin } from 'lucide-react';
 
 interface TemplateProps {
   resumeData: ResumeValues;
@@ -42,15 +42,15 @@ export function CorporateTemplate({ resumeData, contentRef, className }: Templat
         id="resumePreviewContent"
         ref={contentRef}
       >
-        <main className="p-8 space-y-6 print:break-inside-avoid">
+        <main className="p-2 space-y-2 print:break-inside-avoid">
           <HeaderSection resumeData={resumeData} />
-          <div className="grid grid-cols-3 gap-6">
-            <div className="col-span-2 space-y-6">
+          <div className="grid grid-cols-3 gap-2">
+            <div className="col-span-2 space-y-2">
               <SummarySection resumeData={resumeData} />
               <WorkExperienceSection resumeData={resumeData} />
               <EducationSection resumeData={resumeData} />
             </div>
-            <div className="space-y-6">
+            <div className="space-y-2">
               <SkillsSection resumeData={resumeData} />
               {/* <CertificationsSection resumeData={resumeData} /> */}
               <LanguagesSection resumeData={resumeData} />

@@ -66,18 +66,16 @@ function HeaderSection({ resumeData }: SectionProps) {
   const { photo, firstName, lastName, jobTitle, city, country, phone, email, summary, borderStyle } = resumeData;
   const [photoSrc, setPhotoSrc] = useState(photo instanceof File ? "" : photo);
 
-  if (!email?.length || !phone?.length || !city?.length || !country?.length) return null;
-
+  
   useEffect(() => {
     const objectUrl = photo instanceof File ? URL.createObjectURL(photo) : "";
     if (objectUrl) setPhotoSrc(objectUrl);
     if (photo === null) setPhotoSrc("");
     return () => URL.revokeObjectURL(objectUrl);
   }, [photo]);
+  
+  if (!email?.length || !phone?.length || !city?.length || !country?.length) return null;
 
-  useEffect(() => {
-    // Ensure useEffect is called consistently in the component.
-  }, []);
 
   return (
     <header className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white p-4">

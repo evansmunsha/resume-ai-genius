@@ -1,11 +1,10 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
-import { useUser } from "@clerk/nextjs";
+import { useState, Suspense } from "react";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Check, Loader2 } from 'lucide-react';
+import { Check } from 'lucide-react';
 import { env } from "@/env";
 import { useToast } from "@/hooks/use-toast";
 import { createCheckoutSession } from "./premium/actions";
@@ -22,39 +21,10 @@ export function PricingSection() {
 }
 
 export function PricingSectionContent() {
-  const { user } = useUser();
   const { toast } = useToast();
-  const [isLoading, setIsLoading] = useState(true);
   const [loadingStates, setLoadingStates] = useState<Record<string, boolean>>({});
 
-  useEffect(() => {
-    const fetchSubscriptionStatus = async () => {
-      console.log("Fetching subscription status...");
-      console.log("User data:", user);
-      setIsLoading(true);
-      try {
-        const response = await fetch('/api/subscription-status');
-        console.log("Fetch successful.");
-      } catch (error) {
-        console.error("Fetch failed:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchSubscriptionStatus();
-  }, [user]);
-
-  if (isLoading) {
-    console.log("Loading...");
-    return (
-      <div className="flex justify-center items-center h-96">
-        <Loader2 className="h-8 w-8 animate-spin" />
-      </div>
-    );
-  }
-
-  console.log("Subscription data loaded.");
+  
 
   const handleOneTimePaymentClick = async (priceId: string) => {
     setLoadingStates((prev) => ({ ...prev, [priceId]: true }));

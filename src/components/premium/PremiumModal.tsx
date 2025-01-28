@@ -9,9 +9,7 @@ import { Button } from "../ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { createCheckoutSession } from "./actions";
 
-interface SubscriptionData {
-  status: "FREE" | "PRO" | "ENTERPRISE";
-}
+
 
 const premiumFeatures = [
   "AI tools",

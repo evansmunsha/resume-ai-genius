@@ -109,12 +109,10 @@ async function handleSubscriptionCreatedOrUpdated(subscription: Stripe.Subscript
   }
 
   const subscriptionStatus = determineSubscriptionStatus(subscription);
-  const now = new Date();
+  
 
   console.log(`Handling subscription update for user ${userId}. New status: ${subscriptionStatus}`);
 
-  const isPro = subscription.items.data[0].price.id === env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_MONTHLY;
-  const isEnterprise = subscription.items.data[0].price.id === env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO_PLUS_MONTHLY;
 
   // Update or create the user's subscription record
   await prisma.userSubscription.upsert({
