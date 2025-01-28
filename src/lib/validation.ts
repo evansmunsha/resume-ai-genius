@@ -63,10 +63,11 @@ export const educationSchema = z.object({
   educations: z
     .array(
       z.object({
-        degree: z.string().optional(),
-        school: z.string().optional(),
+        degree: z.string().trim(),
+        school: z.string().trim(),
         startDate: dateSchema,
         endDate: dateSchema,
+        description: z.string().optional(),
       }),
     )
     .optional(),

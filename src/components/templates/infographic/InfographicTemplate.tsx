@@ -112,7 +112,16 @@ function TimelineSection({ resumeData }: SectionProps) {
   const timelineItems = [
     ...(workExperiences || []).map(exp => ({ ...exp, type: 'work' })),
     ...(educations || []).map(edu => ({ ...edu, type: 'education' }))
-  ].sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
+  ].sort((a, b) => {
+    const dateA = a.startDate ? new Date(a.startDate).getTime() : 0; // Default to 0 if invalid
+    const dateB = b.startDate ? new Date(b.startDate).getTime() : 0; // Default to 0 if invalid
+    return dateB - dateA;
+  });
+
+  // Type guard to check if item is a work experience
+  const isWorkExperience = (item: any): item is { position: string; type: string; startDate?: string | null; endDate?: string | null; } => {
+    return item.type === 'work' && typeof item.position === 'string';
+  }
 
   return (
     <div className="relative">
@@ -124,11 +133,11 @@ function TimelineSection({ resumeData }: SectionProps) {
           </div>
           <div className="bg-white rounded-lg shadow-md p-4 transition-all duration-300 hover:shadow-lg hover:scale-105">
             <h3 className="text-lg font-semibold" style={{ color: colorHex }}>
-              {item.type === 'work' ? item.position : item.degree}
+              {isWorkExperience(item) ? item.position : item.description}
             </h3>
-            <p className="text-gray-600">{item.type === 'work' ? item.company : item.school}</p>
+            <p className="text-gray-600">{item.type === 'work' ? item.startDate : item.description}</p>
             <p className="text-sm text-gray-500">
-              {formatDate(new Date(item.startDate), "MMM yyyy")} - {item.endDate ? formatDate(new Date(item.endDate), "MMM yyyy") : "Present"}
+              {item.startDate ? formatDate(new Date(item.startDate), "MMM yyyy") : "Invalid Date"} - {item.endDate ? formatDate(new Date(item.endDate), "MMM yyyy") : "Present"}
             </p>
             {item.type === 'work' && item.description && (
               <p className="mt-2 text-sm">{item.description}</p>
@@ -210,4 +219,3 @@ function LanguagesSection({ resumeData }: SectionProps) {
     </div>
   );
 }
-

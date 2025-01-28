@@ -43,8 +43,8 @@ export function mapToResumeValues(data: ResumeServerData): ResumeValues {
       description: exp.description || undefined,
     })),
     educations: data.educations.map((edu) => ({
-      degree: edu.degree || undefined,
-      school: edu.school || undefined,
+      degree: edu.degree || 'Unknown Degree',
+      school: edu.school || 'Unknown School',
       startDate: edu.startDate?.toISOString().split("T")[0],
       endDate: edu.endDate?.toISOString().split("T")[0],
     })),
