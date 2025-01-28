@@ -8,7 +8,7 @@ import { BorderStyles } from "@/app/(main)/editor/BorderStyleButton";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Briefcase, GraduationCap, Award, Globe, BarChart, Target, Users, Zap } from 'lucide-react';
+import { Globe, BarChart, Target, Users } from 'lucide-react';
 import React from "react";
 
 interface TemplateProps {

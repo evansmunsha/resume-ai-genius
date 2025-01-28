@@ -131,7 +131,7 @@ function LanguagesSection({ resumeData }: SectionProps) {
 }
 
 function PersonalInfoHeader({ resumeData }: SectionProps) {
-  const { photo, firstName, lastName, jobTitle, colorHex, borderStyle } = resumeData;
+  const { photo, firstName, lastName, jobTitle, borderStyle } = resumeData;
   const [photoSrc, setPhotoSrc] = useState(photo instanceof File ? "" : photo);
 
   useEffect(() => {
