@@ -105,6 +105,7 @@ export const resumeSchema = z.object({
   colorHex: optionalString,
   borderStyle: optionalString,
   selectedTemplate: z.string().optional(),
+  description: z.string().optional(),
 });
 
 // Update the ResumeValues type
@@ -113,6 +114,7 @@ export type ResumeValues = Omit<z.infer<typeof resumeSchema>, "photo"> & {
   photo?: File | string | null;
   selectedTemplate?: string;
   languages?: string[];
+  title?: string;  
 };
 
 export const generateWorkExperienceSchema = z.object({
