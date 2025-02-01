@@ -15,7 +15,6 @@ interface Step {
 }
 
 export const steps: Step[] = [
-  { title: "Choose Template", component: TemplateStep, key: "template" },
   { title: "General Info", component: GeneralInfoForm, key: "general-info" },
   { title: "Personal Info", component: PersonalInfoForm, key: "personal-info" },
   { title: "Work Experience", component: WorkExperienceForm, key: "work-experience" },
@@ -24,4 +23,5 @@ export const steps: Step[] = [
   { title: "Languages", component: LanguageForm, key: "languages" },
   
   { title: "Summary", component: SummaryForm, key: "summary" },
+  { title: "Choose Template", component: TemplateStep, key: "template" },
 ];
