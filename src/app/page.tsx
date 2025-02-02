@@ -1,4 +1,5 @@
-import React from 'react';
+"use client"
+
 import { Button } from '@/components/ui/button';
 import { Check } from 'lucide-react';
 import Image from 'next/image';
@@ -6,6 +7,15 @@ import Link from 'next/link';
 import { PricingSection } from '@/components/PricingSection';
 import dynamic from 'next/dynamic';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import one from "@/assets/one.jpg";
+import two from "@/assets/two.jpg";
+import three from "@/assets/three.jpg";
+import four from "@/assets/four.jpg";
+import five from "@/assets/five.jpg";
+import six from "@/assets/six.jpg";
+import seven from "@/assets/seven.jpg";
+import eight from "@/assets/eight.jpg";
+import React, { useEffect, useState } from 'react';
 
 
 const FeedbackFormSection = dynamic(() => 
@@ -13,7 +23,31 @@ const FeedbackFormSection = dynamic(() =>
     loading: () => <div className="animate-pulse h-32 bg-gray-100 rounded" />
 })
 
+
+
+
+const images = [one, two, three, four, five, six, seven, eight];
+
 const NewLandingPage = () => {
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 3000); // Change image every 3 seconds
+
+    return () => clearInterval(interval); // Cleanup on unmount
+  }, []);
+
+  const nextImage = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+  };
+
+  const prevImage = () => {
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
+  };
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -54,9 +88,24 @@ const NewLandingPage = () => {
 
 
       {/* Image Section */}
-      <section className="py-20 bg-gray-50 text-center">
+      <section className="py-20 bg-gray-600 text-center">
         <h2 className="text-3xl font-bold mb-4">Example Resumes</h2>
-        <Image src="/path/to/your/image.jpg" alt="Resume example" width={600} height={400} />
+        <div className="relative flex items-center justify-center">
+          <Image 
+            src={images[currentIndex]} 
+            alt={`Resume example ${currentIndex + 1}`} 
+            width={300} 
+            height={200} 
+            className='w-auto' 
+          />
+          <button onClick={prevImage} className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2">Previous</button>
+          <button onClick={nextImage} className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2">Next</button>
+        </div>
+        <div className="flex justify-center mt-4">
+          {images.map((_, index) => (
+            <button key={index} className={`w-3 h-3 mx-1 rounded-full ${currentIndex === index ? 'bg-blue-500' : 'bg-gray-300'}`} onClick={() => setCurrentIndex(index)} />
+          ))}
+        </div>
       </section>
 
       {/* GIF Section */}
@@ -84,8 +133,8 @@ const NewLandingPage = () => {
       </section>
 
       <section className="py-20 bg-white">
-        <div className="container mx-auto max-w-3xl px-4">
-          <h2 className="text-3xl font-bold text-center mb-8">We Value Your Feedback</h2>
+        <div className="container mx-auto max-w-2xl px-2">
+          <h2 className="text-2xl font-bold text-center mb-8">We Value Your Feedback</h2>
           <Card>
             <CardHeader>
               <CardTitle>Help Us Improve</CardTitle>
