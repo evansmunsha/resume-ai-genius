@@ -15,6 +15,7 @@ import five from "@/assets/five.jpg";
 import six from "@/assets/six.jpg";
 import seven from "@/assets/seven.jpg";
 import eight from "@/assets/eight.jpg";
+import Animation from "@/assets/Animation.gif";
 import React, { useEffect, useState } from 'react';
 
 
@@ -111,11 +112,12 @@ const NewLandingPage = () => {
       {/* GIF Section */}
       <section className="py-20 bg-gray-50 text-center">
         <h2 className="text-3xl font-bold mb-4">See It in Action</h2>
-        <img
-          src="/path/to/your/animation.gif"  // Replace with your actual GIF path
+        <Image
+          src={Animation}  // Replace with your actual GIF path
           alt="Demo of the tool in action"
           className="mx-auto"
           width={600}
+          height={400}
         />
         <p className="mt-4 text-lg text-gray-700">
           Watch how our tool simplifies your resume creation process!
