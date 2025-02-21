@@ -50,11 +50,7 @@ export default function TemplateStep({ resumeData, setResumeData }: EditorFormPr
                 <p className="text-sm text-muted-foreground">{template.description}</p>
               </div>
               
-              {template.availability !== "free" && (
-                <Badge variant="secondary">
-                  {template.availability === "enterprise" ? "Premium" : "Pro"}
-                </Badge>
-              )}
+              
             </div>
 
             {resumeData.selectedTemplate === id && (
