@@ -7,7 +7,7 @@ export function canCreateResume(
 ): boolean {
   switch (subscriptionLevel) {
     case "FREE":
-      return totalCount < 1;
+      return true;
     case "PRO":
       return totalCount < 5;
     case "ENTERPRISE":
@@ -27,22 +27,22 @@ export function canCreateCoverLetter(
 ): boolean {
   switch (subscriptionLevel) {
     case "FREE":
-      return totalCount < 1;
+      return true;
     case "PRO":
       return totalCount < 5;
     case "ENTERPRISE":
-      return true;
+      return totalCount < 5;
     default:
       return false;
   }
 }
 
 export function canUseAITools(subscriptionLevel: SubscriptionLevel): boolean {
-  return subscriptionLevel === "PRO" || subscriptionLevel === "ENTERPRISE";
+  return subscriptionLevel === "PRO" || subscriptionLevel === 'FREE';
 }
 
 
 
 export function canUseCustomizations(subscriptionLevel: SubscriptionLevel): boolean {
-  return subscriptionLevel === "ENTERPRISE";
+  return subscriptionLevel === 'FREE';
 }

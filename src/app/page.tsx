@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Check } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { PricingSection } from '@/components/PricingSection';
 import dynamic from 'next/dynamic';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import one from "@/assets/one.jpg";
@@ -124,15 +123,15 @@ const NewLandingPage = () => {
         </p>
       </section>
 
-      {/* Pricing Section */}
+      {/* Pricing Section 
       <section className="py-20 bg-gray-50 text-center">
-        {/* Pricing Section Introduction */}
+        
         <section className="py-20 bg-white text-center">
           <h2 className="text-3xl font-bold mb-4">Affordable Pricing Plans</h2>
           <p className="text-lg">Choose a plan that suits your needs and start building your professional resume today!</p>
         </section>
         <PricingSection />
-      </section>
+      </section>*/}
 
       <section className="py-20 bg-white">
         <div className="container mx-auto max-w-2xl px-2">
