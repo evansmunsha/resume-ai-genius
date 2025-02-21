@@ -1,7 +1,6 @@
 "use client";
 
 import { templates, TemplateId } from "@/components/templates";
-import { Badge } from "@/components/ui/badge";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { EditorFormProps } from "@/lib/types";
