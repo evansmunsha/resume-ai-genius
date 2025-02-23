@@ -16,6 +16,7 @@ import seven from "@/assets/seven.jpg";
 import eight from "@/assets/eight.jpg";
 import Animation from "@/assets/Animation.gif";
 import React, { useEffect, useState } from 'react';
+import AdBanner from '@/components/AdBanner';
 
 
 const FeedbackFormSection = dynamic(() => 
@@ -83,12 +84,26 @@ const NewLandingPage = () => {
 
             </div>
           </div>
+          <div className='h-fit mt-8'>
+            <AdBanner 
+              dataAdSlot={"2115087201"} 
+              dataAdFormat={"auto"} 
+              dataFullWidthResponsive={true} 
+            />
+          </div>
         </div>
       </section>
 
 
       {/* Image Section */}
       <section className="py-20 bg-gray-600 text-center">
+          <div className='h-fit mt-8'>
+            <AdBanner 
+              dataAdSlot={"2115087201"} 
+              dataAdFormat={"auto"} 
+              dataFullWidthResponsive={true} 
+            />
+          </div>
         <h2 className="text-3xl font-bold mb-4">Example Resumes</h2>
         <div className="relative flex items-center justify-center">
           <Image 
@@ -121,6 +136,13 @@ const NewLandingPage = () => {
         <p className="mt-4 text-lg text-gray-700">
           Watch how our tool simplifies your resume creation process!
         </p>
+        <div className='h-fit mt-8'>
+            <AdBanner 
+              dataAdSlot={"2115087201"} 
+              dataAdFormat={"auto"} 
+              dataFullWidthResponsive={true} 
+            />
+          </div>
       </section>
 
       {/* Pricing Section 
@@ -132,6 +154,13 @@ const NewLandingPage = () => {
         </section>
         <PricingSection />
       </section>*/}
+          <div className='h-fit mt-8'>
+            <AdBanner 
+              dataAdSlot={"2115087201"} 
+              dataAdFormat={"auto"} 
+              dataFullWidthResponsive={true} 
+            />
+          </div>
 
       <section className="py-20 bg-white">
         <div className="container mx-auto max-w-2xl px-2">
@@ -145,6 +174,13 @@ const NewLandingPage = () => {
             </CardContent>
           </Card>
         </div>
+          <div className='h-fit mt-8'>
+            <AdBanner 
+              dataAdSlot={"2115087201"} 
+              dataAdFormat={"auto"} 
+              dataFullWidthResponsive={true} 
+            />
+          </div>
       </section>
     </div>
   );
