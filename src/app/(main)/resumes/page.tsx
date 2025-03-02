@@ -9,6 +9,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import CreateResumeButton from "./CreateResumeButton";
 import ResumeItem from "./ResumeItem";
+import AdBanner from "@/components/AdBanner";
 
 export const metadata: Metadata = {
   title: "Your resumes",
@@ -58,6 +59,13 @@ export default async function ResumesPage(props: any) {
           ))}
         </nav>
       )}
+          <div className='h-fit mt-8'>
+            <AdBanner 
+              dataAdSlot={"2115087201"} 
+              dataAdFormat={"auto"} 
+              dataFullWidthResponsive={true} 
+            />
+          </div>
     </main>
   );
 }

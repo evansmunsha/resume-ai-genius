@@ -68,19 +68,19 @@ const NewLandingPage = () => {
           <div className="grid md:grid-cols-3 gap-8">
             <div className="border p-6 rounded-lg shadow-md">
               <Check className="w-6 h-6 text-green-500" />
-              <h3 className="text-xl font-semibold">AI-Powered</h3>
-              <p>Get AI-generated content tailored to your skills.</p>
+              <h3 className="text-xl font-semibold text-gray-900">AI-Powered</h3>
+              <p className='text-gray-700'>Get AI-generated content tailored to your skills.</p>
             </div>
             <div className="border p-6 rounded-lg shadow-md">
               <Check className="w-6 h-6 text-green-500" />
-              <h3 className="text-xl font-semibold">ATS-Friendly</h3>
-              <p>Ensure your resume gets past Applicant Tracking Systems.</p>
+              <h3 className="text-xl font-semibold text-gray-900">ATS-Friendly</h3>
+              <p className='text-gray-700'>Ensure your resume gets past Applicant Tracking Systems.</p>
 
             </div>
             <div className="border p-6 rounded-lg shadow-md">
               <Check className="w-6 h-6 text-green-500" />
-              <h3 className="text-xl font-semibold">Custom Templates</h3>
-              <p>Choose from a variety of professional templates.</p>
+              <h3 className="text-xl font-semibold text-gray-900">Custom Templates</h3>
+              <p className='text-gray-700'>Choose from a variety of professional templates.</p>
 
             </div>
           </div>
@@ -104,7 +104,7 @@ const NewLandingPage = () => {
               dataFullWidthResponsive={true} 
             />
           </div>
-        <h2 className="text-3xl font-bold mb-4">Example Resumes</h2>
+        <h2 className="text-3xl font-bold mb-4 text-gray-900">Example Resumes</h2>
         <div className="relative flex items-center justify-center">
           <Image 
             src={images[currentIndex]} 
@@ -125,7 +125,7 @@ const NewLandingPage = () => {
 
       {/* GIF Section */}
       <section className="py-20 bg-gray-50 text-center">
-        <h2 className="text-3xl font-bold mb-4">See It in Action</h2>
+        <h2 className="text-3xl font-bold mb-4 text-gray-900">See It in Action</h2>
         <Image
           src={Animation}  // Replace with your actual GIF path
           alt="Demo of the tool in action"
@@ -164,7 +164,7 @@ const NewLandingPage = () => {
 
       <section className="py-20 bg-white">
         <div className="container mx-auto max-w-2xl px-2">
-          <h2 className="text-2xl font-bold text-center mb-8">We Value Your Feedback</h2>
+          <h2 className="text-2xl font-bold text-center mb-8 text-gray-900">We Value Your Feedback</h2>
           <Card>
             <CardHeader>
               <CardTitle>Help Us Improve</CardTitle>
